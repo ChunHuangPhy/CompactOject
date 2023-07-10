@@ -12,22 +12,21 @@ from itertools import repeat
 import TOV_solver
 
 # Global Variables
-pi = np.pi
+dyncm2_to_MeVfm3 = 1./(1.6022e33)
+gcm3_to_MeVfm3 = 1./(1.7827e12)
+oneoverfm_MeV = 197.33
 
+energy_density, pressure = EOS_import()
 RFSU2R = []
 MFSU2R = []
 density = numpy.logspace(14.3, 15.6, 50)
-if   all(x<y for x, y in zip(eps_total_poly[j][:], eps_total_poly[j][1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
-    for i in range(len(density)):
-        try:
-            RFSU2R[j].append(solveTOV(density[i], eps_total_poly[j], pres_total_poly[j])[1])
-            MFSU2R[j].append(solveTOV(density[i], eps_total_poly[j], pres_total_poly[j])[0])
-        except OverflowError as e:
-            break
-        if i > 20 and solveTOV(density[i], eps_total_poly[j], pres_total_poly[j])[0] - solveTOV(density[i-1], eps_total_poly[j], pres_total_poly[j])[0]< 0:
-            break
-    if len(RFSU2R[j]) == False:
+#This following step is to make a dicision whether the EOS ingredients is always increase. We can do that outsie of this main to the 
+#EOS import.
+#if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
+for i in range(len(density)):
+    try:
+        RFSU2R = TOV_solver.solveTOV(density[i], energy_density, pressure)[1]
+        MFSU2R = TOV_solver.solveTOV(density[i], energy_density, pressure)[0]
+    #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
+    except OverflowError as e:
         break
-    else:
-        del RFSU2R[j][-1]
-        del MFSU2R[j][-1]
