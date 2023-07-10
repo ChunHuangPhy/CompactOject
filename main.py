@@ -7,6 +7,7 @@ from scipy.integrate import odeint, ode
 from matplotlib import pyplot
 from scipy import optimize
 from itertools import repeat
+import csv
 
 # Import files
 import TOV_solver
@@ -30,8 +31,8 @@ density = numpy.logspace(14.3, 15.6, 50)
 #if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
 for i in range(len(density)):
     try:
-        RFSU2R = TOV_solver.solveTOV(density[i], energy_density, pressure)[1]
-        MFSU2R = TOV_solver.solveTOV(density[i], energy_density, pressure)[0]
+        RFSU2R.append(TOV_solver.solveTOV(density[i], energy_density[j], pressure[j])[1])
+        MFSU2R.append(TOV_solver.solveTOV(density[i], energy_density[j], pressure[j])[0])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
     except OverflowError as e:
         break
