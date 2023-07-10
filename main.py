@@ -12,7 +12,7 @@ from itertools import repeat
 import TOV_solver
 
 # Global Variables
-pi = np.pig
+pi = np.pi
 
 RFSU2R = []
 MFSU2R = []
