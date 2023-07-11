@@ -37,7 +37,6 @@ def EOS_check(density, pressure):
 
     dydx = np.gradient(density,pressure)
     for value in dydx:
-        print(value)
         if value >= 0:
             pass
         else:
