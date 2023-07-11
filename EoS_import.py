@@ -34,7 +34,7 @@ def file_read(input_file):
 
 def EOS_check(density, pressure):
 
-   dydx = np.gradient(density,pressure)
+    dydx = np.gradient(density,pressure)
 
     for value in dydx:
         if value < 0:
@@ -44,10 +44,4 @@ def EOS_check(density, pressure):
             print("This is a valid equation of state")
             return density, pressure
         
-    
-    
-
-
-#EOS_import(file_name='/Users/nicoleosborn/EoS_inference/Test_EOS.csv')
-EOS_import(density=[1,-4,-5,-5],pressure=[1,4,5,1])
 
