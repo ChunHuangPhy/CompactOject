@@ -25,7 +25,7 @@ def solveTOV(center_rho, energy_density, pressure):
     P0 = pcent - (2.*pi/3.)*(pcent + center_rho) *(3.*pcent + center_rho)*r**2.
     m0 = 4./3. *pi *center_rho*r**3.
     stateTOV = numpy.array([P0, m0])
-    sy = ode(TOV, None).set_integrator(‘dopri5’)
+    sy = ode(TOV, None).set_integrator("dopri5")
     
     #have been modified from Irida to this integrator
     sy.set_initial_value(stateTOV , r).set_f_params(inveos)
