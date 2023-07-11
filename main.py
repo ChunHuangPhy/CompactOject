@@ -9,9 +9,11 @@ from scipy import optimize
 from itertools import repeat
 import csv
 
+
 # Import files
 import TOV_solver
 import EoS_import
+import speed_of_sound
 
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
@@ -22,7 +24,6 @@ def OutputMR(input_file='',density=[],pressure=[]):
     dyncm2_to_MeVfm3 = 1./(1.6022e33)
     gcm3_to_MeVfm3 = 1./(1.7827e12)
     oneoverfm_MeV = 197.33
-    
     #############This is something we need to change, like the input for this EOS import should
     ############# be one file contatining Whole EOS. that first column is density and second is pressure
     energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
@@ -48,3 +49,9 @@ def OutputMR(input_file='',density=[],pressure=[]):
     print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radoius, second one is mass")
     np.savetxt("MassRadius.csv", MRT)
     return MRT
+
+
+def OutputC_s(input_file='',density=[],pressure=[]):
+    energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
+    C_s = speed_of_sound.speed_of_sound_calc(energy_density, pressure)
+    return C_s

@@ -54,11 +54,10 @@ def solveTOV(center_rho, energy_density, pressure):
     #inveos = UnivariateSpline(np.log10(pres), np.log10(eps), k=1, s=0)
     #We could change this to Double Log Interpolation。
 
-    # Constants
+
     c = 3e10
     G = 6.67428e-8
     Msun = 1.989e33
-
 
     eos = UnivariateSpline(energy_density, pressure, k=3, s=0)
     inveos = UnivariateSpline(pressure, energy_density, k=3, s=0)
