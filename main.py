@@ -11,7 +11,7 @@ import csv
 
 # Import files
 import TOV_solver
-import EOS_import
+import EoS_import
 
 # Global Variables
 def OutputMR(input_file):
@@ -25,7 +25,7 @@ def OutputMR(input_file):
     
     #############This is something we need to change, like the input for this EOS import should
     ############# be one file contatining Whole EOS. that first column is density and second is pressure
-    energy_density, pressure = EOS_import(input_file)
+    energy_density, pressure = EoS_import.EOS_import(input_file)
     ############# Lets the user only input the EOS file path, then this EOS_import should have file
     ############# as input. and the outputMR should have a file as input too?
     
