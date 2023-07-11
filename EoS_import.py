@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import sys
 
 def EOS_import(file_name = "", density = 0, pressure = 0):
     
@@ -35,13 +36,13 @@ def file_read(input_file):
 def EOS_check(density, pressure):
 
     dydx = np.gradient(density,pressure)
-
     for value in dydx:
-        if value < 0:
-            print("This is not a valid equation of state")
-            exit()
+        print(value)
+        if value >= 0:
+            pass
         else:
-            print("This is a valid equation of state")
-            return density, pressure
-        
+            print("This is not a valid equation of state")
+            sys.exit()
+    print("This is a valid equation of state")
 
+    return density, pressure
