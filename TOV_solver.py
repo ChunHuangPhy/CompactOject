@@ -18,6 +18,22 @@ def m1_from_mc_m2(mc, m2):
     return num1 / denom1 + denom1 / denom2
 
 def TOV(r, y,inveos):
+    """a function that packing the whole TOV equations set
+
+    Args:
+        r (float): raius as integrate varible
+        y (psudo-varible): containing pressure, mass, h and b as intergarte varibles
+        to solve out the TOV equation
+        inveos: the invert of the eos, pressure and energy density relation to integrate
+        and interpolate.
+
+    Returns:
+        Mass (array): The array that contains all the Stars' masses, in M_sun as a 
+        Units.
+        Radius (array): The array that contains all the Stars's radius, in km.
+        Tidal Deformability (array): The array that contains correpsonding Tidal property, 
+        These are dimension-less.
+    """
     pres, m,h,b = y
     
     #eps = 10**inveos(np.log10(pres))
@@ -37,7 +53,16 @@ def TOV(r, y,inveos):
     return np.array([dpdr, dmdr, dhdr, dfdr])
 
 def tidal_deformability(y2, Mns, Rns):
+    """Compute Tidal deformability from y2, neutron star mass and raius
 
+    Args:
+        y2 (array): midiate varrible that computing tidal
+        Mns (array): neutron star mass in g/cm3
+        Rns (array): neutron star radius in cm.
+
+    Returns:
+        tidal_def (array): neutron star tidal deformability with unit-less.
+    """
     C = Mns / Rns
     Eps = 4. * C**3. * (13. - 11. * y2 + C * (3. * y2 - 2.) +
                         2. * C**2. * (1. + y2)) + \
@@ -50,6 +75,27 @@ def tidal_deformability(y2, Mns, Rns):
 
 # Function solves the TOV equation, returning mass and radius
 def solveTOV(center_rho, energy_density, pressure):
+    """Solve TOV equation from given Equation of state in the neutron star 
+    core density range
+
+    Args:
+        center_rho(array): This is the energy density here is fixed in main
+        that is np.logspace(14.3, 15.6, 50)
+        energy_density (array): Desity array of the neutron star EoS, in MeV/fm^{-3}
+        Please check the Test_EOS.csv, the first serveral are BPS crust EoS, so the
+        conversion dould be easily get. (I know this could be a major problem for 
+        people)
+        pressure (array): Pressure array of neutron star EoS, also in nautral unit
+        with MeV/fm^{-3}, still please check the Test_EOS.csv and compare it with 
+        BPS EoS you will easily got the conversion coeffient.
+
+    Returns:
+        Mass (array): The array that contains all the Stars' masses, in M_sun as a 
+        Units.
+        Radius (array): The array that contains all the Stars's radius, in km.
+        Tidal Deformability (array): The array that contains correpsonding Tidal property, 
+        These are dimension-less.
+    """
     #eos = UnivariateSpline(np.log10(eps), np.log10(pres), k=1, s=0)
     #inveos = UnivariateSpline(np.log10(pres), np.log10(eps), k=1, s=0)
     #We could change this to Double Log Interpolation。
