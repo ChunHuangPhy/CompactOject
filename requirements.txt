@@ -1,0 +1,8 @@
+numpy
+scipy
+matplotlib
+pandas
+csv
+sys
+itertools
+math
