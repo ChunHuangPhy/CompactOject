@@ -17,6 +17,16 @@ import speed_of_sound
 
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
+    """OutputMR(input_file='', density=[], pressure=[])
+    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays.
+
+    Args:
+        input_file (str, optional): The file path containing the density and pressure data. Must be equal length
+        density (list, optional): The numpy array containing the density data. Must be same length as pressure array and contain only floats, u
+        pressure (list, optional): The numpy array containing the density data. Must be same length as density array and contain only floats.
+    Returns:
+        MRT: (3D Numpy Array)
+    """
     c = 3e10
     G = 6.67428e-8
     Msun = 1.989e33
