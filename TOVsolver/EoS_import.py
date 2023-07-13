@@ -45,7 +45,7 @@ def file_read(input_file):
     density_list = []
     pressure_list = []
     with open(input_file) as csvfile:
-        file_read = csv.reader(csvfile, delimiter=' ')
+        file_read = csv.reader(csvfile, delimiter=',')
         data_list = [row for row in file_read]
     for row in data_list:
         density_list.append(float(row[0]))
