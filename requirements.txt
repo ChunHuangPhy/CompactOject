@@ -6,3 +6,5 @@ csv
 sys
 itertools
 math
+# path to the directory containing setup.py relative to the project root
+-e ./TOVsolver
