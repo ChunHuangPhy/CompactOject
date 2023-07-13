@@ -16,10 +16,12 @@ _Below is an example of how you can instruct your audience on installing and set
 PyPi:
 
 1. Install package
-2.  ```sh
+2. Install package
+   ```sh
    pip install CompactObject-TOV
    ```
-3. ```sh
+3. Update package
+   ```sh
    pip install CompactObject-TOV --upgrade
    ```
 
