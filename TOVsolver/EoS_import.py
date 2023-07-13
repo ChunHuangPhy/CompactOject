@@ -10,8 +10,8 @@ def EOS_import(file_name = "", density = 0, pressure = 0):
 
     Args:
         file_name (string, optional): string. CSV file to be opened.
-        density (array, optional): numpy array. Passed into a check function and returned if valid.
-        pressure (array, optional): numpy array. Passed into a check function and returned if valid.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
 
     Returns:
         array: checked density and pressure.
@@ -38,7 +38,7 @@ def file_read(input_file):
         input_file (string): string. File to be opened and parsed.
 
     Returns:
-        array: two arrays, one corresponding to density and one corresponding to pressrure. 
+        array: two 1Darray numpy arrays, one corresponding to density and one corresponding to pressrure. 
     """
     
     data_list = []
@@ -64,8 +64,8 @@ def EOS_check(density, pressure):
     Checks that the derivative (drho/dp) is positive.
 
     Args:
-        density (array): array. Density array to be checked.
-        pressure (array): array. Pressure array to be checked.
+        density (array): numpy 1Darray. Density array to be checked.
+        pressure (array): numpy 1Darray. Pressure array to be checked.
 
     Returns:
         array: two arrays, one corresponding to density and one corresponding to pressrure or ends the function and prints
