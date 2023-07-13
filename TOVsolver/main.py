@@ -18,14 +18,14 @@ import speed_of_sound
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
     """OutputMR(input_file='', density=[], pressure=[])
-    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays.
+    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays of the density and pressure.
 
     Args:
         input_file (str, optional): The file path containing the density and pressure data. Must be equal length
         density (list, optional): The numpy array containing the density data. Must be same length as pressure array and contain only floats, u
         pressure (list, optional): The numpy array containing the density data. Must be same length as density array and contain only floats.
     Returns:
-        MRT: (3D Numpy Array)
+        MRT (3D Numpy Array): Returns a 3D numpy array which includes a mass array (in solar masses), radius array (in km), and tidal deformability (in km)
     """
     c = 3e10
     G = 6.67428e-8
@@ -54,14 +54,24 @@ def OutputMR(input_file='',density=[],pressure=[]):
             tidal.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[2])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
-            print("This EOS is ill-defined to reach a infinity result, that is not phyiscal, No Mass radius will be generated.")
+            print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MRT = np.vstack((RFSU2R, MFSU2R,tidal)).T
-    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radoius, second one is mass")
-    np.savetxt("MassRadius.csv", MRT)
+    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radius, second one is mass")
+    np.savetxt("MassRadiusTidal.csv", MRT)
     return MRT
 
 
 def OutputC_s(input_file='',density=[],pressure=[]):
+    """OutputC_s(input_file=', density=[], pressure= [])
+    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays of the density and pressure.
+
+    Args:
+        input_file (str, optional): The file path containing the density and pressure data. Must be equal length
+        density (list, optional): The numpy array containing the density data. Must be same length as pressure array and contain only floats, u
+        pressure (list, optional): The numpy array containing the density data. Must be same length as density array and contain only floats.
+    Returns:
+        C_s (1D Numpy Array): Returns a 1D numpy array which includes the speed of sound for each density/pressure pair
+    """
     energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
     C_s = speed_of_sound.speed_of_sound_calc(energy_density, pressure)
     return C_s
