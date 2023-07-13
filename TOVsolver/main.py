@@ -55,10 +55,10 @@ def OutputMR(input_file='',density=[],pressure=[]):
             tidal.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[2])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
-            print("This EOS is ill-defined to reach a infinity result, that is not phyiscal, No Mass radius will be generated.")
+            print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MRT = np.vstack((RFSU2R, MFSU2R,tidal)).T
-    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radoius, second one is mass")
-    np.savetxt("MassRadius.csv", MRT)
+    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radius, second one is mass")
+    np.savetxt("MassRadiusTidal.csv", MRT)
     return MRT
 
 
