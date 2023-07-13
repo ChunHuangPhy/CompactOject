@@ -41,7 +41,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 * Nicole Osborn - n.osborn@wustl.edu
 * Nathan Whitsett - whitsett.n@wustl.edu
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/ChunHuangPhy/EoS_inference)
+Project Link: [[https://github.com/ChunHuangPhy/EoS_inference](https://github.com/ChunHuangPhy/EoS_inference)]
 
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo..8145167)
