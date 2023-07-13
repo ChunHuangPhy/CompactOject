@@ -68,7 +68,7 @@ def EOS_check(density, pressure):
         pressure (array): numpy 1Darray. Pressure array to be checked.
 
     Returns:
-        array: two arrays, one corresponding to density and one corresponding to pressrure or ends the function and prints
+        array: two arrays, one corresponding to density and one corresponding to pressure or ends the function and prints
         invalid equation of state.
     """
 
@@ -77,7 +77,7 @@ def EOS_check(density, pressure):
 
     for value in drho:
         if value == 0:
-            print("This is not a valid equation of state")
+            print("This is not a valid equation of state, 0")
             sys.exit()
 
     dpdrho = dp/drho # dydx
