@@ -45,7 +45,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/Ch
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo..8145167)
 
 
 <!-- ACKNOWLEDGMENTS -->
