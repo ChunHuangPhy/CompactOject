@@ -12,15 +12,15 @@ Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compa
 
 ## Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-PyPi:
+_Below is commands to install and update the package as well as a link to pypi._
 
+
+### PyPi: (pypi link here
 1. Install package
-2. Install package
    ```sh
    pip install CompactObject-TOV
    ```
-3. Update package
+2. Update package
    ```sh
    pip install CompactObject-TOV --upgrade
    ```
