@@ -11,9 +11,9 @@ import csv
 
 
 # Import files
-import TOVsolver.solver_code as TOV_solver
-import TOVsolver.EoS_import as EoS_import
-import TOVsolver.speed_of_sound as speed_of_sound
+import solver_code as TOV_solver
+import EoS_import as EoS_import
+import speed_of_sound as speed_of_sound
 
 # Global Variables
 def OutputMRT(input_file='',density=[],pressure=[]):
