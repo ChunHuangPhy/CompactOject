@@ -7,25 +7,23 @@ Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compa
 1. Routine to check a valid equation of state input
 2. Return the mass, density, and tidal deformability
 3. Example notebook tutorial
-4. Test cases
+4. Test cases and documentation
 
 
 ## Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_Below are commands to install and update the package as well as a link to pypi._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+
+##### PyPi: (pypi link here)
+
+1. Install package
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   pip install CompactObject-TOV
    ```
-3. Install NPM packages
+2. Update package
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   pip install CompactObject-TOV --upgrade
    ```
 
 <!-- LICENSE -->
