@@ -16,7 +16,7 @@ import EoS_import as EoS_import
 import speed_of_sound as speed_of_sound
 
 # Global Variables
-def OutputMR(input_file='',density=[],pressure=[]):
+def OutputMRT(input_file='',density=[],pressure=[]):
 
     """Outputs the mass, radius, and tidal deformability
     Args:
