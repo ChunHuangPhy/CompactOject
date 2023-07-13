@@ -43,10 +43,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/ChunHuangPhy/EoS_inference)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo..8145167)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
