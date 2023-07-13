@@ -11,9 +11,9 @@ import csv
 
 
 # Import files
-import TOV_solver
-import EoS_import
-import speed_of_sound
+import TOVsolver.TOV_solver
+import TOVsolver.EoS_import
+import TOVsolver.speed_of_sound
 
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
