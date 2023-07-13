@@ -72,13 +72,24 @@ def EOS_check(density, pressure):
         invalid equation of state.
     """
 
-    dydx = np.gradient(density,pressure)
-    for value in dydx:
+    dp = np.diff(pressure) # dy
+    drho = np.diff(density) # dx
+
+    for value in dx:
+        if value == 0:
+            print("This is not a valid equation of state")
+            sys.exit()
+
+    dpdrho = dp/drho # dydx
+
+    for value in dpdrho:
         if value >= 0:
+            print("This is a valid equation of state")
             pass
         else:
             print("This is not a valid equation of state")
             sys.exit()
-    print("This is a valid equation of state")
+            
+        
 
     return density, pressure
