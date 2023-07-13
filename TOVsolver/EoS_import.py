@@ -45,7 +45,7 @@ def file_read(input_file):
     density_list = []
     pressure_list = []
     with open(input_file) as csvfile:
-        file_read = csv.reader(csvfile, delimiter=' ')
+        file_read = csv.reader(csvfile, delimiter=',')
         data_list = [row for row in file_read]
     for row in data_list:
         density_list.append(float(row[0]))
@@ -75,7 +75,7 @@ def EOS_check(density, pressure):
     dp = np.diff(pressure) # dy
     drho = np.diff(density) # dx
 
-    for value in dx:
+    for value in drho:
         if value == 0:
             print("This is not a valid equation of state")
             sys.exit()

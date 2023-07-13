@@ -12,6 +12,5 @@ def speed_of_sound_calc(density, pressure):
         speed_of_sound (array): numpy 1Darray.
     """
 
-
     speed_of_sound = np.gradient(density,pressure)
     return speed_of_sound

@@ -11,7 +11,7 @@ import csv
 
 
 # Import files
-import TOVsolver.TOV_solver as TOV_solver
+import TOVsolver.solver_code as TOV_solver
 import TOVsolver.EoS_import as EoS_import
 import TOVsolver.speed_of_sound as speed_of_sound
 
