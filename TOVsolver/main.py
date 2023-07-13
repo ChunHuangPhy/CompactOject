@@ -11,22 +11,23 @@ import csv
 
 
 # Import files
-import TOV_solver
-import EoS_import
-import speed_of_sound
+import TOVsolver.TOV_solver as TOV_solver
+import TOVsolver.EoS_import as EoS_import
+import TOVsolver.speed_of_sound as speed_of_sound
 
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
-    """OutputMR(input_file='', density=[], pressure=[])
-    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays of the density and pressure.
 
+    """Outputs the mass, radius, and tidal deformability
     Args:
-        input_file (str, optional): The file path containing the density and pressure data. Must be equal length
-        density (list, optional): The numpy array containing the density data. Must be same length as pressure array and contain only floats, u
-        pressure (list, optional): The numpy array containing the density data. Must be same length as density array and contain only floats.
+        file_name (string, optional): string. CSV file to be opened.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+
     Returns:
-        MRT (3D Numpy Array): Returns a 3D numpy array which includes a mass array (in solar masses), radius array (in km), and tidal deformability (in km)
+        MRT (tuple): tuple with mass, radius, and tidal deformability. Also saves to a .txt file.
     """
+
     c = 3e10
     G = 6.67428e-8
     Msun = 1.989e33
@@ -62,16 +63,19 @@ def OutputMR(input_file='',density=[],pressure=[]):
 
 
 def OutputC_s(input_file='',density=[],pressure=[]):
-    """OutputC_s(input_file=', density=[], pressure= [])
-    Summary: Takes as input either a file containing two columns of the density and pressure, or two numpy arrays of the density and pressure.
+
+    """Calls function to open csv (if needed) and check equation of state validity.
+        Then calls function to calculate speed of sound.
 
     Args:
-        input_file (str, optional): The file path containing the density and pressure data. Must be equal length
-        density (list, optional): The numpy array containing the density data. Must be same length as pressure array and contain only floats, u
-        pressure (list, optional): The numpy array containing the density data. Must be same length as density array and contain only floats.
+        file_name (string, optional): string. CSV file to be opened.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+
     Returns:
-        C_s (1D Numpy Array): Returns a 1D numpy array which includes the speed of sound for each density/pressure pair
+        C_s (array): numpy 1D array. List of speeds of sound.
     """
+
     energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
     C_s = speed_of_sound.speed_of_sound_calc(energy_density, pressure)
     return C_s
