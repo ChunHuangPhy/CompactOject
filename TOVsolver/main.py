@@ -11,12 +11,23 @@ import csv
 
 
 # Import files
-import TOVsolver.TOV_solver as solver_code
+import TOVsolver.solver_code as TOV_solver
 import TOVsolver.EoS_import as EoS_import
 import TOVsolver.speed_of_sound as speed_of_sound
 
 # Global Variables
 def OutputMR(input_file='',density=[],pressure=[]):
+
+    """Outputs the mass, radius, and tidal deformability
+    Args:
+        file_name (string, optional): string. CSV file to be opened.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+
+    Returns:
+        MRT (tuple): tuple with mass, radius, and tidal deformability. Also saves to a .txt file.
+    """
+
     c = 3e10
     G = 6.67428e-8
     Msun = 1.989e33
@@ -44,14 +55,27 @@ def OutputMR(input_file='',density=[],pressure=[]):
             tidal.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[2])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
-            print("This EOS is ill-defined to reach a infinity result, that is not phyiscal, No Mass radius will be generated.")
+            print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MRT = np.vstack((RFSU2R, MFSU2R,tidal)).T
-    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radoius, second one is mass")
-    np.savetxt("MassRadius.csv", MRT)
+    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radius, second one is mass")
+    np.savetxt("MassRadiusTidal.csv", MRT)
     return MRT
 
 
 def OutputC_s(input_file='',density=[],pressure=[]):
+
+    """Calls function to open csv (if needed) and check equation of state validity.
+        Then calls function to calculate speed of sound.
+
+    Args:
+        file_name (string, optional): string. CSV file to be opened.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+
+    Returns:
+        C_s (array): numpy 1D array. List of speeds of sound.
+    """
+
     energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
     C_s = speed_of_sound.speed_of_sound_calc(energy_density, pressure)
     return C_s
