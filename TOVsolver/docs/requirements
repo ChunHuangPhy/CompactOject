@@ -1,0 +1,11 @@
+numpy
+scipy
+matplotlib
+pandas
+csv
+sys
+itertools
+math
+os
+# path to the directory containing setup.py relative to the project root
+-e .
