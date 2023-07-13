@@ -82,12 +82,12 @@ def solveTOV(center_rho, energy_density, pressure):
         center_rho(array): This is the energy density here is fixed in main
         that is np.logspace(14.3, 15.6, 50)
         energy_density (array): Desity array of the neutron star EoS, in MeV/fm^{-3}
-        Please check the Test_EOS.csv, the first serveral are BPS crust EoS, so the
-        conversion dould be easily get. (I know this could be a major problem for 
-        people)
+        Please check the Test_EOS.csv, The conversion from the g/cm3 to here is 
+        (g/cm3)*G/c**2, that should will convert it to here in example.
+        
         pressure (array): Pressure array of neutron star EoS, also in nautral unit
-        with MeV/fm^{-3}, still please check the Test_EOS.csv and compare it with 
-        BPS EoS you will easily got the conversion coeffient.
+        with MeV/fm^{-3}, still please check the Test_EOS.csv, the conversion is 
+        (dyn/cm3)*G/c**4.
 
     Returns:
         Mass (array): The array that contains all the Stars' masses, in M_sun as a 
