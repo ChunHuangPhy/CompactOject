@@ -19,6 +19,7 @@ build:
 sphinx:
    configuration: TOVsolver/docs/conf.py
    builder: html
+   fail_on_warning: false
 
 # Optionally build your docs in additional formats such as PDF and ePub
 # formats:
