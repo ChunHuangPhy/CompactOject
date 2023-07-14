@@ -15,7 +15,9 @@ Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compa
 _Below are commands to install and update the package as well as a link to pypi._
 
 
-##### PyPi: (pypi link here)
+##### [PyPi](https://pypi.org/project/CompactObject-TOV/)
+
+
 
 1. Install package
    ```sh
