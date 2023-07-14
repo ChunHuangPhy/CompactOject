@@ -7,7 +7,10 @@ Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compa
 1. Routine to check a valid equation of state input
 2. Return the mass, density, and tidal deformability
 3. Example notebook tutorial
-4. Test cases and documentation
+   Jupyter notebook tutorial on github under /TOVsolver
+   
+   [[Jupyter notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver/tests_script.py)]
+5. Test cases and documentation
 
 
 ## Installation
