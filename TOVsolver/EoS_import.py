@@ -84,7 +84,7 @@ def EOS_check(density, pressure):
 
     for value in dpdrho:
         if value >= 0:
-            print("This is a valid equation of state")
+            #print("This is a valid equation of state")
             pass
         else:
             print("This is not a valid equation of state")
