@@ -57,8 +57,7 @@ def OutputMRT(input_file='',density=[],pressure=[]):
         except OverflowError as e:
             print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MRT = np.vstack((RFSU2R, MFSU2R,tidal)).T
-    print("Mass Radius file will be generated and stored as MassRadius.csv, and the 2-d array. The first column is Radius, second one is mass")
-    np.savetxt("MassRadiusTidal.csv", MRT)
+    print("Mass Radius file will be generated and stored as 2-d array. The first column is Radius, second one is mass")
     return MRT
 
 
