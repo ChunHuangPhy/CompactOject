@@ -138,7 +138,7 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
     r = 4.441e-16
     dr = 10.
     rmax = 50 * 1e5
-    rhocent = rhocent * G/c**2.
+    rhocent = center_rho * G/c**2.
     #pcent = 10**eos(np.log10(rhocent))
     pcent = eos(rhocent)
     P0 = pcent - (2.*pi/3.)*(pcent + rhocent) *(3.*pcent + rhocent)*r**2.
