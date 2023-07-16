@@ -23,9 +23,9 @@ b_B = 1
 m_l = [m_e, m_mu]
 m_b = [m_p, m_n]
 
-Matrix_b = numpy.array([[1., 1., 1/2., 1., 1., 1.],[1., 0., -1/2., 1., 1., 1.]])
+Matrix_b = np.array([[1., 1., 1/2., 1., 1., 1.],[1., 0., -1/2., 1., 1., 1.]])
 
-Matrix_l = numpy.array([[0., -1., 1/2.],[0., -1., 1/2.]])
+Matrix_l = np.array([[0., -1., 1/2.],[0., -1., 1/2.]])
 
 # defining the function to optimize with numba-minpack
 
@@ -51,12 +51,12 @@ def myfunc(x, fvec, args):
     J_B = 1/2.
     b_B = 1
 
-    m_l = numpy.array([m_e, m_mu])
-    m_b = numpy.array([m_p, m_n])
+    m_l = np.array([m_e, m_mu])
+    m_b = np.array([m_p, m_n])
 
-    Matrix_b = numpy.array([[1., 1., 1/2., 1., 1., 1.],[1., 0., -1/2., 1., 1., 1.]])
+    Matrix_b = np.array([[1., 1., 1/2., 1., 1., 1.],[1., 0., -1/2., 1., 1., 1.]])
 
-    Matrix_l = numpy.array([[0., -1., 1/2.],[0., -1., 1/2.]])
+    Matrix_l = np.array([[0., -1., 1/2.],[0., -1., 1/2.]])
     
     sigma = x[0]
     omega=x[1]
@@ -84,7 +84,7 @@ def myfunc(x, fvec, args):
         
         rho_B = ((2*J_B) + 1)*b_B*k_fb**3 / (6.*math.pi**2)
         rho_SB = (m_eff/(2.*math.pi**2))*(E_fb*k_fb - \
-        (m_eff**(2))*numpy.log((E_fb + k_fb)/m_eff))
+        (m_eff**(2))*np.log((E_fb + k_fb)/m_eff))
         
         rho_B_list.append(rho_B)
         rho_SB_list.append(rho_SB)
@@ -170,8 +170,8 @@ def Energy_density_Pressure(x, rho, theta):
     J_B = 1/2.
     b_B = 1
 
-    m_l = numpy.array([m_e, m_mu])
-    m_b = numpy.array([m_p, m_n])
+    m_l = np.array([m_e, m_mu])
+    m_b = np.array([m_p, m_n])
     
     energy_b = 0
     energy_l = 0
@@ -195,7 +195,7 @@ def Energy_density_Pressure(x, rho, theta):
         
         multi = multi + mu_b*rho_B
         energy_baryon = (1/(8.*(math.pi**2)))*(k_fb*(E_fb**3)\
-        + (k_fb**3)*E_fb - numpy.log((k_fb + E_fb)/m_eff)*m_eff**4)
+        + (k_fb**3)*E_fb - np.log((k_fb + E_fb)/m_eff)*m_eff**4)
 
         energy_b = energy_b + energy_baryon
         
@@ -212,7 +212,7 @@ def Energy_density_Pressure(x, rho, theta):
         
         multi = multi + mu_l*rho_l
         energy_lepton = (1/(8.*(math.pi**2)))*(k_fl*(mu_l**3)\
-        +mu_l*(k_fl**3)-(m_l[j]**4)*numpy.log((k_fl+mu_l)/m_l[j]))
+        +mu_l*(k_fl**3)-(m_l[j]**4)*np.log((k_fl+mu_l)/m_l[j]))
         
         energy_l = energy_l + energy_lepton
         
@@ -237,13 +237,13 @@ def compute_EOS(eps_crust, pres_crust, theta):
     dt = 0.05
     rho_0 = 0.1505
     
-    x_init = numpy.array(initial_values(0.1*rho_0, theta))
+    x_init = np.array(initial_values(0.1*rho_0, theta))
     Energy = []
     Pressure = []
     for i in range(1, 125):
 
         rho = i*dt*rho_0
-        args = numpy.append(theta, rho)
+        args = np.append(theta, rho)
         xsol, fvec, success, info = lmdif(funcptr, x_init, 5, args)
         Re = Energy_density_Pressure(x_init, rho, theta)
 
@@ -251,8 +251,8 @@ def compute_EOS(eps_crust, pres_crust, theta):
         Pressure.append(Re[1]*oneoverfm_MeV/dyncm2_to_MeVfm3)
 
         x_init = xsol
-    Energy = numpy.array(Energy)
-    Pressure = numpy.array(Pressure)
+    Energy = np.array(Energy)
+    Pressure = np.array(Pressure)
     
     end = 0
     for i in range(0,len(Energy)-1):
