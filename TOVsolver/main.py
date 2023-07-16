@@ -100,8 +100,10 @@ def OutputMRT(input_file='',density=[],pressure=[]):
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
             print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
+
     MRT = np.vstack((Radius, Mass,tidal)).T
     print("Mass Radius and tidal will be generated as the 3-d array. The first column is Radius, second one is mass,last is tidal")
+
     return MRT
 
 
