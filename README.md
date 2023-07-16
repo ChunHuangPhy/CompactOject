@@ -30,7 +30,7 @@ _Below are commands to install and update the package as well as a link to pypi.
 ## Physics notations
 1. CGS units is using here, for input quantity (equation of state): Pressure (P) and Energy density (rho).
 P is in $MeV/fm^{-3}$, same for rho. However, to omit a lot of the repeat of c,G. We set P as rescaled:
-(value in $MeV/fm^{-3}$)$*G/c^4$, for rho we have (value in $MeV/fm^{-3}$)$*G/c^2$
+(value in $MeV/fm^{-3}$)*G/c^4, for rho we have (value in $MeV/fm^{-3}$)*G/c^2
 2. Out put M in Mass of sun, radius in km, unit-less for spped of sound and tidal deformability.
 <!-- LICENSE -->
 ## License
