@@ -14,16 +14,16 @@ def speed_of_sound_calc(density, pressure):
     """
 
     speed_of_sound = []
-    density = density*G/c**2
-    pressure = pressure*G/c**4
+    #density = density*c**2/G
+    #pressure = pressure*c**4/G
     
     for i in range(0,len(density)-1):
-        speed_of_sound.append((density[i+1]-density[i])/(pressure[i+1]-pressure[i]))
-    p2 = []
+        speed_of_sound.append((pressure[i+1]-pressure[i])/(density[i+1]-density[i]))
+    d2 = []
     C_s= []
     #eps2 = []
     for i in range(0,len(speed_of_sound)):
-        if pressure[i]> 2e-14:
-            p2.append(pressure[i])
+        if density[i]> 1.5e-14:
+            d2.append(density[i])
             C_s.append(speed_of_sound[i])
-    return C_s
+    return C_s,d2
