@@ -6,7 +6,7 @@ Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compa
 ### Inlcudes
 1. Routine to check a valid equation of state input
 2. Return the mass, radius, and tidal deformability, and compute the corresponding speed of sound.
-3. [Illustration Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver/tests_script.ipynb) on the github to show off what we can do currently and how to use our code.
+3. [Illustration Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test\ Case/tests_script.ipynb) on the github to show off what we can do currently and how to use our code.
 5. Test cases and documentation
 
 
