@@ -54,9 +54,10 @@ def OutputMR(input_file='',density=[],pressure=[]):
             Mass.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[0])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
-            print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
+            #print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
+            break
     MR = np.vstack((Radius, Mass)).T
-    print("Mass Radius file will be generated and stored as  2-d array. The first column is Radius, second one is mass")
+    #print("Mass Radius file will be generated and stored as  2-d array. The first column is Radius, second one is mass")
     
     return MR
 
@@ -99,13 +100,12 @@ def OutputMRT(input_file='',density=[],pressure=[]):
             tidal.append(TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)[2])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
-            print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
-
+            #print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
+            break
     MRT = np.vstack((Radius, Mass,tidal)).T
-    print("Mass Radius and tidal will be generated as the 3-d array. The first column is Radius, second one is mass,last is tidal")
+    #print("Mass Radius and tidal will be generated as the 3-d array. The first column is Radius, second one is mass,last is tidal")
 
     return MRT
-
 
 def OutputC_s(input_file='',density=[],pressure=[]):
 
@@ -156,8 +156,7 @@ def OutputMRpoint(central_density,energy_density,pressure):
         Mass.append(TOV_solver.solveTOV(central_density, energy_density, pressure)[0])
     #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
     except OverflowError as e:
-        Mass = []
-        Radius = []
+        print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MR = np.vstack((Radius, Mass)).T
     
     return MR
