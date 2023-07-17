@@ -167,7 +167,7 @@ def Jliklihood(theta,J_low,J_up):
     p_J = -0.5*abs( center - J)**10./width**10.
     return p_J
 
-def Jliklihood(theta,L_low,L_up):
+def Lliklihood(theta,L_low,L_up):
     g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1, d2, d3 = theta
     
     m_sig = 495 / oneoverfm_MeV
