@@ -44,8 +44,8 @@ def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
     m_rho = 3.86662
-    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
-    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
+    the = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
+    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, the)
 
     eps_total = np.hstack((eps_crust,ep))
     pres_total = np.hstack((pres_crust,pr))
@@ -102,7 +102,7 @@ def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
 
 
 def Kliklihood(theta,K_low,K_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, lambda_w, d1, d2, d3 = theta
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, lambda_w, d1 = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
@@ -141,7 +141,7 @@ def Kliklihood(theta,K_low,K_up):
     return p_K
 
 def Jliklihood(theta,J_low,J_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1, d2, d3 = theta
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
@@ -168,7 +168,7 @@ def Jliklihood(theta,J_low,J_up):
     return p_J
 
 def Lliklihood(theta,L_low,L_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1, d2, d3 = theta
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
