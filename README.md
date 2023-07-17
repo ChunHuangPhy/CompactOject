@@ -1,7 +1,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object.
+1. Dealing with complex Relativistic Mean field (RMF) theory to generate Equation of State (EOS) of neutron star. ('EOSgenerators' package)
+2. Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object out of given equation of state of neutron star. ('TOVsolver' folder)
 
 ### Inlcudes
 1. Routine to check a valid equation of state input
