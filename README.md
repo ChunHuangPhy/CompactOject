@@ -51,6 +51,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Project Link: [[https://github.com/ChunHuangPhy/EoS_inference](https://github.com/ChunHuangPhy/EoS_inference)]
 
+Related project papers list: (Please cite them!)
+
+[[Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”, <i>arXiv e-prints</i>, 2023. doi:10.48550/arXiv.2303.17518.](https://arxiv.org/abs/2303.17518)]
+
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo..8145167)
 
