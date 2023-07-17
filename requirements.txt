@@ -7,5 +7,6 @@ sys
 itertools
 math
 os
+ultranest
 # path to the directory containing setup.py relative to the project root
 -e .
