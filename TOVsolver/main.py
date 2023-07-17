@@ -124,3 +124,40 @@ def OutputC_s(input_file='',density=[],pressure=[]):
     energy_density, pressure = EoS_import.EOS_import(input_file,density,pressure)
     C_s = speed_of_sound.speed_of_sound_calc(energy_density, pressure)
     return C_s
+
+def OutputMRpoint(central_density,energy_density,pressure):
+
+    """Outputs the mass, radius, and tidal deformability
+    Args:
+        file_name (string, optional): string. CSV file to be opened.
+        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+
+    Returns:
+        MR (tuple): tuple with mass, radius.
+    """
+
+    c = 3e10
+    G = 6.67428e-8
+    Msun = 1.989e33
+
+    dyncm2_to_MeVfm3 = 1./(1.6022e33)
+    gcm3_to_MeVfm3 = 1./(1.7827e12)
+    oneoverfm_MeV = 197.33
+    
+    Radius = []
+    Mass = []
+    
+#This following step is to make a dicision whether the EOS ingredients is always increase. We can do that outsie of this main to the 
+#EOS import.
+#if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
+    try:
+        Radius.append(TOV_solver.solveTOV(central_density, energy_density, pressure)[1])
+        Mass.append(TOV_solver.solveTOV(central_density, energy_density, pressure)[0])
+    #This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
+    except OverflowError as e:
+        Mass = []
+        Radius = []
+    MR = np.vstack((Radius, Mass)).T
+    
+    return MR
