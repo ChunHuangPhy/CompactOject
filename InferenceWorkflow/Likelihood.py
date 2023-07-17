@@ -61,7 +61,7 @@ def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
-            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1][0]-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[0][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[1][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
             likelihood = np.log(fx)
     if likelihood <= -1e101:
         return -1e101
@@ -93,7 +93,7 @@ def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
             if MR[0][1]>= Mvalue:
                 likelihood = 0
             else:    
-                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
                 likelihood = np.log(fx)
     if likelihood <= -1e101:
         return -1e101
