@@ -21,8 +21,8 @@ def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
     theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
     ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
 
-    eps_total = [*eps_crust, *ep]
-    pres_total = [*pres_crust *pr]
+    eps_total = np.hstack((eps_crust,ep))
+    pres_total = np.hstack((pres_crust,pr))
     
     if d1 ==0 :
         likelihood = -1e101
@@ -47,8 +47,8 @@ def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
     theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
     ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
 
-    eps_total = [*eps_crust, *ep]
-    pres_total = [*pres_crust *pr]
+    eps_total = np.hstack((eps_crust,ep))
+    pres_total = np.hstack((pres_crust,pr))
     
     sigma_x = Rwidth
     sigma_y = Mwidth
@@ -77,8 +77,8 @@ def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
     theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
     ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
 
-    eps_total = [*eps_crust, *ep]
-    pres_total = [*pres_crust *pr]
+    eps_total = np.hstack((eps_crust,ep))
+    pres_total = np.hstack((pres_crust,pr))
     
     sigma_y = Mwidth
     
