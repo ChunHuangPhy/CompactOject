@@ -1,11 +1,11 @@
 import ultranest
 import ultranest.stepsampler
 
-def UltranestSampler(parameters,likelihood,prior,nsteps,live_points,max_ncalls):
+def UltranestSampler(parameters,likelihood,prior,step,live_points,max_ncalls):
     
     sampler = ultranest.ReactiveNestedSampler(parameters, likelihood, prior,log_dir='output')
     sampler.stepsampler = ultranest.stepsampler.SliceSampler(
-        nsteps=nsteps,
+        nsteps=step,
         generate_direction=ultranest.stepsampler.generate_mixture_random_direction,
     )
 
