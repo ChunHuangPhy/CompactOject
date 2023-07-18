@@ -3,7 +3,7 @@
 
 1. Dealing with complex Relativistic Mean field (RMF) theory to generate Equation of State (EOS) of neutron star. ([EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package)
 2. Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object out of given equation of state of neutron star. ([TOVsolver](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver) Package)
-3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing). That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
+3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing) (and/or) Tidal measurement from Gravitational wave detection. That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
 
 
 Project papers list based these package: (Please consider cite them!)
@@ -13,7 +13,7 @@ Project papers list based these package: (Please consider cite them!)
 ### Inlcudes
 1. Routine to check a valid equation of state input
 2. Return the mass, radius, and tidal deformability, and compute the corresponding speed of sound.
-3. [Sample TOV solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_TOVsolver.ipynb), [Sample RMF Equation of state solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_EOSgenerators.ipynb) and [Sample Analysis Notebook on Equation of state Inference and tutorial](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb) on the github to show off what we can do currently and how to use our code.
+3. [Sample TOV solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_TOVsolver.ipynb), [Sample RMF Equation of state solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_EOSgenerators.ipynb) and [Sample Analysis Notebook on Equation of state Inference and tutorial](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb) on the github to show off what we can do currently and how to use our code. (**please read them before you start to work on your own project, to familiar with the coding routine.**)
 4. Test cases and documentation
 ### v.1.3 new features:
 5. Added computation function of generating Relativistic mean field theory(RMF) model EOS functionality. Defined two files fastRMF_EOS and RMF_EOS, which the fastRMF_EOS is speed up by numba, which need gcc compiler, could be hard to implement in windows, so we leave the options for users.
