@@ -4,6 +4,7 @@ import TOVsolver.EoS_import as EoS_import
 import EOSgenerators.crust_EOS as crust
 import EOSgenerators.RMF_EOS as RMF
 import TOVsolver.main as main
+from scipy import interpolate
 
 import numpy as np
 import math
@@ -33,6 +34,38 @@ def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
             likelihood = -1e101
         else:
             likelihood = np.log(kernel.evaluate((MR[0], MR[1])))
+    if likelihood <= -1e101:
+        return -1e101
+    else:
+        return likelihood
+    
+def TidalLikihood_kernel(eps_crust,pres_crust,x,theta):
+    kernelGW,chrip = x
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
+    m_sig = 495 / oneoverfm_MeV
+    m_w = 3.96544
+    m_rho = 3.86662
+    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
+    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
+    
+    eps_total = np.hstack((eps_crust,ep))
+    pres_total = np.hstack((pres_crust,pr))
+    
+    
+    if d1 ==0 :
+        likelihood = -1e101
+    else:
+        if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
+            MRT = main.OutputMRTpoint(d1,eps_total,eps_total).T
+            M1 = TOV_solver.m1_from_mc_m2(chrip_mass, MRT[1][0])
+            Tidal_line = main.OutputMRT('',eps_total,eps_total).T
+        if len(MRT[0]) == False or len(Tidal_line[0]) == False:
+            likelihood = -1e101
+        else:
+            chrip_mass = chrip.resample(1)
+            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2], k=1, s=0)
+            point = np.array([[chrip_mass], [MRT[1][0]/ M1],[MTspline(M1)], [MRT[2][0]]])
+            likelihood = np.log(kernelGW.evaluate(point))
     if likelihood <= -1e101:
         return -1e101
     else:
