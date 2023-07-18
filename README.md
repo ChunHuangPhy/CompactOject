@@ -3,7 +3,7 @@
 
 1. Dealing with complex Relativistic Mean field (RMF) theory to generate Equation of State (EOS) of neutron star. ([EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package)
 2. Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object out of given equation of state of neutron star. ([TOVsolver](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver) Package)
-3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing). That all workflow is inside this repository([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
+3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing). That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
 
 
 Project papers list based these package: (Please consider cite them!)
@@ -38,6 +38,20 @@ _Below are commands to install and update the package as well as a link to pypi.
    ```sh
    pip install CompactObject-TOV --upgrade
    ```
+
+When you call the package, if you need to do EoS computation just
+   ```sh
+   import EOSgenerators
+   ```
+if you need TOV solver, just
+   ```sh
+   import TOVsolver
+   ```
+if you need to do Bayesian inference, just
+   ```sh
+   import InferenceWorkflow
+   ```
+
 ## Physics notations
 1. CGS units is using here, for input quantity (equation of state): Pressure (P) and Energy density (rho).
 P is in $MeV/fm^{-3}$, same for rho. However, to omit a lot of the repeat of c,G. We set P as rescaled:
