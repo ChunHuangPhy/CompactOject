@@ -9,6 +9,16 @@ from scipy import optimize
 from itertools import repeat
 
 def m1_from_mc_m2(mc, m2):
+    """a function that feed back the companion star mass from GW event measurement.
+
+    Args:
+        mc (float): chrip mass of a GW event, unit in solar mass.
+        m2 (float or numpy array): the determined mass for one of the star, this 
+        is computed from sampling of EoS.
+
+    Returns:
+        m1 (float or numpy array): the companion star mass in solar mass.
+    """
     m2 = np.array(m2)
     num1 = (2. / 3.)**(1. / 3.) * mc**5.
     denom1 = ((9 * m2**7. * mc**5. + np.sqrt(3.) * 
