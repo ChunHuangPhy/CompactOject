@@ -4,6 +4,7 @@ import TOVsolver.EoS_import as EoS_import
 import EOSgenerators.crust_EOS as crust
 import EOSgenerators.RMF_EOS as RMF
 import TOVsolver.main as main
+from scipy import interpolate
 
 import numpy as np
 import math
@@ -13,6 +14,20 @@ c = constant.c
 G = constant.G
 
 def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
+    """Computing likelihood from a distribution of MR measurement
+    
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        x (kde.kernel): the distribution kernel of MR measurement.
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
+        about the central density of the neutron star.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
     kernel = x
     g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
     m_sig = 495 / oneoverfm_MeV
@@ -37,8 +52,72 @@ def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
         return -1e101
     else:
         return likelihood
+    
+def TidalLikihood_kernel(eps_crust,pres_crust,x,theta):
+    """Computing likelihood from a distribution of MR measurement
+    
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        x (kde.kernel): containing kernelGW and chirp, kernelGW is the distribution kde.kernel 
+        sampled from full GW measurement, in [chrip mass, M2/M1, tidal of M1, tidal of M2] sequence.
+        chrip mass is the sampling from chrip mass term in GW events solely.
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
+        about the central density of the neutron star.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
+    kernelGW,chrip = x
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
+    m_sig = 495 / oneoverfm_MeV
+    m_w = 3.96544
+    m_rho = 3.86662
+    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
+    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
+    
+    eps_total = np.hstack((eps_crust,ep))
+    pres_total = np.hstack((pres_crust,pr))
+    
+    
+    if d1 ==0 :
+        likelihood = -1e101
+    else:
+        if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
+            MRT = main.OutputMRTpoint(d1,eps_total,eps_total).T
+            M1 = TOV_solver.m1_from_mc_m2(chrip_mass, MRT[1][0])
+            Tidal_line = main.OutputMRT('',eps_total,eps_total).T
+        if len(MRT[0]) == False or len(Tidal_line[0]) == False:
+            likelihood = -1e101
+        else:
+            chrip_mass = chrip.resample(1)
+            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2], k=1, s=0)
+            point = np.array([[chrip_mass], [MRT[1][0]/ M1],[MTspline(M1)], [MRT[2][0]]])
+            likelihood = np.log(kernelGW.evaluate(point))
+    if likelihood <= -1e101:
+        return -1e101
+    else:
+        return likelihood
 
 def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
+    """Computing likelihood from a simulation gaussian distribution of MR measurement
+    
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        x (float array): [Mvalue, Rvalue, Mwidth, Rwidth], Mvalue is the Mass center value of this 
+        simulated measurement, Rvalue is the Radius center of it, Mwidth is the 1-sigma width of
+        this Mass measurement, Rwidth is the 1-sigma width of this radius measurement.
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
+        about the central density of the neutron star.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
     Mvalue, Rvalue, Mwidth,Rwidth = x
     g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
     m_sig = 495 / oneoverfm_MeV
@@ -69,6 +148,21 @@ def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
         return likelihood
     
 def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
+    """Computing likelihood from a simulation gaussian distribution of Mass measurement
+    
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        x (float array): [Mvalue, Mwidth], Mvalue is the Mass center value of this 
+        simulated measurement, Mwidth is the 1-sigma width of this Mass measurement. 
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
+        about the central density of the neutron star.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
     Mvalue, Mwidth = x
     g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
     m_sig = 495 / oneoverfm_MeV
@@ -102,7 +196,20 @@ def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
 
 
 def Kliklihood(theta,K_low,K_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, lambda_w, d1 = theta
+    """Computing likelihood from a hard cut constraint of K.
+    
+    Args:
+    
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 7 parameters. 
+        K_low (float): lower bound of this K constraint.
+        K_up (float): upper bound of this K constraint.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, lambda_w = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
@@ -141,7 +248,20 @@ def Kliklihood(theta,K_low,K_up):
     return p_K
 
 def Jliklihood(theta,J_low,J_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
+    """Computing likelihood from a hard cut constraint of J.
+    
+    Args:
+    
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 7 parameters.
+        K_low (float): lower bound of this J constraint.
+        K_up (float): upper bound of this J constraint.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544
@@ -168,7 +288,20 @@ def Jliklihood(theta,J_low,J_up):
     return p_J
 
 def Lliklihood(theta,L_low,L_up):
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
+    """Computing likelihood from a hard cut constraint of L.
+    
+    Args:
+    
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 7 parameters. 
+        K_low (float): lower bound of this L constraint.
+        K_up (float): upper bound of this L constraint.
+
+    Returns:
+        likelihood (float): likelihood feed back for this given paramter set-up.
+        
+    """
+    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w = theta
     
     m_sig = 495 / oneoverfm_MeV
     m_w = 3.96544

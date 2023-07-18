@@ -3,7 +3,19 @@ from TOVsolver.EoS_import import EOS_import
 import numpy as np
 
 def PolyInterpolate(eps_crust, pressure_crust):
+    """Polytrope connecting crust part of equation of state to core part
     
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        
+    Returns:
+        eps_combine (float): EOS ingredient, combined crust and inter-crust part  energy density in
+        MeV/fm3, times a G/c**2 factor
+        pres_combine (float): EOS ingredient, combined crust and inter-crust part pressure in MeV/fm3,
+        times a G/c**2 factor
+        
+    """
     c = constant.c
     G = constant.G
     
