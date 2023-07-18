@@ -158,5 +158,6 @@ def OutputMRpoint(central_density,energy_density,pressure):
     except OverflowError as e:
         print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
     MR = np.vstack((Radius, Mass)).T
-    
+    if len(MR[0]) != 0:
+        print("should have some in mr")
     return MR
