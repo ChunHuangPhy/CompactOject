@@ -25,6 +25,21 @@ Matrix_b = np.array([[1., 1., 1/2., 1., 1., 1.],[1., 0., -1/2., 1., 1., 1.]])
 Matrix_l = np.array([[0., -1., 1/2.],[0., -1., 1/2.]])
 
 def initial_values(rho, theta):
+    """Outputs the the sigma, omega, rho term and chemical potential of electron and neutron at 
+    given initial density
+    
+    Args:
+        rho (float): given nuclear density
+        theta (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+
+    Returns:
+        sigma (float): sigma term in lagrangian
+        omega (float): omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+        mu_n (float): chemical potential of neutron matter
+        mu_e (float): chemical potential of electron portion
+        
+    """
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
 
     m_e = 2.5896 * 10**-3
@@ -46,7 +61,21 @@ def initial_values(rho, theta):
 
 
 def functie(x, args):
+    """iterate the the sigma, omega, rho term and chemical potential of electron and neutron at 
+    any given density
     
+    Args:
+        x (array): initial sigma omega rho and chemical potential from initial_values function
+        args (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+
+    Returns:
+        sigma (float): sigma term in lagrangian
+        omega (float): omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+        mu_n (float): chemical potential of neutron matter
+        mu_e (float): chemical potential of electron portion
+        
+    """
     m_sig = args[0]
     m_w = args[1]
     m_rho = args[2]
@@ -147,6 +176,21 @@ def functie(x, args):
 
 
 def Energy_density_Pressure(x, rho, theta):
+    """Generate pressure and energy density two EOS ingredient from given RMF term and given parameters,
+    
+    Args:
+        x (array): An array that consists of the initial values of sigma, omega, rho, and chemical 
+        potential obtained from the initial_values function.
+        rho (float): The central density from which the computation of the equation of state begins.
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 10 parameters.
+
+
+    Returns:
+        energy_density (float): EOS ingredient, energy density in g/cm3
+        pressure (float): EOS ingredient, pressure in dyn/cm3
+        
+    """
     sigma, omega, rho_03, mu_n, mu_e = x
     
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
@@ -220,6 +264,19 @@ def Energy_density_Pressure(x, rho, theta):
     return energy_density, Pressure
 
 def compute_EOS(eps_crust, pres_crust, theta):
+    """Generate,
+    
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        theta (array): An array representing the parameters used to determine a RMF model in the 
+        Lagrangian. In this case, the RMF model is defined by 10 parameters.
+
+    Returns:
+        energy_density (float): EOS ingredient, energy density in g/cm3
+        pressure (float): EOS ingredient, pressure in dyn/cm3
+        
+    """
     dt = 0.05
     rho_0 = 0.1505
     
