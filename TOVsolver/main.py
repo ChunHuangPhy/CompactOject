@@ -127,11 +127,11 @@ def OutputC_s(input_file='',density=[],pressure=[]):
 
 def OutputMRpoint(central_density,energy_density,pressure):
 
-    """Outputs the mass, radius, and tidal deformability
+    """Outputs the mass, radius, and tidal deformability (single point)
     Args:
-        file_name (string, optional): string. CSV file to be opened.
-        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
-        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        central_density (float): central density that we want to compute
+        density (array, optional): numpy 1Darray. Density of EoS
+        pressure (array, optional): numpy 1Darray. pressure of EoS
 
     Returns:
         MR (tuple): tuple with mass, radius.
@@ -163,14 +163,14 @@ def OutputMRpoint(central_density,energy_density,pressure):
 
 def OutputMRTpoint(central_density,energy_density,pressure):
 
-    """Outputs the mass, radius, and tidal deformability
+    """Outputs the mass, radius, and tidal deformability (single point)
     Args:
-        file_name (string, optional): string. CSV file to be opened.
-        density (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
-        pressure (array, optional): numpy 1Darray. Passed into a check function and returned if valid.
+        central_density (float): central density that we want to compute
+        density (array, optional): numpy 1Darray. Density of EoS
+        pressure (array, optional): numpy 1Darray. pressure of EoS
 
     Returns:
-        MR (tuple): tuple with mass, radius.
+        MRT (tuple): tuple with mass, radius and tidal.
     """
 
     c = 3e10
