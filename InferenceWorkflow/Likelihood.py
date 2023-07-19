@@ -13,31 +13,20 @@ oneoverfm_MeV = constant.oneoverfm_MeV
 c = constant.c
 G = constant.G
 
-def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
+def MRlikihood_kernel(eps_total,pres_total,x,d1):
     """Computing likelihood from a distribution of MR measurement
     
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        eps_total (array): the energy density of full EoS in MeV/fm3, times a G/c**2 factor
+        pres_total (array): the pressure from full EoS model in MeV/fm3, times a G/c**4 factor
         x (kde.kernel): the distribution kernel of MR measurement.
-        theta (array): An array representing the parameters used to determine a RMF model in the 
-        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
-        about the central density of the neutron star.
+        d1 (float): the sampled density of this measurement
 
     Returns:
         likelihood (float): likelihood feed back for this given paramter set-up.
         
     """
     kernel = x
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
-    m_sig = 495 / oneoverfm_MeV
-    m_w = 3.96544
-    m_rho = 3.86662
-    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
-    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
-
-    eps_total = np.hstack((eps_crust,ep))
-    pres_total = np.hstack((pres_crust,pr))
     
     if d1 ==0 :
         likelihood = -1e101
@@ -53,34 +42,22 @@ def MRlikihood_kernel(eps_crust,pres_crust,x,theta):
     else:
         return likelihood
     
-def TidalLikihood_kernel(eps_crust,pres_crust,x,theta):
-    """Computing likelihood from a distribution of MR measurement
+def TidalLikihood_kernel(eps_total,pres_total,x,d1):
+    """Computing likelihood from a distribution of Gravitational wave measurement
     
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        eps_total (array): the energy density of full EoS in MeV/fm3, times a G/c**2 factor
+        pres_total (array): the pressure from full EoS model in MeV/fm3, times a G/c**4 factor
         x (kde.kernel): containing kernelGW and chirp, kernelGW is the distribution kde.kernel 
         sampled from full GW measurement, in [chrip mass, M2/M1, tidal of M1, tidal of M2] sequence.
         chrip mass is the sampling from chrip mass term in GW events solely.
-        theta (array): An array representing the parameters used to determine a RMF model in the 
-        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
-        about the central density of the neutron star.
+        d1 (float): the sampled density of this measurement
 
     Returns:
         likelihood (float): likelihood feed back for this given paramter set-up.
         
     """
     kernelGW,chrip = x
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
-    m_sig = 495 / oneoverfm_MeV
-    m_w = 3.96544
-    m_rho = 3.86662
-    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
-    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
-    
-    eps_total = np.hstack((eps_crust,ep))
-    pres_total = np.hstack((pres_crust,pr))
-    
     
     if d1 ==0 :
         likelihood = -1e101
@@ -101,33 +78,23 @@ def TidalLikihood_kernel(eps_crust,pres_crust,x,theta):
     else:
         return likelihood
 
-def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
+def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     """Computing likelihood from a simulation gaussian distribution of MR measurement
     
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        eps_total (array): the energy density of full EoS in MeV/fm3, times a G/c**2 factor
+        pres_total (array): the pressure from full EoS model in MeV/fm3, times a G/c**4 factor
         x (float array): [Mvalue, Rvalue, Mwidth, Rwidth], Mvalue is the Mass center value of this 
         simulated measurement, Rvalue is the Radius center of it, Mwidth is the 1-sigma width of
         this Mass measurement, Rwidth is the 1-sigma width of this radius measurement.
-        theta (array): An array representing the parameters used to determine a RMF model in the 
-        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
-        about the central density of the neutron star.
+        d1 (float): the sampled density of this measurement
 
     Returns:
         likelihood (float): likelihood feed back for this given paramter set-up.
         
     """
-    Mvalue, Rvalue, Mwidth,Rwidth = x
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
-    m_sig = 495 / oneoverfm_MeV
-    m_w = 3.96544
-    m_rho = 3.86662
-    the = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
-    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, the)
 
-    eps_total = np.hstack((eps_crust,ep))
-    pres_total = np.hstack((pres_crust,pr))
+    Mvalue, Rvalue, Mwidth,Rwidth = x
     
     sigma_x = Rwidth
     sigma_y = Mwidth
@@ -147,32 +114,21 @@ def MRlikihood_Gaussian(eps_crust,pres_crust,x,theta):
     else:
         return likelihood
     
-def Masslikihood_Gaussian(eps_crust,pres_crust,x,theta):
+def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     """Computing likelihood from a simulation gaussian distribution of Mass measurement
     
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        eps_total (array): the energy density of full EoS in MeV/fm3, times a G/c**2 factor
+        pres_total (array): the pressure from full EoS model in MeV/fm3, times a G/c**4 factor
         x (float array): [Mvalue, Mwidth], Mvalue is the Mass center value of this 
         simulated measurement, Mwidth is the 1-sigma width of this Mass measurement. 
-        theta (array): An array representing the parameters used to determine a RMF model in the 
-        Lagrangian. In this case, the RMF model is defined by 8 parameters. include a sampling 
-        about the central density of the neutron star.
+        d1 (float): the sampled density of this measurement
 
     Returns:
         likelihood (float): likelihood feed back for this given paramter set-up.
         
     """
     Mvalue, Mwidth = x
-    g_sigma, g_omega,g_rho, kappa, lambda_0, zeta, Lambda_w, d1 = theta
-    m_sig = 495 / oneoverfm_MeV
-    m_w = 3.96544
-    m_rho = 3.86662
-    theta = np.array([m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w])
-    ep, pr = RMF.compute_EOS(eps_crust, pres_crust, theta)
-
-    eps_total = np.hstack((eps_crust,ep))
-    pres_total = np.hstack((pres_crust,pr))
     
     sigma_y = Mwidth
     
