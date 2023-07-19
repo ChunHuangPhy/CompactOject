@@ -1,7 +1,7 @@
 import ultranest
 import ultranest.stepsampler
 
-def UltranestSampler(parameters,likelihood,prior,step,live_points,max_ncalls):
+def UltranestSampler(parameters,likelihood,prior,step,live_points,max_calls):
     """UltraNest based nested sampler by given likelihood prior, and parameters.
     
     Args:
@@ -25,13 +25,15 @@ def UltranestSampler(parameters,likelihood,prior,step,live_points,max_ncalls):
     sampler.stepsampler = ultranest.stepsampler.SliceSampler(
         nsteps=step,
         generate_direction=ultranest.stepsampler.generate_mixture_random_direction,
+        # adaptive_nsteps=False,
+        # max_nsteps=400
     )
 
-    result = sampler.run(live_points,max_ncalls)
+    result = sampler.run(min_num_live_points=live_points,max_ncalls= max_calls)
     flat_samples = sampler.results['samples']
     return flat_samples
 
-def UltranestSamplerResume(parameters,likelihood,prior,nsteps,live_points,max_ncalls):
+def UltranestSamplerResume(parameters,likelihood,prior,nsteps,live_points,max_calls):
     """UltraNest based nested sampler by given likelihood prior, and parameters. (resume true verion
     could restart you run from your previous stopped results)
     
@@ -56,8 +58,10 @@ def UltranestSamplerResume(parameters,likelihood,prior,nsteps,live_points,max_nc
     sampler.stepsampler = ultranest.stepsampler.SliceSampler(
         nsteps=nsteps,
         generate_direction=ultranest.stepsampler.generate_mixture_random_direction,
+        # adaptive_nsteps=False,
+        # max_nsteps=400
     )
 
-    result = sampler.run(live_points,max_ncalls)
+    result = sampler.run(min_num_live_points=live_points,max_ncalls=max_calls)
     flat_samples = sampler.results['samples']
     return flat_samples
