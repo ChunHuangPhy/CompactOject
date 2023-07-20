@@ -28,6 +28,7 @@ jobs:
         pip install pandas
         pip install numpy
         pip install scipy
+        pip install jupyter
         pip install matplotlib
         pip install CompactObject-TOV
     - name : install docs dependencies
@@ -37,7 +38,11 @@ jobs:
         pip install sphinxcontrib-websupport sphinx_rtd_theme
         conda install pandoc
     - name : build docs
-      run: make html
+      run: |
+        jupyter nbconvert --to rst test_Inference.ipynb
+        jupyter nbconvert --to rst test_TOVsolver.ipynb
+        jupyter nbconvert --to rst test_EOSgenerators.ipynb
+        make html
       working-directory: docs/
     - name : move docs
       run : |
