@@ -12,8 +12,11 @@
 #
 import os
 import sys
+
+print('In source directory: ', os.getcwd())
+
 sys.path.insert(0, os.path.abspath('source/'))
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
