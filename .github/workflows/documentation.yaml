@@ -23,6 +23,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip install sphinx sphinx_rtd_theme
+        pip install nbsphinx
+        pip install pandoc
     - name : install docs dependencies
       run: |
         micromamba install sphinx=1.8.5 decorator=4.4.1 h5py 
