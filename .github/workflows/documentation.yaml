@@ -22,14 +22,11 @@ jobs:
     - uses: actions/setup-python@v3
     - name: Install dependencies
       run: |
-        pip install sphinx sphinx_rtd_theme
-        pip install nbsphinx
-        conda install pandoc
+        pip install sphinx
         pip install ipynb
         pip install ipykernel
         pip install pandas
         pip install numpy
-        pip install matplotlib
         pip install scipy
         pip install CompactObject-TOV
     - name : install docs dependencies
@@ -37,6 +34,7 @@ jobs:
         pip install decorator h5py 
         pip install nbsphinx nbconvert
         pip install sphinxcontrib-websupport sphinx_rtd_theme
+        conda install pandoc
     - name : build docs
       run: make html
       working-directory: docs/
@@ -56,6 +54,7 @@ jobs:
         pip install sphinxcontrib-websupport sphinx_rtd_theme
     - name : build docs
       run: | 
+        sphinx-quickstart
         make html
         mkdir build/html/py2
         mv ../../../../py2/* build/html/py2/  
