@@ -8,5 +8,5 @@ Controls most functionality of package by calling the following functions.
 * :ref: 'TOV_solving'
 * :ref: '__s'
 
-.. automodule:: main
+.. automodule:: TOVsolver.main
    :members:
