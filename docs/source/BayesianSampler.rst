@@ -5,5 +5,5 @@ Bayesian Inference smapler setup module
 
 Functions to start run Bayesian inference by calling UltraNest package
 
-.. automodule:: BayesianSampler
+.. automodule:: InferenceWorkflow.BayesianSampler
    :members:
