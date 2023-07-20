@@ -24,7 +24,13 @@ jobs:
       run: |
         pip install sphinx sphinx_rtd_theme
         pip install nbsphinx
-        pip install pandoc
+        conda install pandoc
+        pip install ipynb
+        pip install ipykernel
+        pip install pandas
+        pip install numpy
+        pip install matplotlib
+        pip install scipy
     - name : install docs dependencies
       run: |
         micromamba install sphinx=1.8.5 decorator=4.4.1 h5py 
