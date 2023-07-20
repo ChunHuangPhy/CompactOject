@@ -31,6 +31,7 @@ jobs:
         pip install numpy
         pip install matplotlib
         pip install scipy
+        pip install CompactObject-TOV
     - name : install docs dependencies
       run: |
         micromamba install sphinx=1.8.5 decorator=4.4.1 h5py 
