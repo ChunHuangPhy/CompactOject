@@ -12,6 +12,7 @@ jobs:
         run: |
           pip install sphinx sphinx_rtd_theme
           pip install nbsphinx
+          pip uninstall pandoc
           conda install pandoc
       - name: Sphinx build
         run: |
