@@ -1,27 +1,62 @@
 name: Docs
-on: [push, pull_request, workflow_dispatch]
-permissions:
-    contents: write
+
+on:
+  push:
+    branches:
+      - main
+  release:
+  workflow_dispatch:
+
 jobs:
-  docs:
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - name: Install dependencies
-        run: |
-          pip install sphinx sphinx_rtd_theme
-          pip install nbsphinx
-          pip install nbconvert
-          conda install pandoc
-      - name: Sphinx build
-        run: |
-          sphinx-build docs _build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        with:
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
-          force_orphan: true
+    - name: check out CompactObject 
+      uses: actions/checkout@v3
+      with:
+        ref: python2
+    - name : install docs dependencies
+      run: |
+        micromamba install sphinx=1.8.5 decorator=4.4.1 h5py 
+        micromamba install -c conda-forge nbsphinx=0.5.1 nbconvert=5.6.1
+        pip install sphinxcontrib-websupport==1.1.2 sphinx_rtd_theme==0.4.3
+    - name : build docs
+      run: make html
+      working-directory: docs/
+    - name : move docs
+      run : |
+        mkdir ../../../../py2
+        mv build/html/* ../../../../py2/
+      working-directory: docs/
+    - name: check CompactObject
+      uses: actions/checkout@v3
+      with:
+        ref: main
+    - name : install docs dependencies
+      run: |
+        micromamba install sphinx decorator h5py
+        micromamba install -c conda-forge nbsphinx nbconvert
+        pip install sphinxcontrib-websupport sphinx_rtd_theme
+    - name : build docs
+      run: | 
+        make html
+        mkdir build/html/py2
+        mv ../../../../py2/* build/html/py2/  
+      working-directory: docs/
+
+    - name: Deploy to GitHub Pages
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v3
+      with:
+        target_branch: gh-pages
+        build_dir: docs/build/html
+        jekyll: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
