@@ -5,5 +5,5 @@ Calculate Speed of Sound
 
 Calculates and returns speed of sound from an equaiton of state inputed by the user.
 
-.. automodule:: speed_of_sound
+.. automodule:: TOVsolver.speed_of_sound
    :members:
