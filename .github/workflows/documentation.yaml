@@ -18,10 +18,11 @@ jobs:
       max-parallel: 5
 
     steps:
-    - name: check out CompactObject 
-      uses: actions/checkout@v3
-      with:
-        ref: python2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - name: Install dependencies
+      run: |
+        pip install sphinx sphinx_rtd_theme
     - name : install docs dependencies
       run: |
         micromamba install sphinx=1.8.5 decorator=4.4.1 h5py 
