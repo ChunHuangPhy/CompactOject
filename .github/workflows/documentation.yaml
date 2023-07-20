@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v3
+    - uses: actions/setup-python@v2
     - name: Install dependencies
       run: |
         pip install sphinx
@@ -39,9 +39,9 @@ jobs:
         conda install pandoc
     - name : build docs
       run: |
-        jupyter nbconvert --to rst test_Inference.ipynb
-        jupyter nbconvert --to rst test_TOVsolver.ipynb
-        jupyter nbconvert --to rst test_EOSgenerators.ipynb
+        jupyter nbconvert test_Inference.ipynb --to rst
+        jupyter nbconvert test_TOVsolver.ipynb --to rst 
+        jupyter nbconvert test_EOSgenerators.ipynb --to rst 
         make html
       working-directory: docs/
     - name : move docs
