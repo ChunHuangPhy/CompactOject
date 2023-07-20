@@ -34,9 +34,9 @@ jobs:
         pip install CompactObject-TOV
     - name : install docs dependencies
       run: |
-        conda install sphinx=1.8.5 decorator=4.4.1 h5py 
-        conda install -c conda-forge nbsphinx=0.5.1 nbconvert=5.6.1
-        pip install sphinxcontrib-websupport==1.1.2 sphinx_rtd_theme==0.4.3
+        pip install decorator h5py 
+        pip install nbsphinx nbconvert
+        pip install sphinxcontrib-websupport sphinx_rtd_theme
     - name : build docs
       run: make html
       working-directory: docs/
