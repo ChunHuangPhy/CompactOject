@@ -72,12 +72,11 @@ jobs:
         mv ../../../../py2/* build/html/py2/  
       working-directory: docs/
 
-    - name: Deploy to GitHub Pages
-      if: success()
-      uses: crazy-max/ghaction-github-pages@v3
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
-        target_branch: gh-pages
-        build_dir: docs/build/html
-        jekyll: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _build/
+        force_orphan: true
