@@ -31,13 +31,13 @@ jobs:
         pip install jupyter
         pip install matplotlib
         pip install CompactObject-TOV
-        pandoc --version
     - name : install docs dependencies
       run: |
         pip install decorator h5py 
         pip install nbsphinx nbconvert
         pip install sphinxcontrib-websupport sphinx_rtd_theme
         conda install pandoc
+        pandoc --version
     - name : build docs
       run: |
         jupyter nbconvert test_Inference.ipynb --to rst
