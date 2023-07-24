@@ -42,7 +42,7 @@ jobs:
     - name : build docs
       run: |
         make html
-        mkdir docs/build/html
+        mkdir build/html
       working-directory: docs/
     - name: check CompactObject
       uses: actions/checkout@v3
