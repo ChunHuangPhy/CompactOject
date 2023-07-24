@@ -36,7 +36,7 @@ jobs:
         pip install jupyter
         pip install matplotlib
         pip install ultranest
-        python -m pip install NumbaMinpack
+        pip install NumbaMinpack
         pip install CompactObject-TOV==1.8.1
     - name : install docs dependencies
       run: |
