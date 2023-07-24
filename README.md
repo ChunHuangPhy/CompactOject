@@ -10,6 +10,9 @@ Project papers list based these package: (Please consider cite them!)
 
 [1]. [Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”, <i>arXiv e-prints</i>, 2023. doi:10.48550/arXiv.2303.17518.](https://arxiv.org/abs/2303.17518)
 
+<span style="color:red">
+check this project website [CompactObject-TOV package website](https://chunhuangphy.github.io/EoS_inference/)
+</span>
 ### Inlcudes
 1. Routine to check a valid equation of state input
 2. Return the mass, radius, and tidal deformability, and compute the corresponding speed of sound.
