@@ -1,8 +1,11 @@
 name: Docs
-
-on: [push, pull_request, workflow_dispatch]
-permissions: write-all
-
+on:
+  push:
+    branches:
+      - main
+  release:
+  workflow_dispatch:
+permissions: write-all  
 jobs:
   build:
     runs-on: ubuntu-latest
