@@ -6,15 +6,9 @@
    :maxdepth: 2
    :caption: Illustration Notebooks
 
-   .. raw:: html
-
-   <iframe src="test_EOSgenerators.html" width="800" height="600"></iframe>
-   .. raw:: html
-
-   <iframe src="test_TOVsolver.html" width="800" height="600"></iframe>
-   .. raw:: html
-
-   <iframe src="test_Inference.html" width="800" height="600"></iframe>
+   test_EOSgenerators
+   test_TOVsolver
+   test_Inference
 
 .. toctree::
    :maxdepth: 2
