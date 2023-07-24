@@ -42,8 +42,7 @@ jobs:
     - name : build docs
       run: |
         make html
-        mkdir build/html/py2
-        mv ../../../../py2/* build/html/py2/  
+        mkdir docs/build/html
       working-directory: docs/
     - name: check CompactObject
       uses: actions/checkout@v3
