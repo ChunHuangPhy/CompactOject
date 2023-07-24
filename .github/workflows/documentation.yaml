@@ -29,7 +29,7 @@ jobs:
         pip install scipy
         pip install jupyter
         pip install matplotlib
-        pip install CompactObject-TOV
+        pip install CompactObject-TOV-1.8.1
     - name : install docs dependencies
       run: |
         pip install decorator h5py 
