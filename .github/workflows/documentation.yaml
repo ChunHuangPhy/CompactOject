@@ -47,28 +47,10 @@ jobs:
       run: |
         make html
       working-directory: docs/
-    - name : move docs
-      run : |
-        mkdir ../../../../py2
-        mv build/html/* ../../../../py2/
-      working-directory: docs/
     - name: check CompactObject
       uses: actions/checkout@v3
       with:
         ref: main
-    - name : install docs dependencies
-      run: |
-        micromamba install sphinx decorator h5py
-        micromamba install -c conda-forge nbsphinx nbconvert
-        pip install sphinxcontrib-websupport sphinx_rtd_theme
-    - name : build docs
-      run: | 
-        sphinx-quickstart
-        make html
-        mkdir build/html/py2
-        mv ../../../../py2/* build/html/py2/  
-      working-directory: docs/
-
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
