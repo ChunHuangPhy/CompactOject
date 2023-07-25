@@ -6,7 +6,7 @@
 3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing) (and/or) Tidal measurement from Gravitational wave detection. That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
 
 
-Project papers list based these package: (Please consider cite them!)
+Project papers list based these package: (Please consider cite them, if you are using this package)
 
 [1]. [Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”, <i>arXiv e-prints</i>, 2023. doi:10.48550/arXiv.2303.17518.](https://arxiv.org/abs/2303.17518)
 
