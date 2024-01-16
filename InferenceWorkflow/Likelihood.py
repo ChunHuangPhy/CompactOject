@@ -71,8 +71,8 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
             likelihood = -1e101
         else:
             chrip_mass = chrip.resample(1)
-            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2], k=1, s=0)
-            point = np.array([[chrip_mass], [MRT[1][0]/ M1],[MTspline(M1)], [MRT[2][0]]])
+            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2])
+            point = np.array([[chrip_mass[0][0]], [MRT[1][0] / M1[0][0]],[ MTspline(M1)[0][0]], [MRT[2][0]]])
             likelihood = np.log(kernelGW.evaluate(point))
     if likelihood <= -1e101:
         return -1e101
