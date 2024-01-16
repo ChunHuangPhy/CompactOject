@@ -64,6 +64,7 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
     else:
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
             MRT = main.OutputMRTpoint(d1,eps_total,eps_total).T
+            chrip_mass = chrip.resample(1)
             M1 = TOV_solver.m1_from_mc_m2(chrip_mass, MRT[1][0])
             Tidal_line = main.OutputMRT('',eps_total,eps_total).T
         if len(MRT[0]) == False or len(Tidal_line[0]) == False:
