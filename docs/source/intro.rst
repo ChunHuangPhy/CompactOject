@@ -48,7 +48,7 @@ gravitational wave observations by the LIGO detector.
 
 Here below is the overall pipline of this field:
 
-.. image:: _static/workflow.png
+.. image:: workflow.png
 
 
 As depicted in this plot, fundamental physics can provide the equation of state for 
@@ -78,7 +78,7 @@ Where the :math:`\mathcal{L}_N` is the neucleonic Lagrangian, :math:`\mathcal{L}
 is the meson part Lagrangian, :math:`\mathcal{L}_l` is the lepton Lagrangian.
 details of the Lagrangian are
 
-.. image:: _static/lagrangian.png
+.. image:: lagrangian.png
 
 where :math:`\Psi_{N}` and :math:`\psi_{l}` are the nucleon and lepton spinors,
 and :math:`\bar{I}_{N}` is the nucleon isospin operator. The strong interaction
@@ -92,7 +92,7 @@ determined through nuclear experiments. However, in addition to nuclear experime
 we can also explore the possibility of constraining these parameters through 
 astrophysical observations. The complete list of parameters includes:
 
-.. image:: _static/free_para.png
+.. image:: free_para.png
 
 These are the parameters that you should input to generate the equation of state 
 from our EOSgenerators module, different equation of state parameter will have different
