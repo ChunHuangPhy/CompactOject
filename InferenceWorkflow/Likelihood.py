@@ -32,7 +32,7 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
         likelihood = -1e101
     else:
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
@@ -63,10 +63,10 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
         likelihood = -1e101
     else:
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MRT = main.OutputMRTpoint(d1,eps_total,eps_total).T
+            MRT = main.OutputMRTpoint(d1,eps_total,pres_total).T
             chrip_mass = chrip.resample(1)
             M1 = TOV_solver.m1_from_mc_m2(chrip_mass, MRT[1][0])
-            Tidal_line = main.OutputMRT('',eps_total,eps_total).T
+            Tidal_line = main.OutputMRT('',eps_total,pres_total).T
         if len(MRT[0]) == False or len(Tidal_line[0]) == False:
             likelihood = -1e101
         else:
@@ -104,7 +104,7 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
         likelihood = -1e101
     else:
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
@@ -137,7 +137,7 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
         likelihood = -1e101
     else:
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
