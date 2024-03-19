@@ -31,6 +31,7 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
             MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
@@ -62,6 +63,7 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
             MRT = main.OutputMRTpoint(d1,eps_total,pres_total).T
             chrip_mass = chrip.resample(1)
@@ -103,6 +105,7 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
             MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
@@ -136,6 +139,7 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
             MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
