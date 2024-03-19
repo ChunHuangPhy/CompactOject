@@ -31,8 +31,9 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
@@ -62,16 +63,18 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MRT = main.OutputMRTpoint(d1,eps_total,eps_total).T
+            MRT = main.OutputMRTpoint(d1,eps_total,pres_total).T
+            chrip_mass = chrip.resample(1)
             M1 = TOV_solver.m1_from_mc_m2(chrip_mass, MRT[1][0])
-            Tidal_line = main.OutputMRT('',eps_total,eps_total).T
+            Tidal_line = main.OutputMRT('',eps_total,pres_total).T
         if len(MRT[0]) == False or len(Tidal_line[0]) == False:
             likelihood = -1e101
         else:
             chrip_mass = chrip.resample(1)
-            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2], k=1, s=0)
-            point = np.array([[chrip_mass], [MRT[1][0]/ M1],[MTspline(M1)], [MRT[2][0]]])
+            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2])
+            point = np.array([[chrip_mass[0][0]], [MRT[1][0] / M1[0][0]],[ MTspline(M1)[0][0]], [MRT[2][0]]])
             likelihood = np.log(kernelGW.evaluate(point))
     if likelihood <= -1e101:
         return -1e101
@@ -102,8 +105,9 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
@@ -135,8 +139,9 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     if d1 ==0 :
         likelihood = -1e101
     else:
+        d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,eps_total).T
+            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
