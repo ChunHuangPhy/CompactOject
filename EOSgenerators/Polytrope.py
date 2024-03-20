@@ -1,6 +1,7 @@
 import numpy as np
 
-def polytrope(rho, gamma1, gamma2, gamma3, rho_t1, rho_t2):
+def polytrope(rho, theta):
+    gamma1, gamma2, gamma3, rho_t1, rho_t2 = theta
     c = 2.99792458E10 # cgs
     G = 6.6730831e-8 # cgs
     rho_ns = 267994004080000.03 #cgs
