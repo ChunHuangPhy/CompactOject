@@ -7,7 +7,7 @@ from scipy.integrate import odeint, ode
 from matplotlib import pyplot
 from scipy import optimize
 from itertools import repeat
-
+from scipy.interpolate import interp1d
 def m1_from_mc_m2(mc, m2):
     """a function that feed back the companion star mass from GW event measurement.
 
@@ -141,8 +141,15 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
     G = 6.67428e-8
     Msun = 1.989e33
 
-    eos = UnivariateSpline(energy_density, pressure, k=3, s=0)
-    inveos = UnivariateSpline(pressure, energy_density, k=3, s=0)
+    unique_pressure_indices = np.unique(pressure, return_index=True)[1]
+    unique_pressure = pressure[np.sort(unique_pressure_indices)]
+
+# Interpolate pressure vs. energy density
+    eos = interp1d(energy_density, pressure, kind='cubic', fill_value='extrapolate')
+
+# Interpolate energy density vs. pressure
+    inveos = interp1d(unique_pressure, energy_density[unique_pressure_indices], kind='cubic', fill_value='extrapolate')
+
     Pmin = pressure[20]
     
     r = 4.441e-16
@@ -203,8 +210,15 @@ def solveTOV(center_rho, energy_density, pressure):
     G = 6.67428e-8
     Msun = 1.989e33
 
-    eos = UnivariateSpline(energy_density, pressure, k=3, s=0)
-    inveos = UnivariateSpline(pressure, energy_density, k=3, s=0)
+    unique_pressure_indices = np.unique(pressure, return_index=True)[1]
+    unique_pressure = pressure[np.sort(unique_pressure_indices)]
+
+# Interpolate pressure vs. energy density
+    eos = interp1d(energy_density, pressure, kind='cubic', fill_value='extrapolate')
+
+# Interpolate energy density vs. pressure
+    inveos = interp1d(unique_pressure, energy_density[unique_pressure_indices], kind='cubic', fill_value='extrapolate')
+
     Pmin = pressure[20]
     r = 4.441e-16
     dr = 10.
