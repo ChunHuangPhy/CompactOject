@@ -12,10 +12,10 @@ Project papers list based these package: (Please consider cite them, if you are 
 
 
 ```diff
-- check this project website: https://chunhuangphy.github.io/EoS_inference/
+- check this project website: https://chunhuangphy.github.io/CompactOject/
 ```
 
-[CompactObject-TOV package website](https://chunhuangphy.github.io/EoS_inference/)
+[CompactObject-TOV package website](https://chunhuangphy.github.io/CompactOject/)
 
 ### Inlcudes
 1. Routine to check a valid equation of state input
