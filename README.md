@@ -11,11 +11,10 @@ Project papers list based these package: (Please consider cite them, if you are 
 [1]. [Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”,Monthly Notices of the Royal Astronomical Society,2024, 10.1093/mnras/stae844,529, https://academic.oup.com/mnras/article/529/4/4650/7634362
 
 ## Sample citation line:
-
-"The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package. This is an open source full-scope package  designed to implement Bayesian constraints on the neutron star EOS. The other work based on this package is ...."
-
 ```diff
-- check this project website: https://chunhuangphy.github.io/CompactOject/
+"The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactOject/}. This is an open source full-scope package  designed to implement Bayesian constraints on the neutron star EOS. The other work based on this package is ...."
+
+1.https://chunhuangphy.github.io/CompactOject/
 ```
 
 [CompactObject-TOV package website](https://chunhuangphy.github.io/CompactOject/)
