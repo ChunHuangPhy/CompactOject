@@ -39,9 +39,7 @@ measurements I: Nucleonic models”, 2023. doi:10.48550/arXiv.2303.17518) <https
 
 If you are using our software, please consider citing us using the following standard citation:
 
-.. code-block:: latex
-
-"The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{\url{https://chunhuangphy.github.io/CompactObject/}}. This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ...."
+.. code-block:: "The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{\url{https://chunhuangphy.github.io/CompactObject/}}. This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ...."
 
 Concept
 *******
