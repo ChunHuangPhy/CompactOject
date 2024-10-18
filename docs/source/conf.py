@@ -26,8 +26,8 @@ copyright = '2023, Chun Huang, Nicole Obsborn, Nathan Whitsett'
 author = 'Chun Huang, Nicole Obsborn, Nathan Whitsett'
 
 # The full version, including alpha/beta/rc tags
-version = '1.6.0'
-release = '1.6.0'
+version = '1.9.1'
+release = '1.9.1'
 
 
 # -- General configuration ---------------------------------------------------

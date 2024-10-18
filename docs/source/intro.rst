@@ -37,6 +37,13 @@ The papers generated from this package are listed below:
 “Constraining fundamental nuclear physics parameters using neutron star mass-radius
 measurements I: Nucleonic models”, 2023. doi:10.48550/arXiv.2303.17518) <https://arxiv.org/abs/2303.17518>`_
 
+If you are using our software, please consider cite us, with the standard citing line is:
+```diff
+"The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactOject/}. This is an open source full-scope package  designed to implement Bayesian constraints on the neutron star EOS. The other work based on this package is ...."
+
+1.https://chunhuangphy.github.io/CompactOject/
+```
+
 Concept
 *******
 
