@@ -35,6 +35,12 @@
    prior
    Likelihood
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Postprocessing module
+
+   Cornerplot
+
 Indices and tables
 ==================
 
