@@ -12,7 +12,7 @@ Project papers list based these package: (Please consider cite them, if you are 
 
 [2]. Huang, C., Tolos, L., Providência, C., and Watts, A., “Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models”, arXiv:2410.14572, 2024.
 
-[3]. Huang, C. and Zheng, X.-P., “Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades long observation data of the Crab pulsar”, arXiv:2409.18432, 2024. doi:10.48550/arXiv.2409.18432.
+[3]. Huang, C. and Zheng, X.-P., “Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades long observation data of the Crab pulsar”, arXiv:2409.18432, 2024
 
 ## Sample citation line:
 ```diff
