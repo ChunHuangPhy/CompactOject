@@ -1,14 +1,18 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-1. Dealing with complex Relativistic Mean field (RMF) theory to generate Equation of State (EOS) of neutron star. ([EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package)
+1. Dealing with Multiple models (such as RMF, polytrope etc) to generate Equation of State (EOS) of neutron star. ([EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package)
 2. Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object out of given equation of state of neutron star. ([TOVsolver](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver) Package)
 3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing) (and/or) Tidal measurement from Gravitational wave detection. That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
 
 
 Project papers list based these package: (Please consider cite them, if you are using this package)
 
-[1]. [Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”,Monthly Notices of the Royal Astronomical Society,2024, 10.1093/mnras/stae844,529, https://academic.oup.com/mnras/article/529/4/4650/7634362
+[1]. Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”,Monthly Notices of the Royal Astronomical Society,2024, 10.1093/mnras/stae844,529, https://academic.oup.com/mnras/article/529/4/4650/7634362
+
+[2]. Huang, C., Tolos, L., Providência, C., and Watts, A., “Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models”, arXiv:2410.14572, 2024.
+
+[3]. Huang, C. and Zheng, X.-P., “Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades long observation data of the Crab pulsar”, arXiv:2409.18432, 2024. doi:10.48550/arXiv.2409.18432.
 
 ## Sample citation line:
 ```diff
