@@ -59,13 +59,6 @@ def OutputMRT(input_file="", density=[], pressure=[]):
         MRT (tuple): tuple with mass, radius, and tidal deformability.
     """
 
-    c = 3e10
-    G = 6.67428e-8
-    Msun = 1.989e33
-
-    dyncm2_to_MeVfm3 = 1.0 / (1.6022e33)
-    gcm3_to_MeVfm3 = 1.0 / (1.7827e12)
-    oneoverfm_MeV = 197.33
     #############This is something we need to change, like the input for this EOS import should
     ############# be one file contatining Whole EOS. that first column is density and second is pressure
     energy_density, pressure = EoS_import.EOS_import(input_file, density, pressure)
@@ -75,21 +68,17 @@ def OutputMRT(input_file="", density=[], pressure=[]):
     Radius = []
     Mass = []
     tidal = []
-    density = np.logspace(14.3, 15.6, 50)
+    density = np.logspace(14.3, 15.6, 50) * g_cm_3
     # This following step is to make a dicision whether the EOS ingredients is always increase. We can do that outsie of this main to the
     # EOS import.
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     for i in range(len(density)):
         try:
-            Radius.append(
-                TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)[1]
-            )
-            Mass.append(
-                TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)[0]
-            )
-            tidal.append(
-                TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)[2]
-            )
+            M, R, T = TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)
+
+            Radius.append(R)
+            Mass.append(M)
+            tidal.append(T)
         # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
             # print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")

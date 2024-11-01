@@ -3,7 +3,7 @@ import numpy as np
 from scipy.constants import pi
 from scipy.integrate import ode
 from scipy.interpolate import interp1d
-from TOVsolver.unit import g_cm_3, dyn_cm_2, c, G, cm
+import TOVsolver.unit as unit
 
 
 def m1_from_mc_m2(mc, m2):
@@ -183,10 +183,21 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
 
     c = 3e10
     G = 6.67428e-8
-    Msun = 1.989e33
+
+    # tzzhou: migrating to new units
+    center_rho = center_rho / unit.g_cm_3
+    energy_density = energy_density * G / c**2 / unit.g_cm_3
+    pressure = pressure * G / c**4 / unit.dyn_cm_2
 
     unique_pressure_indices = np.unique(pressure, return_index=True)[1]
     unique_pressure = pressure[np.sort(unique_pressure_indices)]
+
+    if np.any(np.diff(unique_pressure) == 0):
+        raise ValueError("Pressure values are not unique")
+
+    if np.any(np.diff(energy_density) == 0):
+        print(energy_density)
+        raise ValueError("energy_density values are not unique")
 
     # Interpolate pressure vs. energy density
     eos = interp1d(energy_density, pressure, kind="cubic", fill_value="extrapolate")
@@ -227,7 +238,7 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
     y = Rns * stateTOV[3] / stateTOV[2]
     tidal = tidal_deformability(y, Mb, Rns)
 
-    return Mb * c**2.0 / G / Msun, Rns / 1e5, tidal
+    return Mb * c**2.0 / G * unit.g, Rns * unit.cm, tidal
 
 
 def solveTOV(center_rho, energy_density, pressure):
@@ -253,9 +264,9 @@ def solveTOV(center_rho, energy_density, pressure):
     """
 
     # Notice that we only rescale quantities inside this function
-    center_rho = center_rho * G / c**2
-    energy_density = energy_density * G / c**2
-    pressure = pressure * G / c**4
+    center_rho = center_rho * unit.G / unit.c**2
+    energy_density = energy_density * unit.G / unit.c**2
+    pressure = pressure * unit.G / unit.c**4
 
     # eos = UnivariateSpline(np.log10(energy_density), np.log10(pres), k=1, s=0)
     # inveos = UnivariateSpline(np.log10(pres), np.log10(energy_density), k=1, s=0)
@@ -276,8 +287,8 @@ def solveTOV(center_rho, energy_density, pressure):
     )
 
     Pmin = pressure[20]
-    r = 4.441e-16 * cm
-    dr = 10.0 * cm
+    r = 4.441e-16 * unit.cm
+    dr = 10.0 * unit.cm
 
     pcent = eos(center_rho)
     P0 = (
@@ -298,4 +309,4 @@ def solveTOV(center_rho, energy_density, pressure):
         dr = 0.46 * (1.0 / stateTOV[1] * dmdr - 1.0 / stateTOV[0] * dpdr) ** (-1.0)
 
     # at the end of this function, we rescale the quantities back
-    return stateTOV[1] * c**2 / G, sy.t
+    return stateTOV[1] * unit.c**2 / unit.G, sy.t
