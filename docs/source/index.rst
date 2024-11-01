@@ -9,6 +9,7 @@
    test_EOSgenerators
    test_TOVsolver
    test_Inference
+   UnitConventionForDeveloper
 
 .. toctree::
    :maxdepth: 2
