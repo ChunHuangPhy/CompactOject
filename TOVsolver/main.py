@@ -6,8 +6,7 @@ import numpy as np
 import TOVsolver.solver_code as TOV_solver
 import TOVsolver.EoS_import as EoS_import
 import TOVsolver.speed_of_sound as speed_of_sound
-from TOVsolver.unit import g_cm_3, dyn_cm_2
-
+from TOVsolver.unit import g_cm_3
 
 # Global Variables
 def OutputMR(input_file="", density=[], pressure=[]):
@@ -36,8 +35,9 @@ def OutputMR(input_file="", density=[], pressure=[]):
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     for i in range(len(density)):
         try:
-            Radius.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[1])
-            Mass.append(TOV_solver.solveTOV(density[i], energy_density, pressure)[0])
+            M, R = TOV_solver.solveTOV(density[i], energy_density, pressure)
+            Mass.append(M)
+            Radius.append(R)
         # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
         except OverflowError as e:
             # print("This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated.")
@@ -75,7 +75,6 @@ def OutputMRT(input_file="", density=[], pressure=[]):
     for i in range(len(density)):
         try:
             M, R, T = TOV_solver.solveTOV_tidal(density[i], energy_density, pressure)
-
             Radius.append(R)
             Mass.append(M)
             tidal.append(T)
@@ -117,15 +116,6 @@ def OutputMRpoint(central_density, energy_density, pressure):
     Returns:
         MR (tuple): tuple with mass, radius.
     """
-
-    c = 3e10
-    G = 6.67428e-8
-    Msun = 1.989e33
-
-    dyncm2_to_MeVfm3 = 1.0 / (1.6022e33)
-    gcm3_to_MeVfm3 = 1.0 / (1.7827e12)
-    oneoverfm_MeV = 197.33
-
     Radius = []
     Mass = []
 
@@ -133,8 +123,9 @@ def OutputMRpoint(central_density, energy_density, pressure):
     # EOS import.
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     try:
-        Radius.append(TOV_solver.solveTOV(central_density, energy_density, pressure)[1])
-        Mass.append(TOV_solver.solveTOV(central_density, energy_density, pressure)[0])
+        M, R = TOV_solver.solveTOV(central_density, energy_density, pressure)
+        Mass.append(M)
+        Radius.append(R)
     # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
     except OverflowError as e:
         print(
@@ -155,15 +146,6 @@ def OutputMRTpoint(central_density, energy_density, pressure):
     Returns:
         MRT (tuple): tuple with mass, radius and tidal.
     """
-
-    c = 3e10
-    G = 6.67428e-8
-    Msun = 1.989e33
-
-    dyncm2_to_MeVfm3 = 1.0 / (1.6022e33)
-    gcm3_to_MeVfm3 = 1.0 / (1.7827e12)
-    oneoverfm_MeV = 197.33
-
     Radius = []
     Mass = []
     tidal = []
@@ -171,15 +153,10 @@ def OutputMRTpoint(central_density, energy_density, pressure):
     # EOS import.
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     try:
-        Radius.append(
-            TOV_solver.solveTOV_tidal(central_density, energy_density, pressure)[1]
-        )
-        Mass.append(
-            TOV_solver.solveTOV_tidal(central_density, energy_density, pressure)[0]
-        )
-        tidal.append(
-            TOV_solver.solveTOV_tidal(central_density, energy_density, pressure)[2]
-        )
+        M, R, T = TOV_solver.solveTOV_tidal(central_density, energy_density, pressure)
+        Mass.append(M)
+        Radius.append(R)
+        tidal.append(T)
     # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
     except OverflowError as e:
         print(
