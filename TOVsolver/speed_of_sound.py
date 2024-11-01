@@ -2,8 +2,6 @@ import numpy as np
 from TOVsolver.constant import c,G
 
 def speed_of_sound_calc(density, pressure):
-
-
     """Function that calculates the speed of sound by taking the gradient of the euqation of state.
     Args:
         density (array): numpy 1Darray. 
