@@ -16,7 +16,7 @@
    :caption: EOS generators module
 
    crust_EOS
-   RMF_EOS
+   EOS
    fastRMF_EoS
 
 .. toctree::
