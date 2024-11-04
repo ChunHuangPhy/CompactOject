@@ -293,7 +293,7 @@ def Energy_density_Pressure(x, rho, theta):
     return energy_density, Pressure
 
 
-def compute_EOS(eps_crust, pres_crust, theta):
+def RMF_compute_EOS(eps_crust, pres_crust, theta):
     """Generate core part equation of state, main function, from RMF model,
 
     Args:
