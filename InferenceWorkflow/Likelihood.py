@@ -304,3 +304,186 @@ def Lliklihood(theta,L_low,L_up):
     width = (L_up - L_low)/2
     p_L = -0.5*abs( center - J)**10./width**10.
     return p_L
+
+
+
+########################## Date: 04 Nov 2024 #######################################
+def chiEFT_PNM( EoS_PNM, type="Gaussian", contraint_quantity="e", enlargement=0):
+    """
+    Authors: João Cartaxo, Tuhin Malik, Constança Providência
+    
+    Calculate the log-likelihood for the equation of state (EoS) of pure neutron matter using 
+    chiEFT data extracted from chiral effective field theory. This can be achieved by assigning 
+    constants to the energy per neutron \( E/N \) or the pressure \( p \), utilizing either a 
+    Gaussian or Super-Gaussian likelihood model.
+    
+    Parameters:
+    -----------
+    EoS_PNM : np.ndarray
+        Array with PNM equation of state data, where:
+        - EoS_PNM[0] is the density in fm^-3,
+        - EoS_PNM[1] is the energy density MeV.fm^-3.
+        - EoS_PNM[2] is the pressure in MeV.fm^-3.
+        
+    type : str, optional
+        Specifies the type of distribution to use for the likelihood function.
+        - "Gaussian" (default) or "Super Gaussian".
+        
+    contraint_quantity : str, optional
+        Specifies which quantity (energy or pressure) to use for the log-likelihood calculation.
+        - "e" for energy, "p" for pressure. The default is "e".
+        
+    enlargement : float, optional
+        Enlargement factor (as a percentage in decimal form) for the Super-Gaussian distribution, e.g., 0.05 for 5%.
+        Only applicable if type="Super Gaussian".
+        
+    Returns:
+    --------
+    log_likelihood : float
+    The sum of log-likelihoods over constraint on number density 0.08, 0.12 and 0.16 fm^-3.
+    
+    Explanation:
+    ------------
+    - The likelihood calculation:
+      - "Gaussian": Uses a standard Gaussian log-likelihood based on the discrepancy between EoS data and constraints.
+      - "Super Gaussian": Employs an adjusted likelihood featuring a flattened peak of the Gaussian distribution.  
+      
+    Data Sources:
+    -------------
+    - Energy per neutron constraints are taken from: Huth et al., Nature, vol 606, pp 276–280 (2022).
+    - Pressure constraints are taken from: K. Hebeler et al., ApJ 773, 11 (2013).
+    """
+    def Gaussian(x, mu, sigma):
+        """
+        Compute the log of a Gaussian (Normal) probability density function (PDF).
+        
+        Parameters:
+        -----------
+        x : float or np.ndarray
+            The data point(s) at which to evaluate the Gaussian PDF.
+        mu : float
+            The mean (center) of the Gaussian distribution.
+        sigma : float
+            The standard deviation (spread) of the Gaussian distribution.
+        
+        Returns:
+        --------
+        log_pdf : np.ndarray
+            The log of the Gaussian PDF at each value of `x`.
+        
+        Explanation:
+        ------------
+        - The Gaussian PDF is defined as:
+          f(x) = (1 / sqrt(2 * pi * sigma^2)) * exp(-0.5 * ((x - mu) / sigma)^2)
+        - We compute the log of this PDF for numerical stability:
+          log(f(x)) = -0.5 * log(2 * pi * sigma^2) - 0.5 * ((x - mu) / sigma)^2
+        """
+        
+        # Calculate the normalization term: -0.5 * log(2 * pi * sigma^2)
+        log_of_norm = -0.5 * np.log(2 * np.pi * sigma**2)
+        
+        # Calculate the exponent term: -0.5 * ((x - mu) / sigma)^2
+        log_of_exp = -0.5 * ((x - mu) / sigma) ** 2
+        
+        # Return the sum of both terms, representing the log of the Gaussian PDF
+        return log_of_norm + log_of_exp
+
+    def Super_Gaussian(x, mu, sigma, enlargement):
+        """
+        Compute the log of a Super-Gaussian probability density function (PDF).
+        
+        Parameters:
+        -----------
+        x : float or np.ndarray
+            The data point(s) at which to evaluate the Super-Gaussian PDF.
+        mu : float
+            The mean (center) of the Super-Gaussian distribution.
+        sigma : float
+            The standard deviation (spread) of the original Gaussian distribution.
+        enlargement : float
+            The percentage enlargement factor for `sigma` to increase the width of the distribution.
+            For example, 0.05 for 5% enlargement, or 0.10 for 10% enlargement.
+    
+        Returns:
+        --------
+        log_pdf : float or np.ndarray
+            The log of the Super-Gaussian PDF at each value of `x`.
+        
+        Explanation:
+        ------------
+        - The Super-Gaussian function extends the Gaussian by applying an enlargement factor to `sigma`,
+          effectively "widening" the distribution.
+        - Based on the reference: https://arxiv.org/pdf/2407.18452
+        
+        - The PDF calculation involves:
+          - Adjusted variance term, `denom_1 = 2 * sigma_enlarged^2`
+          - A damping factor, `denom_2 = 1 + exp((|x - mu| - sigma_enlarged) / 0.015)`, which modulates the tail behavior.
+        """
+        
+        # Calculate the enlarged standard deviation by applying the percentage increase to sigma
+        sigma_enlarged = sigma * (1 + enlargement)
+    
+        # Compute the first denominator term, incorporating the enlarged standard deviation
+        denom_1 = 2 * sigma_enlarged ** 2
+        
+        # Compute the second denominator term, which dampens large deviations from the mean
+        denom_2 = 1 + np.exp((np.abs(x - mu) - sigma_enlarged) / 0.015)
+        
+        # Calculate the Super-Gaussian PDF
+        fx = 1 / (denom_1 * denom_2)
+    
+        log_fx = np.log(fx)
+    
+        return np.clip(log_fx, -1e20, np.infty)
+
+    
+    EoS_PNM = (EoS_PNM.T[EoS_PNM.T[:, 0] < 0.2]).T
+    
+    chidata_rho=[0.08,0.12,0.16]
+
+    if contraint_quantity=="e":
+        #### https://www.nature.com/articles/s41586-022-04750-w
+        ### Nature volume 606, pages276–280 (2022), Huth et al
+        ### Combined band including all the chiEFT sources in Fig. 4
+        chidata_e     = np.array([8.90713476783698, 12.3640996602492, 16.1183465458664])  ## E/N : energy per neutron in MeV scale
+        chidata_e_err = np.array([1.64779161947911, 2.36976217440553, 3.98357870894679])  ## error +- sigma
+        real_e        = np.interp(chidata_rho, EoS_PNM[0], EoS_PNM[1]) / chidata_rho - 939.0
+    
+        if type=="Gaussian":
+            return sum(Gaussian(real_e, chidata_e, chidata_e_err))
+        elif type=="Super Gaussian":
+            return sum(Super_Gaussian(real_e, chidata_e, chidata_e_err, enlargement))
+    
+    elif contraint_quantity=="p":
+        ### K. Hebeler et al 2013 ApJ 773 11
+        ## NN+3N data (Figure 2) 
+        chidata_p     = np.array([0.505714285714279,1.24142857142857, 2.4857142857143])    ## in MeV.fm-3 units
+        chidata_p_err = np.array([0.097142857142855,0.304285714285714, 0.691428571428572]) ## error +-sigma
+        real_p = np.interp(chidata_rho, EoS_PNM[0], EoS_PNM[2])
+
+        if type=="Gaussian":
+            return sum(Gaussian(real_p, chidata_p, chidata_p_err))
+        elif type=="Super Gaussian":
+            return sum(Super_Gaussian(real_p, chidata_p, chidata_p_err, enlargement))
+            
+########################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
