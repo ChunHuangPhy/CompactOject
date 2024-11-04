@@ -1,13 +1,17 @@
-numpy
-scipy
-matplotlib
-pandas
+corner
 csv
-sys
 itertools
 math
+matplotlib
+numba
+numba
+numbaminpack
+numpy
 os
+pandas
+scipy
+sys
 ultranest
-corner
+
 # path to the directory containing setup.py relative to the project root
 -e .
