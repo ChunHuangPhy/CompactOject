@@ -1,9 +1,9 @@
-.. _RMF_EOS:
+.. _EOS:
 
-RMF EOS solver 
+EOS solver 
 =====================
 
-Functions to compute RMF Equation of state from given parameters.
+Functions to compute multiple Equation of state from given parameters, like polytrope, speed of sound, RMF etc.
 
 .. automodule:: EOSgenerators.EOS
    :members:
