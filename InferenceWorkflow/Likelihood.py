@@ -2,10 +2,10 @@ import TOVsolver.constant as constant
 import TOVsolver.solver_code as TOV_solver
 import TOVsolver.EoS_import as EoS_import
 import EOSgenerators.crust_EOS as crust
-import EOSgenerators.RMF_EOS as RMF
+
 import TOVsolver.main as main
 from scipy import interpolate
-
+from TOVsolver.unit import  km, Msun, MeV,fm,g_cm_3,dyn_cm_2
 import numpy as np
 import math
 
@@ -37,7 +37,7 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
-            likelihood = np.log(kernel.evaluate((MR[0], MR[1])))
+            likelihood = np.log(kernel.evaluate((MR[0]/km, MR[1]/Msun)))
     if likelihood <= -1e101:
         return -1e101
     else:
@@ -73,7 +73,7 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
             likelihood = -1e101
         else:
             chrip_mass = chrip.resample(1)
-            MTspline = interpolate.interp1d(Tidal_line[1],Tidal_line[2])
+            MTspline = interpolate.interp1d(Tidal_line[1]/Msun,Tidal_line[2])
             point = np.array([[chrip_mass[0][0]], [MRT[1][0] / M1[0][0]],[ MTspline(M1)[0][0]], [MRT[2][0]]])
             likelihood = np.log(kernelGW.evaluate(point))
     if likelihood <= -1e101:
@@ -111,7 +111,7 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
         if len(MR[0]) == False:
             likelihood = -1e101
         else:
-            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[1][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]/km-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[1][0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
             likelihood = np.log(fx)
     if likelihood <= -1e101:
         return -1e101
@@ -148,7 +148,7 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
             if MR[0][1]>= Mvalue:
                 likelihood = 0
             else:    
-                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1][0]-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1][0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
                 likelihood = np.log(fx)
     if likelihood <= -1e101:
         return -1e101
