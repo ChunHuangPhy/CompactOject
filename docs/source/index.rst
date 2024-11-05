@@ -13,7 +13,7 @@
    :maxdepth: 2
    :caption: Development
    
-   Contributors
+   Contributor
 
 .. toctree::
    :maxdepth: 2
