@@ -4,6 +4,12 @@
 
 .. toctree::
    :maxdepth: 2
+   :caption: User guides
+
+   installation
+
+.. toctree::
+   :maxdepth: 2
    :caption: Illustration Notebooks
 
    test_EOSgenerators

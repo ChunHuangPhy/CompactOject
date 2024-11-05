@@ -1,0 +1,535 @@
+import numpy as np
+import math
+from scipy import optimize
+from TOVsolver.unit import g_cm_3, dyn_cm_2
+
+c = 3e10
+G = 6.67428e-8
+Msun = 1.989e33
+
+dyncm2_to_MeVfm3 = 1.0 / (1.6022e33)
+gcm3_to_MeVfm3 = 1.0 / (1.7827e12)
+oneoverfm_MeV = 197.33
+
+m_e = 2.5896 * 10**-3
+m_mu = 0.53544
+m_n = 4.7583690772
+m_p = 4.7583690772
+
+J_B = 1 / 2.0
+b_B = 1
+
+m_l = [m_e, m_mu]
+m_b = [m_p, m_n]
+
+Matrix_b = np.array(
+    [[1.0, 1.0, 1 / 2.0, 1.0, 1.0, 1.0], [1.0, 0.0, -1 / 2.0, 1.0, 1.0, 1.0]]
+)
+
+Matrix_l = np.array([[0.0, -1.0, 1 / 2.0], [0.0, -1.0, 1 / 2.0]])
+
+
+def initial_values(rho, theta):
+    """Outputs the the sigma, omega, rho term and chemical potential of electron and neutron at
+    given initial density
+
+    Args:
+        rho (float): given nuclear density
+        theta (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+
+    Returns:
+        sigma (float): sigma term in lagrangian
+        omega (float): omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+        mu_n (float): chemical potential of neutron matter
+        mu_e (float): chemical potential of electron portion
+
+    """
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
+
+    m_e = 2.5896 * 10**-3
+    m_mu = 0.53544
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    rho_0 = 0.1505
+
+    sigma = g_sigma * rho / (m_sig**2)
+    rho_03 = -g_rho * rho / (2.0 * (m_rho**2))
+    omega = rho * (
+        (((m_w**2) / g_omega) + (2.0 * Lambda_w * ((g_rho * rho_03) ** 2) * g_omega))
+        ** (-1.0)
+    )
+    m_eff = m_n - (g_sigma * sigma)
+    mu_n = m_eff + g_omega * omega + g_rho * rho_03 * Matrix_b[1, 2]
+    mu_e = 0.12 * m_e * (rho / rho_0) ** (2 / 3.0)
+
+    return sigma, omega, rho_03, mu_n, mu_e
+
+
+def functie(x, args):
+    """iterate the the sigma, omega, rho term and chemical potential of electron and neutron at
+    any given density
+
+    Args:
+        x (array): initial sigma omega rho and chemical potential from initial_values function
+        args (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+
+    Returns:
+        sigma (float): sigma term in lagrangian
+        omega (float): omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+        mu_n (float): chemical potential of neutron matter
+        mu_e (float): chemical potential of electron portion
+
+    """
+    m_sig = args[0]
+    m_w = args[1]
+    m_rho = args[2]
+    g_sigma = args[3]
+    g_omega = args[4]
+    g_rho = args[5]
+    kappa = args[6]
+    lambda_0 = args[7]
+    zeta = args[8]
+    Lambda_w = args[9]
+    rho = args[10]
+
+    m_e = 2.5896 * 10**-3
+    m_mu = 0.53544
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    J_B = 1 / 2.0
+    b_B = 1
+
+    m_l = np.array([m_e, m_mu])
+    m_b = np.array([m_p, m_n])
+
+    Matrix_b = np.array(
+        [[1.0, 1.0, 1 / 2.0, 1.0, 1.0, 1.0], [1.0, 0.0, -1 / 2.0, 1.0, 1.0, 1.0]]
+    )
+
+    Matrix_l = np.array([[0.0, -1.0, 1 / 2.0], [0.0, -1.0, 1 / 2.0]])
+
+    sigma = x[0]
+    omega = x[1]
+    rho_03 = x[2]
+    mu_n = x[3]
+    mu_e = x[4]
+
+    rho_B_list = []
+    rho_SB_list = []
+    q_list = []
+
+    m_eff = m_n - (g_sigma * sigma)
+    # i = 0
+    # j = 0
+    for i in range(len(Matrix_b)):
+        # while i < len(Matrix_b):
+
+        mu_b = Matrix_b[i, 0] * mu_n - Matrix_b[i, 1] * mu_e
+
+        E_fb = mu_b - g_omega * omega - g_rho * rho_03 * Matrix_b[i, 2]
+
+        k_fb_sq = E_fb**2 - m_eff**2
+        if k_fb_sq < 0:
+            k_fb_sq = np.clip(k_fb_sq, a_min=0.0, a_max=None)
+            E_fb = m_eff
+
+        k_fb = math.sqrt(k_fb_sq)
+
+        rho_B = ((2 * J_B) + 1) * b_B * k_fb**3 / (6.0 * math.pi**2)
+        rho_SB = (m_eff / (2.0 * math.pi**2)) * (
+            E_fb * k_fb - (m_eff ** (2)) * np.log((E_fb + k_fb) / m_eff)
+        )
+
+        rho_B_list.append(rho_B)
+        rho_SB_list.append(rho_SB)
+
+        Q_B = ((2.0 * J_B) + 1.0) * Matrix_b[i, 1] * k_fb**3 / (6.0 * math.pi**2)
+        q_list.append(Q_B)
+        # i += 1
+
+    for j in range(len(Matrix_l)):
+        # while j < len(Matrix_l):
+
+        mu_l = Matrix_l[j, 0] * mu_n - Matrix_l[i, 1] * mu_e
+        E_fl = mu_l
+
+        k_fl_sq = E_fl**2 - m_l[j] ** 2
+        k_fl_sq = np.clip(k_fl_sq, a_min=0.0, a_max=None)
+        k_fl = math.sqrt(k_fl_sq)
+
+        Q_L = ((2.0 * J_B) + 1.0) * Matrix_l[i, 1] * (k_fl**3) / (6.0 * (math.pi**2))
+        q_list.append(Q_L)
+
+        # rho_l = k_fl**3 / (3.*(math.pi**2))
+        # rho_list.append(rho_l)
+
+    f = [
+        (
+            sigma * (m_sig**2) / g_sigma
+            - sum(np.array(rho_SB_list) * Matrix_b[:, 3])
+            + (kappa * (g_sigma * sigma) ** 2) / 2.0
+            + (lambda_0 * (g_sigma * sigma) ** 3) / 6.0
+        )
+        ** 2,
+        (
+            omega * (m_w**2) / g_omega
+            - sum(np.array(rho_B_list) * Matrix_b[:, 4])
+            + (zeta * (g_omega * omega) ** 3) / 6.0
+            + 2.0 * Lambda_w * g_omega * omega * (rho_03 * g_rho) ** 2
+        )
+        ** 2,
+        (
+            rho_03 * (m_rho**2) / g_rho
+            - sum(np.array(rho_B_list) * Matrix_b[:, 5] * Matrix_b[:, 2])
+            + 2.0 * Lambda_w * g_rho * rho_03 * (omega * g_omega) ** 2
+        )
+        ** 2,
+        (rho - sum(rho_B_list)) ** 2,
+        (sum(q_list)) ** 2,
+    ]
+
+    return f
+
+
+def Energy_density_Pressure(x, rho, theta):
+    """Generate pressure and energy density two EOS ingredient from given RMF term and given parameters,
+
+    Args:
+        x (array): An array that consists of the initial values of sigma, omega, rho, and chemical
+        potential obtained from the initial_values function.
+        rho (float): The central density from which the computation of the equation of state begins.
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 10 parameters.
+
+
+    Returns:
+        energy_density (float): EOS ingredient, energy density in g/cm3
+        pressure (float): EOS ingredient, pressure in dyn/cm3
+
+    """
+    sigma, omega, rho_03, mu_n, mu_e = x
+
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
+
+    m_e = 2.5896 * 10**-3
+    m_mu = 0.53544
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    J_B = 1 / 2.0
+    b_B = 1
+
+    m_l = np.array([m_e, m_mu])
+    m_b = np.array([m_p, m_n])
+
+    energy_b = 0
+    energy_l = 0
+    multi = 0
+
+    m_eff = m_n - (g_sigma * sigma)
+
+    for i in range(len(Matrix_b)):
+        mu_b = Matrix_b[i, 0] * mu_n - Matrix_b[i, 1] * mu_e
+
+        E_fb = mu_b - g_omega * omega - g_rho * rho_03 * Matrix_b[i, 2]
+
+        k_fb_sq = E_fb**2 - m_eff**2
+        if k_fb_sq < 0:
+            k_fb_sq = 0.0
+            E_fb = m_eff
+
+        k_fb = math.sqrt(k_fb_sq)
+
+        rho_B = ((2.0 * J_B) + 1.0) * b_B * (k_fb**3) / (6.0 * math.pi**2)
+
+        multi = multi + mu_b * rho_B
+        energy_baryon = (1 / (8.0 * (math.pi**2))) * (
+            k_fb * (E_fb**3)
+            + (k_fb**3) * E_fb
+            - np.log((k_fb + E_fb) / m_eff) * m_eff**4
+        )
+
+        energy_b = energy_b + energy_baryon
+
+    for j in range(len(Matrix_l)):
+        mu_l = Matrix_l[i, 0] * mu_n - Matrix_l[j, 1] * mu_e
+
+        k_fl_sq = mu_l**2 - m_l[j] ** 2
+        if k_fl_sq < 0.0:
+            k_fl_sq = 0.0
+        k_fl = math.sqrt(k_fl_sq)
+
+        rho_l = k_fl**3 / (3.0 * math.pi**2)
+
+        multi = multi + mu_l * rho_l
+        energy_lepton = (1 / (8.0 * (math.pi**2))) * (
+            k_fl * (mu_l**3)
+            + mu_l * (k_fl**3)
+            - (m_l[j] ** 4) * np.log((k_fl + mu_l) / m_l[j])
+        )
+
+        energy_l = energy_l + energy_lepton
+
+    sigma_terms = (
+        0.5 * ((sigma * m_sig) ** 2)
+        + (kappa * ((g_sigma * sigma) ** 3)) / 6.0
+        + (lambda_0 * ((g_sigma * sigma) ** 4)) / 24.0
+    )
+
+    omega_terms = 0.5 * ((omega * m_w) ** 2) + (zeta * ((g_omega * omega) ** 4)) / 8.0
+
+    rho_terms = 0.5 * ((rho_03 * m_rho) ** 2) + +3.0 * Lambda_w * (
+        (g_rho * rho_03 * g_omega * omega) ** 2
+    )
+
+    energy_density = energy_b + energy_l + sigma_terms + omega_terms + rho_terms
+
+    Pressure = multi - energy_density
+
+    return energy_density, Pressure
+
+
+def compute_EOS(eps_crust, pres_crust, theta):
+    """Generate core part equation of state, main function, from RMF model,
+
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 10 parameters.
+
+    Returns:
+        energy_density (float): EOS ingredient, energy density in g/cm3
+        pressure (float): EOS ingredient, pressure in dyn/cm3
+
+    """
+    dt = 0.05
+    rho_0 = 0.1505
+
+    x_init = np.array(initial_values(0.1 * rho_0, theta))
+    Energy = []
+    Pressure = []
+    for i in range(1, 125):
+        rho = i * dt * rho_0
+        arg = np.append(theta, rho)
+        sol = optimize.root(functie, x_init, method="lm", args=arg)
+
+        Re = Energy_density_Pressure(x_init, rho, theta)
+
+        Energy.append(Re[0] * oneoverfm_MeV / gcm3_to_MeVfm3)
+        Pressure.append(Re[1] * oneoverfm_MeV / dyncm2_to_MeVfm3)
+
+        x_init = sol.x
+
+    Energy = np.array(Energy)
+    Pressure = np.array(Pressure)
+
+    end = 0
+    for i in range(0, len(Energy) - 1):
+        if Energy[i] > max(eps_crust / g_cm_3) and i > 18:
+            end = i + 2
+            break
+        end += 1
+    ep = Energy[end::] * G / c**2
+    pr = Pressure[end::] * G / c**4
+
+    # tzzhou: migrating to new unit convention
+    ep = ep * c**2 / G * g_cm_3
+    pr = pr * c**4 / G * dyn_cm_2
+
+    return ep, pr
+
+
+##################### Date: 04 Nov 2024 #######################
+###  João Cartaxo ### Tuhin Malik ### Constança Providência ###
+def initial_guess_alpha(rho, theta):
+    """ Outputs the sigma, omega, rho field value 
+
+    Args:
+        rho (float): given nuclear density
+        theta (array): parameters to determine an RMF model in Lagrangian, here we have 11 parameters,
+        where the last parameters are the proton fraction (alpha) and the density rho.
+
+    Returns:
+        math.sqrt(sigma) (float): square root of the sigma term in lagrangian
+        math.sqrt(omega) (float): square root of the omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+    """
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha = theta
+        
+    sigma = g_sigma*rho/(m_sig**2)
+    rho_03 = -g_rho*rho/(2.*(m_rho**2))
+    omega = rho*((((m_w**2)/g_omega)+\
+    (2.*Lambda_w*((g_rho*rho_03)**2)*g_omega))**(-1.))
+
+    return math.sqrt(sigma), math.sqrt(omega), rho_03
+    
+def fields_alpha(x, args):
+    """ Iterate the sigma, omega, and rho fields for a given proton fraction and density
+
+    Args:
+        x (array): initial sqrt(sigma) sqrt(omega) and rho from initial_values function
+        args (array): parameters to determine a RMF model in Lagrangian, here we have 12 parameters,
+        where the last parameters are the proton fraction (alpha) and the density rho. 
+        For pure neutron matter (PNM), alpha is 0, and for symmetric nuclear matter, alpha is 0.5.
+
+    Returns:
+        f (array): field equations which are then solved using the scipy root finding function.
+    """
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha, rho = args
+
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    sigma_sqrt, omega_sqrt, rho_03 = x
+
+    sigma = sigma_sqrt**2
+    omega = omega_sqrt**2
+
+    m_eff = m_n - (g_sigma*sigma)
+
+    # Proton
+    rho_p    = alpha*rho
+    kf_p     = (rho_p*(3*math.pi**2))**(1/3)
+    E_fp     = (kf_p**2 + m_eff**2)**(1/2)
+    rho_SB_p = (m_eff/(2.*math.pi**2))*(E_fp*kf_p - (m_eff**(2))*np.arctanh(kf_p/E_fp))
+
+    #Neutron
+    rho_n    = (1-alpha)*rho
+    kf_n     = (rho_n*(3*math.pi**2))**(1/3)
+    E_fn     = (kf_n**2 + m_eff**2)**(1/2)
+    rho_SB_n = (m_eff/(2.*math.pi**2))*(E_fn*kf_n - (m_eff**(2))*np.arctanh(kf_n/E_fn))
+
+    rho_b  = rho_p    + rho_n      
+    rho_SB = rho_SB_p + rho_SB_n
+    
+    fvec_0 = (sigma*(m_sig**2)/g_sigma - rho_SB +(kappa*(g_sigma*sigma)**2)/2.\
+              + (lambda_0*(g_sigma*sigma)**3)/6.)**2
+    fvec_1 = (omega*(m_w**2)/g_omega - rho + (zeta*(g_omega*omega)**3)/6.\
+              + 2.*Lambda_w*g_omega*omega*(rho_03*g_rho)**2)**2
+    fvec_2 = (rho_03*(m_rho**2)/g_rho - (alpha-0.5)*rho + 2.*Lambda_w*g_rho*rho_03*(omega*g_omega)**2)**2
+
+    f=[(fvec_0),(fvec_1),(fvec_2)]
+    return f
+
+def get_energy_pressure_alpha(x, rho, theta):
+    """ Generate pressure and energy density at a given number density and proton fraction 
+    
+    Args:
+        x (array): An array that consists of the initial values of sqrt(sigma), sqrt(omega), and rho 
+        obtained from the initial_values function.
+        rho (float): The central density from which the computation of the equation of state begins.
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last parameters
+        is the proton fraction (alpha).
+
+
+    Returns:
+        energy_density (float): EOS ingredient, energy density in fm-4
+        pressure (float): EOS ingredient, pressure in fm-4
+
+    """
+    sigma_sqrt, omega_sqrt, rho_03 = x
+
+    sigma = sigma_sqrt**2
+    omega = omega_sqrt**2
+
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha = theta
+   
+    
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    m_eff    = m_n - (g_sigma*sigma)
+
+   
+    #Proton
+    rho_p    = alpha*rho
+    kf_p     = (rho_p*(3*math.pi**2))**(1/3)
+    E_fp     = (kf_p**2 + m_eff**2)**(1/2)
+    energy_p = (1/(8.*(math.pi**2)))*(kf_p*E_fp*(2*kf_p**2+m_eff**2) - np.log((kf_p + E_fp)/m_eff)*m_eff**4)
+    integral_p = 1/4 * ( 1.5 * m_eff**4*np.arctanh(kf_p/E_fp) - 1.5*kf_p*m_eff**2*E_fp + kf_p**3*E_fp )
+    Pressure_p = 1/3*(1/math.pi**2 * integral_p) 
+
+    #Neutron
+    rho_n    = (1-alpha)*rho
+    kf_n     = (rho_n*(3*math.pi**2))**(1/3)
+    E_fn     = (kf_n**2 + m_eff**2)**(1/2)
+    energy_n = (1/(8.*(math.pi**2)))*(kf_n*E_fn*(2*kf_n**2+m_eff**2) - np.log((kf_n + E_fn)/m_eff)*m_eff**4)
+    integral_n = 1/4 * ( 1.5 * m_eff**4*np.arctanh(kf_n/E_fn) - 1.5*kf_n*m_eff**2*E_fn + kf_n**3*E_fn )
+    Pressure_n = 1/3*(1/math.pi**2 * integral_n) 
+
+    #Total
+    energy_b = energy_p + energy_n
+    Pressure_b = Pressure_p + Pressure_n
+    
+
+    sigma_terms =  0.5*((sigma*m_sig)**2) + (kappa*((g_sigma*sigma)**3))/6.\
+                    + (lambda_0*((g_sigma*sigma)**4))/24.
+        
+    omega_terms = 0.5*((omega*m_w)**2) +(zeta*((g_omega*omega)**4))/8.
+        
+    rho_terms = 0.5*((rho_03*m_rho)**2)+ 3.*Lambda_w*((g_rho*rho_03*g_omega*omega)**2)
+    
+    energy_density = energy_b   + sigma_terms + omega_terms + rho_terms
+    Pressure       = Pressure_p + Pressure_n  - sigma_terms + omega_terms + rho_terms
+
+    return energy_density, Pressure
+
+
+def get_eos_alpha(theta, single_point = False):
+    """ Generate EOS for a given alpha
+
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last
+        defined the proton fraction (alpha).
+        single_point (boolean): Allows for the return of a single point of the EoS.
+
+    Returns:
+        rho (array): EOS ingredient, density in fm-3
+        energy_density (array): EOS ingredient, energy density in fm-4
+        pressure (array): EOS ingredient, pressure in fm-4
+
+    """
+    if not single_point:
+        x_init           = np.array(initial_guess_alpha(0.05, theta))
+        dt               = 0.006
+        N_points         = 250
+
+        Density  = np.empty(N_points, dtype=float)
+        Energy   = np.empty(N_points, dtype=float)
+        Pressure = np.empty(N_points, dtype=float)
+        for i in range(N_points):
+            rho = 0.04 + i*dt
+
+            arg    = np.append(theta, rho)
+            sol    = optimize.root(fields_alpha, np.array(x_init).astype(np.float64) ,method='lm', args = arg.astype(np.float64))
+            x_init = sol.x
+            Re     = get_energy_pressure_alpha(x_init.astype(np.float64), rho, theta.astype(np.float64))
+
+            Density[i]  = (rho)
+            Energy[i]   = (Re[0]*oneoverfm_MeV/gcm3_to_MeVfm3)
+            Pressure[i] = (Re[1]*oneoverfm_MeV/dyncm2_to_MeVfm3)
+
+        rh = Density
+        ep = Energy   * g_cm_3
+        pr = Pressure * dyn_cm_2
+        
+        return rh, ep, pr
+    else:
+        rho    = single_point
+        x_init = np.array(initial_guess_alpha(rho, theta))
+
+        arg = np.append(theta, rho)
+        sol = optimize.root(fields_alpha, np.array(x_init).astype(np.float64) ,method='lm', tol=1e-15, args = arg.astype(np.float64))
+        Re  = get_energy_pressure_alpha(sol.x.astype(np.float64), rho, theta.astype(np.float64))
+
+        return rho, Re[0] * oneoverfm_MeV / gcm3_to_MeVfm3 * g_cm_3 , Re[1] * oneoverfm_MeV / dyncm2_to_MeVfm3 *dyn_cm_2
+

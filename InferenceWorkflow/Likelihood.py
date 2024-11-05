@@ -316,7 +316,7 @@ def chiEFT_PNM( EoS_PNM, type="Gaussian", contraint_quantity="e", enlargement=0)
     
     Calculate the log-likelihood for the equation of state (EoS) of pure neutron matter using 
     chiEFT data extracted from chiral effective field theory. This can be achieved by assigning 
-    constants to the energy per neutron \( E/N \) or the pressure \( p \), utilizing either a 
+    constants to the energy per neutron ( E/N ) or the pressure ( p ), utilizing either a 
     Gaussian or Super-Gaussian likelihood model.
     
     Parameters:
