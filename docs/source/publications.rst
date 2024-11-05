@@ -51,7 +51,7 @@ The initial papers based on or contributing to this package are listed below:
 If your work relates to pQCD computations, chiral effective field theory constraints, or density-function implementations within the **CompactObject** framework, please ensure to update the corresponding sections with your publications.
 
 Citing CompactObject
-====================
+--------------------
 
 .. code-block:: none
 
@@ -63,12 +63,12 @@ Citing CompactObject
 .. [CompactObject] https://chunhuangphy.github.io/CompactObject/
 
 Acknowledgements
-================
+----------------
 
 We welcome feedback and contributions to expand the functionalities of **CompactObject**. Your support helps enhance the tool for the entire research community.
 
 Contact
-=======
+-------
 
 For inquiries, contributions, or to be featured in our publications list, please contact us at `chun.h@wustl.edu <mailto:chun.h@wustl.edu>`_.
 
