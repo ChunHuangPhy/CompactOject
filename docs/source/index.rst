@@ -4,10 +4,16 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: User guides
+   :caption: User Guide
 
    installation
    publications
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Development
+   
+   Contributors
 
 .. toctree::
    :maxdepth: 2
