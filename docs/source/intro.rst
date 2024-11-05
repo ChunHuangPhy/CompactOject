@@ -1,175 +1,184 @@
 .. _readme:
 
 ***********************************
-CompactObject package Tutorials
+CompactObject Package Tutorials
 ***********************************
 
-**An open-source package for neutron star**
-**whole workflow Bayesian nference constraining**
-**Neutron star EOS package**
+**An Open-Source Package for Neutron Stars**
+**Comprehensive Workflow for Bayesian Inference Constraining**
+**Neutron Star EOS Package**
 
-CompactObject is designed to open-source a full-scope neutron star equation inference.
-Currently, this equation of state framework is mainly based on relativistic mean field
-(RMF) theory. The package integrates three independent modules:
+**CompactObject** is an open-source package designed to perform Bayesian inference 
+on neutron star equation of state (EOS) constraints. It offers a comprehensive workflow
+that integrates astrophysical observations and nuclear measurements to explore the interior 
+composition of neutron stars. The package is built to be user-friendly, easily extendable, 
+and thoroughly documented, making it an essential tool for researchers in nuclear astrophysics.
+The package integrates three independent modules:
 
-1. A user-friendly Tolman–Oppenheimer–Volkoff (TOV) equation solver for determining
-neutron star structure based on a given equation of state (EOS).
+1. **Tolman–Oppenheimer–Volkoff (TOV) Equation Solver**  
+   A user-friendly solver for determining neutron star structure based on a given EOS.
 
-2. A neutron star full density range equation of state generator. At present, it 
-only contains the relativistic mean field theory equation of state solver. In 
-the future, it will easily accommodate polytropes and more equation of states.
+2. **Neutron Star EOS Generator**  
+   Generates EOS across the full density range. Currently, it includes the relativistic mean 
+   field theory EOS solver and will support polytropes and additional EOS models in the future.
 
-3. A complete Bayesian inference workflow package for constraining the equation 
-of state of neutron stars. This includes defining the likelihood of inference from
-observations and nuclear experiments, as well as from simulated astrophysical 
-observations. It also involves defining priors for the given parameters and running 
-a nested sampling of the posterior space.
+3. **Bayesian Inference Workflow**  
+   A complete package for constraining the EOS of neutron stars. This includes defining the 
+   likelihood from observations (X-ray timing, gravitational waves, radio timing) and nuclear 
+   experiments (nuclear quantities, pQCD, chiral EFT), as well as from simulated astrophysical 
+   observations. It also involves defining priors for the parameters and running nested sampling 
+   of the posterior space.
 
+These three components are independent, allowing users to integrate them into their workflows 
+seamlessly. The package's functionality extends beyond inference studies, and we welcome 
+contributions of new features.
 
-We should mention that these three parts are independent, which means users can embed
-these modules as part of their work. The usage of this package extends beyond conducting
-inference studies. Additionally, we welcome contributions of new features for our package.
+For installation instructions, please refer to the `Installation Page <https://chunhuangphy.github.io/CompactObject/installation.html>`_.
 
+### Publications
 
-The papers generated from this package are listed below:
-[1]
-`(Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C.,
-“Constraining fundamental nuclear physics parameters using neutron star mass-radius
-measurements I: Nucleonic models”, 2023. doi:10.48550/arXiv.2303.17518) <https://arxiv.org/abs/2303.17518>`_
+Papers generated using this package include:
 
-If you are using our software, please consider citing us using the following standard citation:
+.. [1] **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024).  
+   *Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models*.  
+   *Monthly Notices of the Royal Astronomical Society*, 529.  
+   `DOI:10.1093/mnras/stae844 <https://academic.oup.com/mnras/article/529/4/4650/7634362>`_
 
-.. code-block:: "The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{\url{https://chunhuangphy.github.io/CompactObject/}}. This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ...."
+.. [2] **Huang, C., Tolos, L., Providência, C., & Watts, A.** (2024).  
+   *Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models*.  
+   *arXiv preprint arXiv:2410.14572*.  
+   `https://arxiv.org/abs/2410.14572 <https://arxiv.org/abs/2410.14572>`_
+
+.. [3] **Huang, C., & Zheng, X.-P.** (2024).  
+   *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*.  
+   *arXiv preprint arXiv:2409.18432*.  
+   `https://arxiv.org/abs/2409.18432 <https://arxiv.org/abs/2409.18432>`_
+
+If you use our software, please consider citing us with the following standard citation:
+
+.. [CompactObject] The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_.  
+   This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ....
+
+.. _CompactObject: https://chunhuangphy.github.io/CompactObject/
 
 Concept
-*******
+=======
 
 Bayesian inference studies of the neutron star equation of state have become a trending
-field nowadays, particularly due to significant advancements such as the Neutron Star 
-Interior Composition Explorer (NICER) measuring the mass and radius of neutron stars 
-through X-ray timing, as well as the detection of neutron star merger events through
-gravitational wave observations by the LIGO detector.
+field, particularly due to significant advancements such as the Neutron Star 
+Interior Composition Explorer (NICER) measuring neutron star masses and radii through X-ray timing, and the detection of neutron star merger events through gravitational wave observations by the LIGO detector.
 
-Here below is the overall pipline of this field:
+Below is the overall pipeline of this field:
 
 .. image:: workflow.png
+   :alt: Workflow Diagram
 
+As depicted in this diagram, fundamental physics provides the EOS for neutron stars. By inputting the EOS into the Tolman–Oppenheimer–Volkoff (TOV) equation, we can obtain parameters related to the neutron star structure, such as mass, radius, and tidal properties. Instruments like NICER and LIGO measure these properties, providing data for Bayesian inference. This process constrains the EOS by determining the region in the Mass-Radius space where neutron stars can exist, ultimately offering insights into the fundamental composition of their interiors.
 
-As depicted in this plot, fundamental physics can provide the equation of state for 
-neutron stars. By inputting the equation of state into the Tolman–Oppenheimer–Volkoff
-(TOV) equation, we can obtain parameters related to the neutron star structure, such
-as mass, radius, and tidal properties. Instruments like NICER and LIGO can be utilized
-to measure these properties. With the information obtained from observations, it
-becomes possible to perform Bayesian inference constraining, such as determining the
-region in the Mass-Radius space where neutron stars can exist. Subsequently, we can
-derive constraints on the equation of state space and, ideally, obtain insights into
-the fundamental composition of the neutron star's interior.
+Equation of State
+=================
 
-**Equation of State**
-
-The neutron star equation of state (EOS) plays a crucial role in reflecting the 
-composition of a neutron star. It is closely connected to the microphysical 
-properties of neutron stars. In this context, we are utilizing an equation of 
-state derived from a model known as the Relativistic Mean Field theory (RMF). 
-The Lagrangian of this model is represented as follows:
+The neutron star equation of state (EOS) plays a crucial role in determining the composition of a neutron star. It is closely connected to the microphysical properties of neutron stars. Here, we introduce an EOS derived from the Relativistic Mean Field (RMF) theory. The Lagrangian of this model is represented as follows:
 
 .. math::
 
-   \mathcal{L}=\sum_N \mathcal{L}_N+\mathcal{L}_{\mathcal{M}}+\sum_l \mathcal{L}_l
+   \mathcal{L} = \sum_N \mathcal{L}_N + \mathcal{L}_{\mathcal{M}} + \sum_l \mathcal{L}_l
 
+Where:
 
-Where the :math:`\mathcal{L}_N` is the neucleonic Lagrangian, :math:`\mathcal{L}_M`
-is the meson part Lagrangian, :math:`\mathcal{L}_l` is the lepton Lagrangian.
-details of the Lagrangian are
+- :math:`\mathcal{L}_N` is the nucleonic Lagrangian
+- :math:`\mathcal{L}_{\mathcal{M}}` is the meson part of the Lagrangian
+- :math:`\mathcal{L}_l` is the lepton Lagrangian
+
+Details of the Lagrangian are illustrated below:
 
 .. image:: lagrangian.png
+   :alt: Lagrangian Diagram
 
-where :math:`\Psi_{N}` and :math:`\psi_{l}` are the nucleon and lepton spinors,
-and :math:`\bar{I}_{N}` is the nucleon isospin operator. The strong interaction
-coupling of a meson to a nucleon is denoted by :math:`g`, while the masses of 
-the nucleons, mesons, and leptons are denoted by :math:`m`. The parameters :math:`\kappa`,
-:math:`\lambda_0`, :math:`\zeta` and :math:`\Lambda_{\omega}` plus the meson-nucleon
-coupling constants are coupling constants to be determined by the inference method.
+In the equation:
 
-These free parameters represent the degrees of freedom in the RMF model and can be
-determined through nuclear experiments. However, in addition to nuclear experiments, 
-we can also explore the possibility of constraining these parameters through 
-astrophysical observations. The complete list of parameters includes:
+- :math:`\Psi_{N}` and :math:`\psi_{l}` are the nucleon and lepton spinors
+- :math:`\bar{I}_{N}` is the nucleon isospin operator
+- :math:`g` denotes the strong interaction coupling of a meson to a nucleon
+- :math:`m` represents the masses of the nucleons, mesons, and leptons
+- The parameters :math:`\kappa`, :math:`\lambda_0`, :math:`\zeta`, and :math:`\Lambda_{\omega}` are coupling constants to be determined by the inference method
+
+These free parameters represent the degrees of freedom in the RMF model and can be determined through nuclear experiments. Additionally, astrophysical observations can help constrain these parameters. The complete list of parameters includes:
 
 .. image:: free_para.png
+   :alt: Free Parameters Diagram
 
-These are the parameters that you should input to generate the equation of state 
-from our EOSgenerators module, different equation of state parameter will have different
-effect on mass radius like we showed here.More details about this physics can check 
-`(Glendenning, 1996) <https://ui.adsabs.harvard.edu/abs/1996cost.book.....G/abstract>`_
+These parameters should be inputted to generate the EOS using our EOS generators module. Different EOS parameters will affect mass-radius relations, as demonstrated here. For more details on the physics, refer to `Glendenning (1996) <https://ui.adsabs.harvard.edu/abs/1996cost.book.....G/abstract>`_.
 
-**Tolman–Oppenheimer–Volkoff(TOV) equation**
+Tolman–Oppenheimer–Volkoff (TOV) Equation
+==========================================
 
-TOV equation is a general relativity equation that constrain the structure of 
-a spherical symmetrical body by gravity. This is the original equation:
+The TOV equation is a general relativity equation that constrains the structure of a spherically symmetrical body under gravity. The original equation is:
 
 .. math::
 
-    \frac{d P}{d r}=-\frac{G m}{r^2} \rho\left(1+\frac{P}{\rho c^2}\right)\left(1+\frac{4 \pi r^3 P}{m c^2}\right)\left(1-\frac{2 G m}{r c^2}\right)^{-1}
+    \frac{d P}{d r} = -\frac{G m}{r^2} \rho \left(1 + \frac{P}{\rho c^2}\right) \left(1 + \frac{4 \pi r^3 P}{m c^2}\right) \left(1 - \frac{2 G m}{r c^2}\right)^{-1}
 
+To solve this equation, the essential ingredient is the EOS. The basic strategy is as follows: at a given central density, input it into the neutron star EOS to obtain the pressure. Then, integrate the density from the center to the boundary, repeating this process across the entire possible density range.
 
+In our code, we provide two different functions:
 
-To solve this problem, the essential ingredient is the equation of state (EOS).
-Once you have the EOS, the basic strategy for solving the equation is as follows: 
-at a given central density, you input it into the neutron star EOS to obtain the 
-pressure. Then, you integrate the density from the center to the boundary, repeating 
-this process across the entire possible density range.
+1. **Default Solver:**  
+   Solves the TOV equation within a predefined density range (log(14.3, 15.6) on a scale of 10).
 
-In our code, we provide two different functions that you can call. The default option
-allows you to solve the Tolman-Oppenheimer-Volkoff (TOV) equation within a predefined 
-density range, which is log(14.3, 15.6) on a scale of 10. Alternatively, you can choose 
-to solve the equation point by point, allowing you to select any central density range
-you prefer. More information about TOV you could check 
-`(wiki page) <https://en.wikipedia.org/wiki/Tolman–Oppenheimer–Volkoff_equation>`_
+2. **Point-by-Point Solver:**  
+   Allows solving the equation for any chosen central density range.
 
-The following image integrates (and thus averages) over waveband (a
-range of photon energies). We also decrease the mode frequency relative to the
-stellar spin frequency, such that the mode is not as equatorially trapped.
+For more information on the TOV equation, visit the `Wikipedia page <https://en.wikipedia.org/wiki/Tolman–Oppenheimer–Volkoff_equation>`_.
 
-**Bayesian Inference**
+The following image illustrates the integration over a waveband (a range of photon energies). We also decrease the mode frequency relative to the stellar spin frequency, ensuring the mode is not as equatorially trapped.
 
-Using Bayesian inference tools to explore the constraint of neutron star equation of state
-is common nowadays, the basic equation of it is Bayes theorem:
+.. image:: mode_integration.png
+   :alt: Mode Integration Diagram
 
+Bayesian Inference
+==================
+
+Using Bayesian inference tools to explore constraints on the neutron star EOS is increasingly common. The foundational equation is Bayes' Theorem:
 
 .. math::
-    P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}
+    P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}
 
-That is, Posterior probablity is propotional to the prior probablity times likelihood.
-Posterior is --- after correction of the new observations/experiment, the probablity of
-something is true.
-Prior is --- before the new observations/experiment come in, my initial thought about the
-probablity of something is true.
-Likelihood is --- the correction that we get from the new observation/experiments.
+Where:
 
-Here, the likelihood will be mostly come from three different families:
+- **Posterior Probability** (:math:`P(A \mid B)`): The probability of hypothesis A after observing B.
+- **Prior Probability** (:math:`P(A)`): The initial probability of hypothesis A before observing B.
+- **Likelihood** (:math:`P(B \mid A)`): The probability of observing B given that hypothesis A is true.
+- **Evidence** (:math:`P(B)`): The probability of observing B under all possible hypotheses.
 
-1. Mass Raius measurements from x-ray timing (like NICER).
-2. Tidal measurements from gravitational wave detection
-3. Mass measurements from radio timing.
-4. Nuclear physics constraint comes from the nuclear experiments.
+In this context:
 
-NICER Mass radius measurements are remarkable achievement of this centry of neutron star
-physics, same as the gravitational wave detection. many references out there for this topic.
-About the Nuclear physics connection between our equation of state and the nuclear quantities,
-please check `(Chen & Piekarewicz 2014a) <https://journals.aps.org/prc/abstract/10.1103/PhysRevC.90.044305>`_
+- **Posterior** is the updated probability after considering new observations or experiments.
+- **Prior** is the initial belief before new data is considered.
+- **Likelihood** is the influence of new data on the belief.
 
+The likelihood in our studies primarily comes from four sources:
 
-Here the nuclear physics quantities we cared are K, J and L, that is the decompressibility of
-nuclear matter K, symmerty energy at saturation density J, and the slope of symmetry energy
-at saturation density L. These all can be computed out by posterior samples (will add the nuclear
-properties computation code in near future). Also they could be independent group of constraint on 
-our equation of state of neutron star.
+1. **Mass-Radius Measurements from X-ray Timing** (e.g., NICER)
+2. **Tidal Measurements from Gravitational Wave Detection**
+3. **Mass Measurements from Radio Timing**
+4. **Nuclear Physics Constraints from Experiments**
 
-When you do a Real astrophysical sampling, the important thing is you should also sampling the 
-neutron star central density of that measurement you are using, which means if you want to investigate
-what the constraining effect for neutron star EOS by two mass radius measurements, then you need 
-define another two free parameters ---  the central densities of these measurements, other-wise, 
-this could be proved to be a not full-scope equation of state inference, that is why our likelihood
-functions once you want to constraint from observation, always need a parameter d1, that is the 
-density parameter of this observation. 
+NICER's mass-radius measurements are a significant achievement in neutron star physics, comparable to gravitational wave detections. For the connection between our EOS and nuclear quantities, refer to `Chen & Piekarewicz (2014a) <https://journals.aps.org/prc/abstract/10.1103/PhysRevC.90.044305>`_.
+
+The nuclear physics quantities we consider are:
+
+- **K**: Compressibility of nuclear matter
+- **J**: Symmetry energy at saturation density
+- **L**: Slope of symmetry energy at saturation density
+
+These can be computed from posterior samples (we will add the nuclear properties computation code in the near future). They also serve as independent constraints on the neutron star EOS.
+
+When performing real astrophysical sampling, it is crucial to sample the neutron star central density corresponding to each measurement used. For instance, if investigating the constraining effect of two mass-radius measurements on the EOS, you need to define two additional free parameters—the central densities for each measurement. Otherwise, the inference would not represent a full-scope EOS analysis. Therefore, our likelihood functions include a parameter :math:`d_1`, representing the density parameter of each observation.
+
+Summary
+=======
+
+**CompactObject** provides a comprehensive suite of tools for Bayesian inference on neutron star EOS constraints. By integrating astrophysical observations with nuclear experiments, it facilitates a deeper understanding of neutron star interiors.
+
+For more information, tutorials, and support, please refer to our documentation or contact the development team.
