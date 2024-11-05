@@ -44,11 +44,13 @@ Please cite the following papers if you use CompactObject in your research:
 
 ## Sample Citation
 
+## Sample Citation
 
+```latex
 "The inference conducted here relies on the framework in the *CompactObject* \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactObject/}. This is an open-source, comprehensive package designed to implement Bayesian constraints on the neutron star EOS. Other works based on this package include ..."
 
 [CompactObject-TOV Package Website](https://chunhuangphy.github.io/CompactObject/)
-
+```
 ## Includes
 
 CompactObject includes the following components to facilitate neutron star EOS analysis:
