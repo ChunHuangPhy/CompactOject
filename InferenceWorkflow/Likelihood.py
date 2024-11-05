@@ -309,7 +309,7 @@ def Lliklihood(theta,L_low,L_up):
 
 
 
-########################## Date: 04 Nov 2024 #######################################
+############################################ Date: 04 Nov 2024 #########################################################
 def chiEFT_PNM( EoS_PNM, type="Gaussian", contraint_quantity="e", enlargement=0):
     """
     Authors: João Cartaxo, Tuhin Malik, Constança Providência
@@ -471,10 +471,84 @@ def chiEFT_PNM( EoS_PNM, type="Gaussian", contraint_quantity="e", enlargement=0)
 ########################################################################################################################
 
 
+############################################ Date: 05 Nov 2024 #########################################################
+from InferenceWorkflow.pQCD import constraints
+def ln_pQCD(EOS, rho_list=[0.92], points=1000):
+    """
+    Calculates the log-likelihood for the beta-equilibrium equation of state (EoS) using pQCD data. 
+    
+    Parameters:
+    -----------
+    EoS : np.ndarray
+        Array with beta-equilibrium equation of state data, where:
+        - EoS[0] is the density in fm^-3,
+        - EoS[1] is the energy density GeV.fm^-3.
+        - EoS[2] is the pressure in GeV.fm^-3.
+        
+    rho_list : list, optional
+       Specifies at which number densities (in fm^-3) to compute the pQCD contraint at.
+        
+    points : int, optional
+        Number of points used to compute the weight, a higher number allows for greater precisions.
+        
+    Returns:
+    --------
+    log_mean : float
+    The averaged sum of log-likelihoods over constraint on number density specified by rho_list fm^-3.
+    
+      
+    Data Sources:
+    -------------
+    - @article{Komoltsev:2021jzg,
+        author = "Komoltsev, Oleg and Kurkela, Aleksi",
+        title = "{How perturbative QCD constrains the Equation of State at Neutron-Star densities}",
+        eprint = "2111.05350",
+        archivePrefix = "arXiv",
+        primaryClass = "nucl-th",
+        month = "11",
+        year = "2021"}
+
+    -@article{Gorda:2022jvk,
+        author = "Gorda, Tyler and Komoltsev, Oleg and Kurkela, Aleksi",
+        title = "{Ab-initio QCD calculations impact the inference of the neutron-star-matter equation of state}",
+        eprint = "2204.11877",
+        archivePrefix = "arXiv",
+        primaryClass = "nucl-th",
+        month = "4",
+        year = "2022"}
+
+    -@article{PhysRevLett.127.162003,
+      title = {Soft Interactions in Cold Quark Matter},
+      author = {Gorda, Tyler and Kurkela, Aleksi and Paatelainen, Risto and S\"appi, Saga and Vuorinen, Aleksi},
+      journal = {Phys. Rev. Lett.},
+      volume = {127},
+      issue = {16},
+      pages = {162003},
+      numpages = {6},
+      year = {2021},
+      month = {Oct},
+      publisher = {American Physical Society},
+      doi = {10.1103/PhysRevLett.127.162003},
+      url = {https://link.aps.org/doi/10.1103/PhysRevLett.127.162003}}
+    """
+    
+    log_mean = 0
+    for rho in rho_list:
+        energy   = np.interp(rho, EOS[0], EOS[1])
+        pressure = np.interp(rho, EOS[0], EOS[2])
+        weight   = np.empty(points)
+
+        for i in range(points):    
+            X = np.exp(np.random.uniform( np.log(1), np.log(4) )) # Exp of the Log-linear distribution
+            # To apply random weightage of the renormalization scale between X=1 to X=4            
+            weight[i] = int(constraints(X, energy, pressure, rho)) 
+        log_mean += np.log(weight.mean())
+    log_mean = log_mean/len(rho_list)
+                            
+    return log_mean
 
 
-
-
+########################################################################################################################
 
 
 
