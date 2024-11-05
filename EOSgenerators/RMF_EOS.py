@@ -344,6 +344,192 @@ def compute_EOS(eps_crust, pres_crust, theta):
     return ep, pr
 
 
+##################### Date: 04 Nov 2024 #######################
+###  João Cartaxo ### Tuhin Malik ### Constança Providência ###
+def initial_guess_alpha(rho, theta):
+    """ Outputs the sigma, omega, rho field value 
+
+    Args:
+        rho (float): given nuclear density
+        theta (array): parameters to determine an RMF model in Lagrangian, here we have 11 parameters,
+        where the last parameters are the proton fraction (alpha) and the density rho.
+
+    Returns:
+        math.sqrt(sigma) (float): square root of the sigma term in lagrangian
+        math.sqrt(omega) (float): square root of the omega term in lagrangian
+        rho_03 (float): rho term in lagrangian
+    """
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha = theta
+        
+    sigma = g_sigma*rho/(m_sig**2)
+    rho_03 = -g_rho*rho/(2.*(m_rho**2))
+    omega = rho*((((m_w**2)/g_omega)+\
+    (2.*Lambda_w*((g_rho*rho_03)**2)*g_omega))**(-1.))
+
+    return math.sqrt(sigma), math.sqrt(omega), rho_03
+    
+def fields_alpha(x, args):
+    """ Iterate the sigma, omega, and rho fields for a given proton fraction and density
+
+    Args:
+        x (array): initial sqrt(sigma) sqrt(omega) and rho from initial_values function
+        args (array): parameters to determine a RMF model in Lagrangian, here we have 12 parameters,
+        where the last parameters are the proton fraction (alpha) and the density rho. 
+        For pure neutron matter (PNM), alpha is 0, and for symmetric nuclear matter, alpha is 0.5.
+
+    Returns:
+        f (array): field equations which are then solved using the scipy root finding function.
+    """
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha, rho = args
+
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    sigma_sqrt, omega_sqrt, rho_03 = x
+
+    sigma = sigma_sqrt**2
+    omega = omega_sqrt**2
+
+    m_eff = m_n - (g_sigma*sigma)
+
+    # Proton
+    rho_p    = alpha*rho
+    kf_p     = (rho_p*(3*math.pi**2))**(1/3)
+    E_fp     = (kf_p**2 + m_eff**2)**(1/2)
+    rho_SB_p = (m_eff/(2.*math.pi**2))*(E_fp*kf_p - (m_eff**(2))*np.arctanh(kf_p/E_fp))
+
+    #Neutron
+    rho_n    = (1-alpha)*rho
+    kf_n     = (rho_n*(3*math.pi**2))**(1/3)
+    E_fn     = (kf_n**2 + m_eff**2)**(1/2)
+    rho_SB_n = (m_eff/(2.*math.pi**2))*(E_fn*kf_n - (m_eff**(2))*np.arctanh(kf_n/E_fn))
+
+    rho_b  = rho_p    + rho_n      
+    rho_SB = rho_SB_p + rho_SB_n
+    
+    fvec_0 = (sigma*(m_sig**2)/g_sigma - rho_SB +(kappa*(g_sigma*sigma)**2)/2.\
+              + (lambda_0*(g_sigma*sigma)**3)/6.)**2
+    fvec_1 = (omega*(m_w**2)/g_omega - rho + (zeta*(g_omega*omega)**3)/6.\
+              + 2.*Lambda_w*g_omega*omega*(rho_03*g_rho)**2)**2
+    fvec_2 = (rho_03*(m_rho**2)/g_rho - (alpha-0.5)*rho + 2.*Lambda_w*g_rho*rho_03*(omega*g_omega)**2)**2
+
+    f=[(fvec_0),(fvec_1),(fvec_2)]
+    return f
+
+def get_energy_pressure_alpha(x, rho, theta):
+    """ Generate pressure and energy density at a given number density and proton fraction 
+    
+    Args:
+        x (array): An array that consists of the initial values of sqrt(sigma), sqrt(omega), and rho 
+        obtained from the initial_values function.
+        rho (float): The central density from which the computation of the equation of state begins.
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last parameters
+        is the proton fraction (alpha).
 
 
+    Returns:
+        energy_density (float): EOS ingredient, energy density in fm-4
+        pressure (float): EOS ingredient, pressure in fm-4
+
+    """
+    sigma_sqrt, omega_sqrt, rho_03 = x
+
+    sigma = sigma_sqrt**2
+    omega = omega_sqrt**2
+
+    m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha = theta
+   
+    
+    m_n = 4.7583690772
+    m_p = 4.7583690772
+
+    m_eff    = m_n - (g_sigma*sigma)
+
+   
+    #Proton
+    rho_p    = alpha*rho
+    kf_p     = (rho_p*(3*math.pi**2))**(1/3)
+    E_fp     = (kf_p**2 + m_eff**2)**(1/2)
+    energy_p = (1/(8.*(math.pi**2)))*(kf_p*E_fp*(2*kf_p**2+m_eff**2) - np.log((kf_p + E_fp)/m_eff)*m_eff**4)
+    integral_p = 1/4 * ( 1.5 * m_eff**4*np.arctanh(kf_p/E_fp) - 1.5*kf_p*m_eff**2*E_fp + kf_p**3*E_fp )
+    Pressure_p = 1/3*(1/math.pi**2 * integral_p) 
+
+    #Neutron
+    rho_n    = (1-alpha)*rho
+    kf_n     = (rho_n*(3*math.pi**2))**(1/3)
+    E_fn     = (kf_n**2 + m_eff**2)**(1/2)
+    energy_n = (1/(8.*(math.pi**2)))*(kf_n*E_fn*(2*kf_n**2+m_eff**2) - np.log((kf_n + E_fn)/m_eff)*m_eff**4)
+    integral_n = 1/4 * ( 1.5 * m_eff**4*np.arctanh(kf_n/E_fn) - 1.5*kf_n*m_eff**2*E_fn + kf_n**3*E_fn )
+    Pressure_n = 1/3*(1/math.pi**2 * integral_n) 
+
+    #Total
+    energy_b = energy_p + energy_n
+    Pressure_b = Pressure_p + Pressure_n
+    
+
+    sigma_terms =  0.5*((sigma*m_sig)**2) + (kappa*((g_sigma*sigma)**3))/6.\
+                    + (lambda_0*((g_sigma*sigma)**4))/24.
+        
+    omega_terms = 0.5*((omega*m_w)**2) +(zeta*((g_omega*omega)**4))/8.
+        
+    rho_terms = 0.5*((rho_03*m_rho)**2)+ 3.*Lambda_w*((g_rho*rho_03*g_omega*omega)**2)
+    
+    energy_density = energy_b   + sigma_terms + omega_terms + rho_terms
+    Pressure       = Pressure_p + Pressure_n  - sigma_terms + omega_terms + rho_terms
+
+    return energy_density, Pressure
+
+
+def get_eos_alpha(theta, single_point = False):
+    """ Generate EOS for a given alpha
+
+    Args:
+        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
+        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        theta (array): An array representing the parameters used to determine a RMF model in the
+        Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last
+        defined the proton fraction (alpha).
+        single_point (boolean): Allows for the return of a single point of the EoS.
+
+    Returns:
+        rho (array): EOS ingredient, density in fm-3
+        energy_density (array): EOS ingredient, energy density in fm-4
+        pressure (array): EOS ingredient, pressure in fm-4
+
+    """
+    if not single_point:
+        x_init           = np.array(initial_guess_alpha(0.05, theta))
+        dt               = 0.006
+        N_points         = 250
+
+        Density  = np.empty(N_points, dtype=float)
+        Energy   = np.empty(N_points, dtype=float)
+        Pressure = np.empty(N_points, dtype=float)
+        for i in range(N_points):
+            rho = 0.04 + i*dt
+
+            arg    = np.append(theta, rho)
+            sol    = optimize.root(fields_alpha, np.array(x_init).astype(np.float64) ,method='lm', args = arg.astype(np.float64))
+            x_init = sol.x
+            Re     = get_energy_pressure_alpha(x_init.astype(np.float64), rho, theta.astype(np.float64))
+
+            Density[i]  = (rho)
+            Energy[i]   = (Re[0]*oneoverfm_MeV/gcm3_to_MeVfm3)
+            Pressure[i] = (Re[1]*oneoverfm_MeV/dyncm2_to_MeVfm3)
+
+        rh = Density
+        ep = Energy   * g_cm_3
+        pr = Pressure * dyn_cm_2
+        
+        return rh, ep, pr
+    else:
+        rho    = single_point
+        x_init = np.array(initial_guess_alpha(rho, theta))
+
+        arg = np.append(theta, rho)
+        sol = optimize.root(fields_alpha, np.array(x_init).astype(np.float64) ,method='lm', tol=1e-15, args = arg.astype(np.float64))
+        Re  = get_energy_pressure_alpha(sol.x.astype(np.float64), rho, theta.astype(np.float64))
+
+        return rho, Re[0] * oneoverfm_MeV / gcm3_to_MeVfm3 * g_cm_3 , Re[1] * oneoverfm_MeV / dyncm2_to_MeVfm3 *dyn_cm_2
 
