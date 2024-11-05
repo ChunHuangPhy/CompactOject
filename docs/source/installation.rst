@@ -1,4 +1,4 @@
-Installation Instructions
+Installation
 =========================
 
 CompactObject is an open-source tool designed for comprehensive neutron star equation inference. It is built to be easy to install and use. Follow the step-by-step installation guide below to get started.
