@@ -1,6 +1,4 @@
-.. _installation:
-
-Installation Instructions
+Installation
 =========================
 
 CompactObject is an open-source tool designed for comprehensive neutron star equation inference. It is built to be easy to install and use. Follow the step-by-step installation guide below to get started.
@@ -8,112 +6,112 @@ CompactObject is an open-source tool designed for comprehensive neutron star equ
 Using Anaconda (Recommended)
 ---------------------------
 
-### 1. Create a Virtual Environment
+1. **Create a Virtual Environment**
 
-We recommend creating a virtual environment for CompactObject using Anaconda:
+   We recommend creating a virtual environment for CompactObject using Anaconda:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    conda create -n CompactObject
+       conda create -n CompactObject
 
-When prompted to proceed, type `y` and press Enter:
+   When prompted to proceed, type `y` and press Enter:
 
-.. code-block:: none
+   .. code-block:: none
 
-    Proceed ([y]/n)?
+       Proceed ([y]/n)?
 
-### 2. Activate the Environment
+2. **Activate the Environment**
 
-Activate your newly created environment with the following command:
+   Activate your newly created environment with the following command:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    conda activate CompactObject
+       conda activate CompactObject
 
-**Note:** Once you create this environment, you don't need to create it again. Simply activate it whenever you want to use CompactObject.
+   **Note:** Once you create this environment, you don't need to create it again. Simply activate it whenever you want to use CompactObject.
 
-### 3. Install CompactObject
+3. **Install CompactObject**
 
-Use `pip` to install the CompactObject package:
+   Use `pip` to install the CompactObject package:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    pip install CompactObject-TOV
+       pip install CompactObject-TOV
 
-To upgrade to the latest version, run:
+   To upgrade to the latest version, run:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    pip install CompactObject-TOV --upgrade
+       pip install CompactObject-TOV --upgrade
 
-### 4. You're Ready to Use CompactObject!
+4. **You're Ready to Use CompactObject!**
 
-You are now ready to use CompactObject. Whenever you want to use this package, remember to activate the environment first:
+   You are now ready to use CompactObject. Whenever you want to use this package, remember to activate the environment first:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    conda activate CompactObject
+       conda activate CompactObject
 
-Our package automatically installs all necessary dependencies for you. The dependencies include:
+   Our package automatically installs all necessary dependencies for you. The dependencies include:
 
-- `corner`
-- `csv`
-- `itertools`
-- `math`
-- `matplotlib`
-- `numba`
-- `numbaminpack`
-- `numpy`
-- `os`
-- `pandas`
-- `scipy`
-- `sys`
-- `ultranest`
+   - `corner`
+   - `csv`
+   - `itertools`
+   - `math`
+   - `matplotlib`
+   - `numba`
+   - `numbaminpack`
+   - `numpy`
+   - `os`
+   - `pandas`
+   - `scipy`
+   - `sys`
+   - `ultranest`
 
 Optional: Using Python Virtual Environment
 ------------------------------------------
 
 If you are not using Anaconda, you can create a virtual environment using Python's `venv` module:
 
-### 1. Create a Virtual Environment
+1. **Create a Virtual Environment**
 
-Run the following command to create a virtual environment named `CompactObject`:
+   Run the following command to create a virtual environment named `CompactObject`:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    python3 -m venv CompactObject
+       python3 -m venv CompactObject
 
-*You can specify a different path by replacing `CompactObject` with your desired directory name.*
+   *You can specify a different path by replacing `CompactObject` with your desired directory name.*
 
-### 2. Activate the Environment
+2. **Activate the Environment**
 
-Activate the virtual environment with:
+   Activate the virtual environment with:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    source CompactObject/bin/activate
+       source CompactObject/bin/activate
 
-### 3. Install CompactObject
+3. **Install CompactObject**
 
-Once the environment is activated, install CompactObject using `pip`:
+   Once the environment is activated, install CompactObject using `pip`:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    pip install CompactObject-TOV
+       pip install CompactObject-TOV
 
-To upgrade to the latest version, run:
+   To upgrade to the latest version, run:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    pip install CompactObject-TOV --upgrade
+       pip install CompactObject-TOV --upgrade
 
-### 4. Using the Package
+4. **Using the Package**
 
-You are now ready to use CompactObject. Each time you want to use the package, ensure you activate the environment:
+   You are now ready to use CompactObject. Each time you want to use the package, ensure you activate the environment:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-    source CompactObject/bin/activate
+       source CompactObject/bin/activate
 
 Summary
 -------
