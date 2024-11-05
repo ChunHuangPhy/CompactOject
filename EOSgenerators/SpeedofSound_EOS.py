@@ -8,7 +8,7 @@ from scipy.integrate import cumulative_simpson
 #####################  SPEED-OF-SOUND-EOS  BEGIN  ##############################
 
 
-class SpeedOfSoundEOS:
+class compute_EOS:
     def __init__(self, x_last, y_last, dydx_last, enablePTcheck=False) -> None:
         """
         Speed of sound EOS class.
