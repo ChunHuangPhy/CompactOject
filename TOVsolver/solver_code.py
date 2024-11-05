@@ -241,78 +241,7 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
     return Mb * c**2.0 / G * unit.g, Rns * unit.cm, tidal
 
 
-def solveTOV(center_rho, energy_density, pressure):
-    """Solve TOV equation from given Equation of state in the neutron star
-    core density range
-
-    Args:
-        center_rho(array): This is the energy density here is fixed in main
-        that is np.logspace(14.3, 15.6, 50)
-        energy_density (array): Desity array of the neutron star EoS, in MeV/fm^{-3}
-        Notice here for simiplicity, we omitted G/c**4 magnitude, so
-        (value in MeV/fm^{-3})*G/c**4, could convert to the energy density we are
-        using, please check the Test_EOS.csv to double check the order of magnitude.
-
-        pressure (array): Pressure array of neutron star EoS, also in nautral unit
-        with MeV/fm^{-3}, still please check the Test_EOS.csv, the conversion is
-        (value in dyn/cm3)*G/c**4.
-
-    Returns:
-        Mass (array): The array that contains all the Stars' masses, in M_sun as a
-        Units.
-        Radius (array): The array that contains all the Stars's radius, in km.
-    """
-
-    # Notice that we only rescale quantities inside this function
-    center_rho = center_rho * unit.G / unit.c**2
-    energy_density = energy_density * unit.G / unit.c**2
-    pressure = pressure * unit.G / unit.c**4
-
-    # eos = UnivariateSpline(np.log10(energy_density), np.log10(pres), k=1, s=0)
-    # inveos = UnivariateSpline(np.log10(pres), np.log10(energy_density), k=1, s=0)
-    # We could change this to Double Log Interpolation。
-
-    unique_pressure_indices = np.unique(pressure, return_index=True)[1]
-    unique_pressure = pressure[np.sort(unique_pressure_indices)]
-
-    # Interpolate pressure vs. energy density
-    eos = interp1d(energy_density, pressure, kind="cubic", fill_value="extrapolate")
-
-    # Interpolate energy density vs. pressure
-    inveos = interp1d(
-        unique_pressure,
-        energy_density[unique_pressure_indices],
-        kind="cubic",
-        fill_value="extrapolate",
-    )
-
-    Pmin = pressure[20]
-    r = 4.441e-16 * unit.cm
-    dr = 10.0 * unit.cm
-
-    pcent = eos(center_rho)
-    P0 = (
-        pcent
-        - (4.0 * pi / 3.0) * (pcent + center_rho) * (3.0 * pcent + center_rho) * r**2.0
-    )
-    m0 = 4.0 / 3.0 * pi * center_rho * r**3.0
-    stateTOV = np.array([P0, m0])
-
-    sy = ode(TOV, None).set_integrator("dopri5")
-
-    # have been modified from Irida to this integrator
-    sy.set_initial_value(stateTOV, r).set_f_params(inveos)
-
-    while sy.successful() and stateTOV[0] > Pmin:
-        stateTOV = sy.integrate(sy.t + dr)
-        dpdr, dmdr = TOV(sy.t + dr, stateTOV, inveos)
-        dr = 0.46 * (1.0 / stateTOV[1] * dmdr - 1.0 / stateTOV[0] * dpdr) ** (-1.0)
-
-    # at the end of this function, we rescale the quantities back
-    return stateTOV[1] * unit.c**2 / unit.G, sy.t
-
-
-def solveTOV2(center_rho, Pmin, eos, inveos):
+def solveTOV(center_rho, Pmin, eos, inveos):
     """Solve TOV equation from given Equation of state in the neutron star 
     core density range
 
@@ -330,9 +259,6 @@ def solveTOV2(center_rho, Pmin, eos, inveos):
         Mass (float): The Stars' masses
         Radius (float): The Stars's radius
     """
-    # Notice that we only rescale quantities inside this function
-    center_rho = center_rho * unit.G / unit.c**2
-
     r = 4.441e-16 * unit.cm
     dr = 10.0 * unit.cm
 
