@@ -35,7 +35,7 @@ contributions of new features.
 
 For installation instructions, please refer to the `Installation Page <https://chunhuangphy.github.io/CompactObject/installation.html>`_.
 
-### Publications
+**Publications**
 
 Papers generated using this package include:
 
@@ -56,8 +56,8 @@ Papers generated using this package include:
 
 If you use our software, please consider citing us with the following standard citation:
 
-.. [CompactObject] The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_.  
-   This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ....
+The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_.  
+This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ....
 
 .. _CompactObject: https://chunhuangphy.github.io/CompactObject/
 
@@ -171,6 +171,11 @@ The nuclear physics quantities we consider are:
 - **K**: Compressibility of nuclear matter
 - **J**: Symmetry energy at saturation density
 - **L**: Slope of symmetry energy at saturation density
+
+There are more on constraining the EOS by Pure neutron matter (PNM):
+
+- **chiral EFT constraint**
+- **pQCD constraint**
 
 These can be computed from posterior samples (we will add the nuclear properties computation code in the near future). They also serve as independent constraints on the neutron star EOS.
 
