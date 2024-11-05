@@ -42,7 +42,7 @@ The initial papers based on or contributing to this package are listed below:
 
 .. [6] *To be added*
 
-**6. Density-Function Implementation**
+**6. Density-dependent RMF Implementation**
 
 .. _density_function_publications:
 
