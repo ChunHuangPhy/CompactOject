@@ -1,7 +1,7 @@
 .. _readme:
 
 ***********************************
-CompactObject-TOV package Tutorials
+CompactObject package Tutorials
 ***********************************
 
 **An open-source package for neutron star**
