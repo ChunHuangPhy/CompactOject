@@ -92,11 +92,8 @@ def EOS_check(density, pressure):
     dpdrho = dp / drho  # dydx
 
     for value in dpdrho:
-        if value >= 0:
-            # print("This is a valid equation of state")
-            pass
-        else:
-            print("This is not a valid equation of state")
+        if value < -1e-3:
+            print(f"dpdrho = {value} is not a valid equation of state")
             sys.exit()
 
     return density, pressure
