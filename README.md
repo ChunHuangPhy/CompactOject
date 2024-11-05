@@ -31,12 +31,13 @@ CompactObject offers a range of functionalities essential for constraining the E
 
 3. **Bayesian Inference Workflow**
     - Implements neutron star EOS inference using Nested Sampling.
+    - Provide options for single machine users using MCMC sampling by emcee.
     - Integrates constraints from nuclear experiments, neutron star mass and/or radius observations (from X-ray timing and/or radio timing), and tidal measurements from gravitational wave detections.
     - [InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package
 
 ## Papers
 
-Please cite the following papers if you use CompactObject in your research:
+Please consider cite the following papers if you use CompactObject in your research:
 
 1. **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024). *Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models*. *Monthly Notices of the Royal Astronomical Society*, 529. [DOI:10.1093/mnras/stae844](https://academic.oup.com/mnras/article/529/4/4650/7634362)
 
@@ -48,19 +49,20 @@ Please cite the following papers if you use CompactObject in your research:
 
 ## Sample Citation
 
-```latex
+
 "The inference conducted here relies on the framework in the *CompactObject* \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactObject/}. This is an open-source, comprehensive package designed to implement Bayesian constraints on the neutron star EOS. Other works based on this package include ..."
-```
+
 
 ## Includes
 
-CompactObject includes the following components to facilitate neutron star EOS analysis:
+CompactObject includes the following components to facilitate neutron star EOS inference analysis:
 
-1. **EOS Validation Routine**
+1. **EOS Output Validation Routine**
+    - Compute various type of EOS by different models
     - Checks the validity of EOS inputs.
 
 2. **Mass, Radius, and Tidal Deformability Calculator**
-    - Returns mass, radius, tidal deformability, and computes the corresponding speed of sound.
+    - Returns mass, radius, tidal deformability, by solve TOV equation, and computes the corresponding speed of sound.
 
 3. **Sample TOV Solver Notebook**
     - [Test_TOVsolver.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_TOVsolver.ipynb)
@@ -77,7 +79,7 @@ CompactObject includes the following components to facilitate neutron star EOS a
 
 5. **Sample Analysis and Tutorial Notebook**
     - [test_Inference.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb)
-    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project.
+    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer.
 
 > **Note:** Please review these notebooks before starting your own project to familiarize yourself with the coding routines.
 
@@ -120,6 +122,7 @@ Below are the commands to install and update the CompactObject package, along wi
     - **CGS Units** are used throughout the package.
     - **Pressure (P):** erg/cm³
     - **Energy Density (ρ):** g/cm³
+    - **Default Unit system** any input in this package is follow the cgs unit
 
 2. **Unit Conventions:**
     - Follow the unit system defined in the [Unit Conversion](https://chunhuangphy.github.io/CompactObject/UnitConventionForDeveloper.html) notebook.
