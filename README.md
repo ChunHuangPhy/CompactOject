@@ -45,7 +45,6 @@ Please consider cite the following papers if you use CompactObject in your resea
 
 3. **Huang, C., & Zheng, X.-P.** (2024). *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*. *arXiv preprint arXiv:2409.18432*. [https://arxiv.org/abs/2409.18432](https://arxiv.org/abs/2409.18432)
 
-## Sample Citation
 
 ## Sample Citation
 
