@@ -68,6 +68,10 @@ Using Anaconda (Recommended)
    - `sys`
    - `ultranest`
 
+Some of the dependencies like numbaminpack may hard to install if don't have a fortran complier, please
+refer to this page `NumbaMinpack documentation <https://pypi.org/project/NumbaMinpack/>`, and you can skip
+this NumbaMinpack if you are not using "fastRMF_EoS" and "pQCD"
+
 Optional: Using Python Virtual Environment
 ------------------------------------------
 
