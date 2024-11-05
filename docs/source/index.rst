@@ -7,6 +7,7 @@
    :caption: User guides
 
    installation
+   publications
 
 .. toctree::
    :maxdepth: 2
