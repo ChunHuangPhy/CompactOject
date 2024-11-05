@@ -113,6 +113,8 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
         else:
             fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]/km-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[1][0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
             likelihood = np.log(fx)
+            
+            
     if likelihood <= -1e101:
         return -1e101
     else:
