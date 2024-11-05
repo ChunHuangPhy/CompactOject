@@ -3,7 +3,7 @@
 
 **CompactObject** is an open-source package designed to perform Bayesian inference on neutron star equation of state (EOS) constraints. It offers a comprehensive workflow that integrates astrophysical observations and nuclear measurements to explore the interior composition of neutron stars. The package is built to be user-friendly, easily extendable, and thoroughly documented, making it an essential tool for researchers in nuclear astrophysics.
 
-We have a detailed documentation please check here: [CompactObject-TOV Package Website](https://chunhuangphy.github.io/CompactObject/)
+We have a detailed documentation please check here: [CompactObject Package Website](https://chunhuangphy.github.io/CompactObject/)
 
 ## Table of Contents
 
