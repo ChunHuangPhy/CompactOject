@@ -138,7 +138,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 * **Chun Huang** - [chun.h@wustl.edu](mailto:chun.h@wustl.edu)
 
-**Documentation Link:** [EoS Inference Documentation](https://github.com/ChunHuangPhy/EoS_inference)
+**Documentation Link:** [CompactObject Documentation](https://chunhuangphy.github.io/CompactObject/)
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo.8145167)
 
