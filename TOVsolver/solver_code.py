@@ -310,3 +310,49 @@ def solveTOV(center_rho, energy_density, pressure):
 
     # at the end of this function, we rescale the quantities back
     return stateTOV[1] * unit.c**2 / unit.G, sy.t
+
+
+def solveTOV2(center_rho, Pmin, eos, inveos):
+    """Solve TOV equation from given Equation of state in the neutron star 
+    core density range
+
+    Args:
+        center_rho(array): This is the energy density here is fixed in main
+        that is range [10**14.3, 10**15.6] * unit.g_cm_3
+        
+        Pmin (float): In unit.G / unit.c**4
+        
+        eos (function): pressure vs. energy density, energy density in unit.G / unit.c**2, pressure in unit.G / unit.c**4
+        
+        inveos (function): energy density vs. pressure
+
+    Returns:
+        Mass (float): The Stars' masses
+        Radius (float): The Stars's radius
+    """
+    # Notice that we only rescale quantities inside this function
+    center_rho = center_rho * unit.G / unit.c**2
+
+    r = 4.441e-16 * unit.cm
+    dr = 10.0 * unit.cm
+
+    pcent = eos(center_rho)
+    P0 = (
+        pcent
+        - (4.0 * pi / 3.0) * (pcent + center_rho) * (3.0 * pcent + center_rho) * r**2.0
+    )
+    m0 = 4.0 / 3.0 * pi * center_rho * r**3.0
+    stateTOV = np.array([P0, m0])
+
+    sy = ode(TOV, None).set_integrator("dopri5")
+
+    # have been modified from Irida to this integrator
+    sy.set_initial_value(stateTOV, r).set_f_params(inveos)
+
+    while sy.successful() and stateTOV[0] > Pmin:
+        stateTOV = sy.integrate(sy.t + dr)
+        dpdr, dmdr = TOV(sy.t + dr, stateTOV, inveos)
+        dr = 0.46 * (1.0 / stateTOV[1] * dmdr - 1.0 / stateTOV[0] * dpdr) ** (-1.0)
+
+    # at the end of this function, we rescale the quantities back
+    return stateTOV[1] * unit.c**2 / unit.G, sy.t

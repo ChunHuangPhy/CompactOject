@@ -165,3 +165,26 @@ def OutputMRTpoint(central_density, energy_density, pressure):
     MRT = np.vstack((Radius, Mass, tidal)).T
 
     return MRT
+
+
+def OutputMRpoint_with_EoS(central_density, Pmin, eos, inveos):
+    """Outputs the mass, radius(single point)
+    Args:
+        central_density (float): central density that we want to compute, in unit.g_cm_3
+        Pmin (float):  In unit.G / unit.c**4
+        eos (function): Equation of state, rho in unit.G / unit.c**2, pressure in unit.G / unit.c**4
+        inveos (function): The inverse of equation of state
+
+    Returns:
+        Mass (float): mass
+        Radius (float): radius
+    """
+    try:
+        Mass, Radius = TOV_solver.solveTOV2(central_density, Pmin, eos, inveos)
+        return Mass, Radius
+    # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
+    except OverflowError as e:
+        print(
+            "This EOS is ill-defined to reach an infinity result, that is not phyiscal, No Mass radius will be generated."
+        )
+        return (0, 0)

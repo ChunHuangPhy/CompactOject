@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.optimize import root
+
 from TOVsolver.unit import g_cm_3, dyn_cm_2
 
 def polytrope(rhos, theta,
@@ -45,3 +47,20 @@ def polytrope(rhos, theta,
     pres = np.piecewise(rhos, conds, functions)
 
     return pres
+
+def fun_gamma_max(rho2, rho1, p1):
+    """Outputs the maximum gamma for given densities and pressure at both ends of a section of polytropic function.
+    Args:
+        rho2 (float): density at the end point.
+        rho1 (float): density at the start point.
+        p1 (float): pressure at the start point.
+    Returns:
+        gamma_max (float): the maximum gamma.
+    """
+    def fun(x):
+        a1 = np.log(rho2/p1/x)
+        a2 = np.log(rho2/rho1)
+        return a1 / a2 - x
+
+    gamma_max = root(fun, [3/4]).x[0]
+    return gamma_max
