@@ -3,7 +3,7 @@ import math
 from scipy import optimize
 from TOVsolver.unit import g_cm_3, dyn_cm_2
 
-def polytrope(rho, theta):
+def compute_EOS(rho, theta):
     """
     Calculate the pressure of a neutron star based on density using a piecewise polytropic equation of state (EOS).
 
