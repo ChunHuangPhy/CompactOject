@@ -1,7 +1,9 @@
 import numpy as np
 import math
 from scipy import optimize
-from TOVsolver.unit import g_cm_3, dyn_cm_2
+from TOVsolver.unit import g_cm_3, dyn_cm_2, e0
+from scipy.integrate import cumulative_simpson
+
 
 c = 3e10
 G = 6.67428e-8
@@ -344,7 +346,7 @@ def RMF_compute_EOS(eps_crust, pres_crust, theta):
     return ep, pr
 
 
-def Strangeon_compute_EOS(n, theta): 
+def Strangeon_compute_EOS(n, theta):
     """
     Compute the energy density and pressure based on the given parameters.
 
@@ -352,31 +354,31 @@ def Strangeon_compute_EOS(n, theta):
         n (array): An array of n values. Input values of baryon number densities.
         theta (array): An array representing the parameters [epsilon, Nq, ns].
         epsilon: the depth of the potential well; MeV;
-        Nq: the number of quarks in a strangeon; 
+        Nq: the number of quarks in a strangeon;
         ns: the number density of baryons at the surface of the star; fm^-3
-        
+
     Returns:
         tuple: Arrays of energy densities in units of gcm3 and pressures in units of dyncm2.
     """
-    
+
     Nq, epsilon, ns = theta
-    
+
     A12 = 6.2
-    A6 = 8.4 
-    mq = 300 
+    A6 = 8.4
+    mq = 300
     """
     mq: the mass of the quark in this EOS.
     A12 and A6 are fixed throughout the calculation.
     """
-   
-    sigma = np.sqrt(A6 / (2 * A12)) * (Nq / (3 * ns)) 
-   
-    energy_density = 2 * epsilon * (A12 * sigma**4 * n**5 - A6 * sigma**2 * n**3) + n * Nq * mq
+
+    sigma = np.sqrt(A6 / (2 * A12)) * (Nq / (3 * ns))
+
+    energy_density = (
+        2 * epsilon * (A12 * sigma**4 * n**5 - A6 * sigma**2 * n**3) + n * Nq * mq
+    )
     pressure = 4 * epsilon * (2 * A12 * sigma**4 * n**5 - A6 * sigma**2 * n**3)
-    
-    return energy_density , pressure
 
-
+    return energy_density, pressure
 
 
 def polytrope(rho, theta):
@@ -386,7 +388,7 @@ def polytrope(rho, theta):
     This function computes the pressure (`pres`) as a function of density (`rho`) by applying different polytropic indices
     (`gamma1`, `gamma2`, `gamma3`) within specified density thresholds (`rho_t1`, `rho_t2`). The EOS is defined in three
     distinct regions:
-    
+
     - **Low-density region:** `rho <= rho_t1`
     - **Intermediate-density region:** `rho_t1 < rho <= rho_t2`
     - **High-density region:** `rho > rho_t2`
@@ -395,38 +397,142 @@ def polytrope(rho, theta):
     ----------
     rho : array-like
         An array of density values (in cgs units) at which to calculate the pressure.
-    
+
     theta : array-like, length 5
         A list or tuple containing the EOS parameters in the following order:
-        
+
         - `gamma1` (float): Polytropic index for the low-density region.
         - `gamma2` (float): Polytropic index for the intermediate-density region.
         - `gamma3` (float): Polytropic index for the high-density region.
         - `rho_t1` (float): Density threshold between the low and intermediate-density regions (in cgs units).
         - `rho_t2` (float): Density threshold between the intermediate and high-density regions (in cgs units).
-    
+
     Returns
     -------
     pres : ndarray
         An array of pressure values (in cgs units) corresponding to the input density values.
     """
     gamma1, gamma2, gamma3, rho_t1, rho_t2 = theta
-    c = 2.99792458E10 # cgs
-    G = 6.6730831e-8 # cgs
-    rho_ns = 267994004080000.03 #cgs
-    rho_t = 4.3721E11*G/c**2
-    P_t = 7.7582E29* G / c**4
-    
+    c = 2.99792458e10  # cgs
+    G = 6.6730831e-8  # cgs
+    rho_ns = 267994004080000.03  # cgs
+    rho_t = 4.3721e11 * G / c**2
+    P_t = 7.7582e29 * G / c**4
+
     P_ts, k = np.zeros(3), np.zeros(3)
     P_ts[0] = P_t
-    k[0] = P_t / ((rho_t / rho_ns)**gamma1)
+    k[0] = P_t / ((rho_t / rho_ns) ** gamma1)
     P_ts[1] = k[0] * rho_t1**gamma1
     k[1] = P_ts[1] / (rho_t1**gamma2)
     P_ts[2] = k[1] * rho_t2**gamma2
     k[2] = P_ts[2] / (rho_t2**gamma3)
 
     # Calculate the pressure for the entire input array `rho`
-    pres = np.where(rho <= rho_t1, k[0] * rho**gamma1,
-                    np.where(rho <= rho_t2, k[1] * rho**gamma2, k[2] * rho**gamma3))
+    pres = np.where(
+        rho <= rho_t1,
+        k[0] * rho**gamma1,
+        np.where(rho <= rho_t2, k[1] * rho**gamma2, k[2] * rho**gamma3),
+    )
 
     return pres
+
+
+#####################  SPEED-OF-SOUND-EOS  BEGIN  ##############################
+
+
+class SpeedOfSoundEOS:
+    def __init__(self, x_last, y_last, dydx_last, enablePTcheck=False) -> None:
+        """
+        Speed of sound EOS class.
+        See https://arxiv.org/abs/1812.08188 for details.
+        Since the speed of sound core eos need to fit the last point and derivative of outer eos,
+        the initial values are provided here.
+
+        Args:
+            x_last (float): Last energy density value.
+            y_last (float): Last pressure value.
+            dydx_last (float): Last derivative value.
+            enablePTcheck (bool, optional): Enable phase transition check. Defaults to False.
+        """
+        self.x_last = x_last
+        self.y_last = y_last
+        self.dydx_last = dydx_last
+        self.enablePTcheck = enablePTcheck
+
+    def cs2(self, x, a):
+        a1, a2, a3, a4, a5, a6 = a
+        ret = (
+            a1 * np.exp(-0.5 * (((x - a2) / a3) ** 2))
+            + a6
+            + (1 / 3 - a6) / (1 + np.exp(-a5 * (x - a4)))
+        )
+        return np.clip(ret, 0, 1)  # requirement 2 and 4
+
+    def cal_a6(self, a1, a2, a3, a4, a5):
+        A = a1 * np.exp(-0.5 * (((self.x_last - a2) / a3) ** 2)) + (1 / 3) / (
+            1 + np.exp(-a5 * (self.x_last - a4))
+        )
+        B = 1 - 1 / (1 + np.exp(-a5 * (self.x_last - a4)))
+        # cs2 = A + B * a6 = dydx
+        return (self.dydx_last - A) / B
+
+    def uniform_prior(self, a, b, r):
+        return a + (b - a) * r
+
+    def gen_a(self, cube5_):
+        """
+        Generate the EOS parameters from the given cube.
+
+        Args:
+            cube5_ (array): The input cube. The shape is (5,). The values are in the range of [0, 1].
+
+        Returns:
+            tuple: The EOS parameters.
+        """
+        a1 = self.uniform_prior(0.1, 1.5, cube5_[0])
+        a2 = self.uniform_prior(1.5, 12, cube5_[1])
+        a3 = self.uniform_prior(0.05 * a2, 2 * a2, cube5_[2])
+        a4 = self.uniform_prior(1.5, 37, cube5_[3])
+        a5 = self.uniform_prior(0.1, 1, cube5_[4])
+        a6 = self.cal_a6(a1, a2, a3, a4, a5)
+        return (a1, a2, a3, a4, a5, a6)
+
+    def check_a(self, a):
+        a1, a2, a3, a4, a5, a6 = a
+
+        # PT requirement
+        if self.enablePTcheck and a6 > 0:
+            return False
+
+        # requirement 5
+        if np.any(self.cs2(np.linspace(0.5 * e0, 1.5 * e0, 16), a) > 0.163):
+            return False
+
+        # requirement 3
+        if a6 > 1 / 3:
+            return False
+        if np.any(self.cs2(np.linspace(49 * e0, 50 * e0, 16), a) > 1 / 3):
+            return False
+
+        return True
+
+    def cal_core_p(self, core_e, a):
+        """
+        Calculate the core pressure.
+
+        Args:
+            core_e (array): The core energy density.
+            a (array): The EOS parameters.
+
+        Returns:
+            array: The core pressure.
+        """
+        core_p = cumulative_simpson(self.cs2(core_e, a), x=core_e, initial=self.y_last)
+        return core_p
+        # fix check dpde < 0 issue
+        # dif_p = np.diff(core_p, prepend=self.y_last)
+        # dif_p = np.maximum(dif_p, 0)
+        # return np.cumsum(dif_p)
+
+
+#####################  SPEED-OF-SOUND-EOS  END  ###########################  ###
