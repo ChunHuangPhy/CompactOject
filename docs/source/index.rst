@@ -22,6 +22,7 @@
    test_EOSgenerators
    test_TOVsolver
    test_Inference
+   test_Bayesian_inference_Strangeon_EOS
    UnitConventionForDeveloper
 
 .. toctree::
