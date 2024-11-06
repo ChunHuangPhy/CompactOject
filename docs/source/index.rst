@@ -8,7 +8,7 @@
 
    installation
    publications
-
+   
 .. toctree::
    :maxdepth: 2
    :caption: Development
@@ -17,7 +17,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Illustration Notebooks
+   :caption: Tutorials
 
    test_EOSgenerators
    test_TOVsolver
