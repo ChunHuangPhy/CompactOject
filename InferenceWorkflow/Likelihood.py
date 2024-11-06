@@ -27,13 +27,13 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
         
     """
     kernel = x
-    
+    MR = []
     if d1 ==0 :
         likelihood = -1e101
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
@@ -59,7 +59,7 @@ def TidalLikihood_kernel(eps_total,pres_total,x,d1):
         
     """
     kernelGW,chrip = x
-    
+    MRT = []
     if d1 ==0 :
         likelihood = -1e101
     else:
@@ -101,13 +101,13 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     
     sigma_x = Rwidth
     sigma_y = Mwidth
-    
+    MR = []
     if d1 ==0 :
         likelihood = -1e101
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
@@ -137,13 +137,13 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     Mvalue, Mwidth = x
     
     sigma_y = Mwidth
-    
+    MR = []
     if d1 ==0 :
         likelihood = -1e101
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
