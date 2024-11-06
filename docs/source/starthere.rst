@@ -8,17 +8,17 @@ Prerequisites
 - **Package Installation:** Ensure you have installed **CompactObject** successfully.
 - **Virtual Environment:** Activate your virtual environment where **CompactObject** is installed.
 
-Choosing Your Scientific Goal
------------------------------
+Depends on Your Scientific Goal
+-------------------------------
 
-### 1. Understanding Basic Concepts
+ 1. **Understanding Basic Concepts**
 
 If you are new to **CompactObject** and wish to familiarize yourself with its basic concepts and introduction:
 
 - **Index Page:** Explore the `Index Page <https://chunhuangphy.github.io/CompactOject/index.html>`_ for an overview of the package.
 - **README:** Review the `README <https://github.com/ChunHuangPhy/CompactOject/blob/main/README.md>`_ on GitHub to understand the package’s purpose and features.
 
-### 2. Generating Equations of State (EOS)
+ 2. **Generating Equations of State (EOS)**
 
 To use **CompactObject** for generating equations of state:
 
@@ -31,7 +31,7 @@ To use **CompactObject** for generating equations of state:
   - **Density-Dependent EOS Model**
   - *...and more*
 
-### 3. Using the Tolman–Oppenheimer–Volkoff (TOV) Solver
+ 3. **Using the Tolman–Oppenheimer–Volkoff (TOV) Solver**
 
 To utilize the TOV solver integrated within **CompactObject**:
 
@@ -41,11 +41,11 @@ To utilize the TOV solver integrated within **CompactObject**:
   - **Radius**
   - **Tidal Deformability**
 
-### 4. Performing Bayesian Inference on the EOS
+ 4. **Performing Bayesian Inference on the EOS**
 
 **CompactObject** offers robust tools for Bayesian inference related to neutron star EOS. There are two primary scenarios:
 
-#### a. Using Integrated EOS for Inference
+ a. **Using Integrated EOS for Inference**
 
 If you wish to perform Bayesian inference using the EOS models already integrated into **CompactObject**, follow these examples:
 
@@ -53,7 +53,7 @@ If you wish to perform Bayesian inference using the EOS models already integrate
 2. **Strangeon EOS Inference Pipeline:** Check out the `Strangeon EOS Inference Pipeline <https://chunhuangphy.github.io/CompactOject/test_Bayesian_inference_Strangeon_EOS.html>`_.
 3. *...and more examples*
 
-#### b. Using Your Own EOS for Inference
+ b. **Using Your Own EOS for Inference**
 
 If you have developed your own EOS and wish to perform Bayesian inference:
 
@@ -64,13 +64,13 @@ If you have developed your own EOS and wish to perform Bayesian inference:
 **Contribution Invitation:**  
 Consider contributing your EOS to our community if you are using our package! This will boost the influence of your work and make you a collaborator on this project. We can also promote your results on our page. Please check the `Instructions for Contributors <https://chunhuangphy.github.io/CompactOject/Contributor.html>`_ if you wish to contribute.
 
-### 5. Performing Bayesian Inference in Other Fields
+ 5. **Performing Bayesian Inference in Other Fields**
 
 If you aim to use the inference modules of **CompactObject** for Bayesian inference outside of EOS studies, such as in high-energy physics or other astrophysical fields:
 
 - **Example Notebook:** Refer to the `Sample Glitch Bayesian Inference Notebook <https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/Sample_glitchBayesian.ipynb>`_ for an example of how to apply **CompactObject** to different inference scenarios.
 
-### 6. Advanced Usage: Modifying Solvers or APIs
+ 6. **Advanced Usage: Modifying Solvers or APIs**
 
 If the existing tutorials do not cover your specific needs, such as:
 
