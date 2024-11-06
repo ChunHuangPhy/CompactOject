@@ -241,52 +241,24 @@ def solveTOV_tidal(center_rho, energy_density, pressure):
     return Mb * c**2.0 / G * unit.g, Rns * unit.cm, tidal
 
 
-def solveTOV(center_rho, energy_density, pressure):
-    """Solve TOV equation from given Equation of state in the neutron star
+def solveTOV(center_rho, Pmin, eos, inveos):
+    """Solve TOV equation from given Equation of state in the neutron star 
     core density range
 
     Args:
         center_rho(array): This is the energy density here is fixed in main
-        that is np.logspace(14.3, 15.6, 50)
-        energy_density (array): Desity array of the neutron star EoS, in MeV/fm^{-3}
-        Notice here for simiplicity, we omitted G/c**4 magnitude, so
-        (value in MeV/fm^{-3})*G/c**4, could convert to the energy density we are
-        using, please check the Test_EOS.csv to double check the order of magnitude.
-
-        pressure (array): Pressure array of neutron star EoS, also in nautral unit
-        with MeV/fm^{-3}, still please check the Test_EOS.csv, the conversion is
-        (value in dyn/cm3)*G/c**4.
+        that is range [10**14.3, 10**15.6] * unit.g_cm_3
+        
+        Pmin (float): In unit.G / unit.c**4
+        
+        eos (function): pressure vs. energy density, energy density in unit.G / unit.c**2, pressure in unit.G / unit.c**4
+        
+        inveos (function): energy density vs. pressure
 
     Returns:
-        Mass (array): The array that contains all the Stars' masses, in M_sun as a
-        Units.
-        Radius (array): The array that contains all the Stars's radius, in km.
+        Mass (float): The Stars' masses
+        Radius (float): The Stars's radius
     """
-
-    # Notice that we only rescale quantities inside this function
-    center_rho = center_rho * unit.G / unit.c**2
-    energy_density = energy_density * unit.G / unit.c**2
-    pressure = pressure * unit.G / unit.c**4
-
-    # eos = UnivariateSpline(np.log10(energy_density), np.log10(pres), k=1, s=0)
-    # inveos = UnivariateSpline(np.log10(pres), np.log10(energy_density), k=1, s=0)
-    # We could change this to Double Log Interpolation。
-
-    unique_pressure_indices = np.unique(pressure, return_index=True)[1]
-    unique_pressure = pressure[np.sort(unique_pressure_indices)]
-
-    # Interpolate pressure vs. energy density
-    eos = interp1d(energy_density, pressure, kind="cubic", fill_value="extrapolate")
-
-    # Interpolate energy density vs. pressure
-    inveos = interp1d(
-        unique_pressure,
-        energy_density[unique_pressure_indices],
-        kind="cubic",
-        fill_value="extrapolate",
-    )
-
-    Pmin = pressure[20]
     r = 4.441e-16 * unit.cm
     dr = 10.0 * unit.cm
 
