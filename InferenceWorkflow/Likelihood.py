@@ -33,11 +33,11 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
-        if len(MR[0]) == False:
+            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+        if len(MR) == False:
             likelihood = -1e101
         else:
-            likelihood = np.log(kernel.evaluate((MR[0]/km, MR[1]/Msun)))
+            likelihood = np.log(kernel.evaluate((MR[1]/km, MR[0]/Msun)))
     if likelihood <= -1e101:
         return -1e101
     else:
@@ -107,11 +107,11 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
-        if len(MR[0]) == False:
+            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+        if len(MR) == False:
             likelihood = -1e101
         else:
-            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0][0]/km-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[1][0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+            fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1]/km-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
             likelihood = np.log(fx)
             
             
@@ -143,14 +143,14 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMRpoint(d1,eps_total,pres_total).T
-        if len(MR[0]) == False:
+            MR = main.OutputMR([d1],eps_total,pres_total)[0]
+        if len(MR) == False:
             likelihood = -1e101
         else:
-            if MR[0][1]>= Mvalue:
+            if MR[0]>= Mvalue:
                 likelihood = 0
             else:    
-                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1][0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
+                fx = 1/(sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
                 likelihood = np.log(fx)
     if likelihood <= -1e101:
         return -1e101
