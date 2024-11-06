@@ -1,108 +1,158 @@
 <!-- ABOUT THE PROJECT -->
-## About The Project
+# CompactObject
 
-1. Dealing with Multiple models (such as RMF, polytrope etc) to generate Equation of State (EOS) of neutron star. ([EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package)
-2. Solves the Tolman-Oppenheimer-Volkoff equation for a spherically symmetric compact object out of given equation of state of neutron star. ([TOVsolver](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver) Package)
-3. Implementing Neutron state EOS inference by Nested Sampling, draw constraints from Nuclear experiments, Neutron star mass (and/or) radius observations (from X-ray timing and/or radio timing) (and/or) Tidal measurement from Gravitational wave detection. That all workflow is inside this folder. ([InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package) 
+**CompactObject** is an open-source package designed to perform Bayesian inference on neutron star equation of state (EOS) constraints. It offers a comprehensive workflow that integrates astrophysical observations and nuclear measurements to explore the interior composition of neutron stars. The package is built to be user-friendly, easily extendable, and thoroughly documented, making it an essential tool for researchers in nuclear astrophysics.
+
+We have a detailed documentation please check here: [CompactObject Package Website](https://chunhuangphy.github.io/CompactObject/)
+
+## Table of Contents
+
+- [Core Functionality](#core-functionality)
+- [Papers](#papers)
+- [Sample Citation](#sample-citation)
+- [Includes](#includes)
+- [Installation](#installation)
+- [Physics Notations](#physics-notations)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
+
+## Core Functionality
+
+CompactObject offers a range of functionalities essential for constraining the EOS of neutron stars:
+
+1. **Equation of State (EOS) Generation**
+    - Utilizes multiple physics/meta models, including Relativistic Mean Field (RMF), strange star, quark star, polytrope, and speed of sound models, to generate neutron star EOS.
+    - [EOSgenerators](https://github.com/ChunHuangPhy/EoS_inference/blob/main/EOSgenerators) Package
+
+2. **Tolman-Oppenheimer-Volkoff (TOV) Solver**
+    - Solves the TOV equations for a spherically symmetric compact object based on a given neutron star EOS.
+    - [TOVsolver](https://github.com/ChunHuangPhy/EoS_inference/blob/main/TOVsolver) Package
+
+3. **Bayesian Inference Workflow**
+    - Implements neutron star EOS inference using Nested Sampling.
+    - Provide options for single machine users using MCMC sampling by emcee.
+    - Integrates constraints from nuclear experiments, neutron star mass and/or radius observations (from X-ray timing and/or radio timing), and tidal measurements from gravitational wave detections.
+    - [InferenceWorkflow](https://github.com/ChunHuangPhy/EoS_inference/blob/main/InferenceWorkflow) Package
+
+## Papers
+
+Please consider cite the following papers if you use CompactObject in your research:
+
+1. **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024). *Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models*. *Monthly Notices of the Royal Astronomical Society*, 529. [DOI:10.1093/mnras/stae844](https://academic.oup.com/mnras/article/529/4/4650/7634362)
+
+2. **Huang, C., Tolos, L., Providência, C., & Watts, A.** (2024). *Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models*. *arXiv preprint arXiv:2410.14572*. [https://arxiv.org/abs/2410.14572](https://arxiv.org/abs/2410.14572)
+
+3. **Huang, C., & Zheng, X.-P.** (2024). *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*. *arXiv preprint arXiv:2409.18432*. [https://arxiv.org/abs/2409.18432](https://arxiv.org/abs/2409.18432)
 
 
-Project papers list based these package: (Please consider cite them, if you are using this package)
+## Sample Citation
 
-[1]. Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., and Providência, C., “Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models”,Monthly Notices of the Royal Astronomical Society,2024, 10.1093/mnras/stae844,529, https://academic.oup.com/mnras/article/529/4/4650/7634362
 
-[2]. Huang, C., Tolos, L., Providência, C., and Watts, A., “Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models”, arXiv:2410.14572, 2024.
+"The inference conducted here relies on the framework in the *CompactObject* \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactObject/}. This is an open-source, comprehensive package designed to implement Bayesian constraints on the neutron star EOS. Other works based on this package include ..."
 
-[3]. Huang, C. and Zheng, X.-P., “Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades long observation data of the Crab pulsar”, arXiv:2409.18432, 2024
 
-## Sample citation line:
-```diff
-"The inference conducted here relies on the framework in \textit{CompactObject} \cite{CompactObject} package\footnote{https://chunhuangphy.github.io/CompactOject/}. This is an open source full-scope package  designed to implement Bayesian constraints on the neutron star EOS. The other work based on this package is ...."
+## Includes
 
-1.https://chunhuangphy.github.io/CompactOject/
-```
+CompactObject includes the following components to facilitate neutron star EOS inference analysis:
 
-[CompactObject-TOV package website](https://chunhuangphy.github.io/CompactOject/)
+1. **EOS Output Validation Routine**
+    - Compute various type of EOS by different models
+    - Checks the validity of EOS inputs.
 
-### Inlcudes
-1. Routine to check a valid equation of state input
-2. Return the mass, radius, and tidal deformability, and compute the corresponding speed of sound.
-3. [Sample TOV solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_TOVsolver.ipynb), [Sample RMF Equation of state solver Notebook](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_EOSgenerators.ipynb) and [Sample Analysis Notebook on Equation of state Inference and tutorial](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb) on the github to show off what we can do currently and how to use our code. (**please read them before you start to work on your own project, to familiar with the coding routine.**)
-4. Test cases and documentation
-### v.1.3 new features:
-5. Added computation function of generating Relativistic mean field theory(RMF) model EOS functionality. Defined two files fastRMF_EOS and RMF_EOS, which the fastRMF_EOS is speed up by numba, which need gcc compiler, could be hard to implement in windows, so we leave the options for users.
-### v.1.5 new features:
-6. Added Whole workflow of Bayesian inference of neutron star equation of state. Include defining prior by InferenceWorkflow.prior, which included two types: flat distribution and gaussian type. Include defining liklihood generated from nuclear and astrophysical constraint.
+2. **Mass, Radius, and Tidal Deformability Calculator**
+    - Returns mass, radius, tidal deformability, by solve TOV equation, and computes the corresponding speed of sound.
 
+3. **Sample TOV Solver Notebook**
+    - [Test_TOVsolver.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_TOVsolver.ipynb)
+    - Demonstrates how to solve the TOV equation with a given EOS.
+
+4. **Sample EOS Generators Notebook**
+    - [test_EOSgenerators.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_EOSgenerators.ipynb)
+    - Showcases all integrated EOS computations, including:
+        - Polytrope
+        - Speed of Sound Model
+        - RMF Model
+        - Strange Star Model
+        - Quark Star Model
+
+5. **Sample Analysis and Tutorial Notebook**
+    - [test_Inference.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb)
+    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer.
+
+> **Note:** Please review these notebooks before starting your own project to familiarize yourself with the coding routines.
 
 ## Installation
 
-_Below are commands to install and update the package as well as a link to pypi._
+Below are the commands to install and update the CompactObject package, along with a link to PyPI.
 
+### [PyPI - CompactObject-TOV](https://pypi.org/project/CompactObject-TOV/)
 
-##### [PyPi](https://pypi.org/project/CompactObject-TOV/)
+1. **Install the Package**
+    ```sh
+    pip install CompactObject-TOV
+    ```
 
+2. **Update the Package**
+    ```sh
+    pip install CompactObject-TOV --upgrade
+    ```
 
+### Importing the Package
 
-1. Install package
-   ```sh
-   pip install CompactObject-TOV
-   ```
-2. Update package
-   ```sh
-   pip install CompactObject-TOV --upgrade
-   ```
+- **For EOS Computation:**
+    ```python
+    import EOSgenerators
+    ```
 
-When you call the package, if you need to do EoS computation just
-   ```sh
-   import EOSgenerators
-   ```
-if you need TOV solver, just
-   ```sh
-   import TOVsolver
-   ```
-if you need to do Bayesian inference, just
-   ```sh
-   import InferenceWorkflow
-   ```
+- **For TOV Solver:**
+    ```python
+    import TOVsolver
+    ```
 
-## Physics notations
-1. CGS units is using here, for input quantity (equation of state): Pressure (P) and Energy density (rho).
-P is in $MeV/fm^{-3}$, same for rho. However, to omit a lot of the repeat of c,G. We set P as rescaled:
-(value in $MeV/fm^{-3}$)*G/c^4, for rho we have (value in $MeV/fm^{-3}$)*G/c^2
-2. Out put M in Mass of sun, radius in km, unit-less for spped of sound and tidal deformability.
-<!-- LICENSE -->
+- **For Bayesian Inference:**
+    ```python
+    import InferenceWorkflow
+    ```
+
+## Physics Notations
+
+1. **Units:**
+    - **CGS Units** are used throughout the package.
+    - **Pressure (P):** erg/cm³
+    - **Energy Density (ρ):** g/cm³
+    - **Default Unit system** any input in this package is follow the cgs unit
+
+2. **Unit Conventions:**
+    - Follow the unit system defined in the [Unit Conversion](https://chunhuangphy.github.io/CompactObject/UnitConventionForDeveloper.html) notebook.
+    - **Basic Rules:**
+        1. If using a quantity with a unit, multiply by the unit during computations.
+        2. If plotting or demonstrating values in a specific unit, divide accordingly.
+    - Detailed guidelines can be found in the [Unit Conversion](https://chunhuangphy.github.io/CompactObject/UnitConventionForDeveloper.html) documentation.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#compactobject">back to top</a>)</p>
 
-
-<!-- CONTACT -->
 ## Contact
 
-* Chun Huang - chun.h@wustl.edu
-* Nicole Osborn - n.osborn@wustl.edu
-* Nathan Whitsett - whitsett.n@wustl.edu
+* **Chun Huang** - [chun.h@wustl.edu](mailto:chun.h@wustl.edu)
 
-Project Link: [[https://github.com/ChunHuangPhy/EoS_inference](https://github.com/ChunHuangPhy/EoS_inference)]
+**Documentation Link:** [CompactObject Documentation](https://chunhuangphy.github.io/CompactObject/)
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo.8145167)
 
+<p align="right">(<a href="#compactobject">back to top</a>)</p>
 
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.8145167.svg)](http://dx.doi.org/10.5281/zenodo..8145167)
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. Here included a few of my favorites to kick things off! We would like to acknowledge the support of Code/Astro workshop to make this project happen, we all learned a lot from that 5 day intensive workshop.
-
-Chun want to thank Professor Anna Watts, Dr. Geert Raaijmakers and Jeannie Kuijper for asistance on coding and help on providing me basic strategy of how to solve this problem.
+We would like to acknowledge the support of the Code/Astro workshop, which was instrumental in the development of this project. Special thanks to Professor Anna Watts, Dr. Geert Raaijmakers, and Jeannie Kuijper for their assistance with coding and providing foundational strategies to address the research challenges.
 
 * [Code Astro](https://github.com/semaphoreP/codeastro)
 * [Choose an Open Source License](https://choosealicense.com)
 * [Read Me Template](https://github.com/othneildrew/Best-README-Template)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#compactobject">back to top</a>)</p>
+```

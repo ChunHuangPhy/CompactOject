@@ -4,6 +4,19 @@
 
 .. toctree::
    :maxdepth: 2
+   :caption: User Guide
+
+   installation
+   publications
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Development
+   
+   Contributor
+
+.. toctree::
+   :maxdepth: 2
    :caption: Illustration Notebooks
 
    test_EOSgenerators
@@ -16,7 +29,7 @@
    :caption: EOS generators module
 
    crust_EOS
-   RMF_EOS
+   EOS
    fastRMF_EoS
 
 .. toctree::

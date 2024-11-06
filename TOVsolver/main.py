@@ -123,7 +123,7 @@ def OutputMRpoint(central_density, energy_density, pressure):
     # EOS import.
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     try:
-        M, R = TOV_solver.solveTOV(central_density, energy_density, pressure)
+        M, R = TOV_solver.solveTOV(central_density* g_cm_3, energy_density, pressure)
         Mass.append(M)
         Radius.append(R)
     # This is sentense is for avoiding the outflow of the result, like when solveTOV blow up because of ill EOS, we need to stop
@@ -153,7 +153,7 @@ def OutputMRTpoint(central_density, energy_density, pressure):
     # EOS import.
     # if   all(x<y for x, y in zip(eps_total_poly[:], eps_total_poly[[1:])) and all(x<y for x, y in zip(pres_total_poly[j][:], pres_total_poly[j][1:])):
     try:
-        M, R, T = TOV_solver.solveTOV_tidal(central_density, energy_density, pressure)
+        M, R, T = TOV_solver.solveTOV_tidal(central_density* g_cm_3, energy_density, pressure)
         Mass.append(M)
         Radius.append(R)
         tidal.append(T)
