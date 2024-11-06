@@ -33,7 +33,7 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
@@ -107,10 +107,11 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
+            
             fx = 1/(sigma_x*sigma_y*(np.sqrt(2*np.pi))**2)*np.exp(-np.power(MR[1]/km-Rvalue, 2.)/(2*np.power(sigma_x,2.))-np.power(MR[0]/Msun-Mvalue, 2.)/(2*np.power(sigma_y,2.)))
             likelihood = np.log(fx)
             
@@ -143,7 +144,7 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1])[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
