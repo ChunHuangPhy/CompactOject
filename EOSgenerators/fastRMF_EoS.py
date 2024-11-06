@@ -203,21 +203,40 @@ def myfunc(x, fvec, args):
 funcptr = myfunc.address # address in memory to myfunc
 
 @njit
-def Energy_density_Pressure(x, rho, theta):
-    """Generate pressure and energy density two EOS ingredient from given RMF term and given parameters,
+def Energy_density_Pressure(x, rho, theta, return_tag=False):
+    """
+    Compute the pressure and energy density for the equation of state (EOS) 
+    based on the Relativistic Mean Field (RMF) model parameters.
+    
     (Faster Version Using Numba)
+    
     Args:
-        x (array): An array that consists of the initial values of sigma, omega, rho, and chemical
-        potential obtained from the initial_values function.
-        rho (float): The central density from which the computation of the equation of state begins.
-        theta (array): An array representing the parameters used to determine a RMF model in the
-        Lagrangian. In this case, the RMF model is defined by 10 parameters.
-
+        x (array): An array containing the initial values for sigma, omega, rho, 
+                   and chemical potential, obtained from the `initial_values` function.
+        rho (float): The central density at which the EOS computation begins.
+        theta (array): An array of 10 parameters that define the RMF model in the 
+                       Lagrangian.
+        return_tag (bool, optional): If False (default), returns only the energy 
+                                     density and pressure. If True, returns additional 
+                                     EOS components.
 
     Returns:
-        energy_density (float): EOS ingredient, energy density in g/cm3
-        pressure (float): EOS ingredient, pressure in dyn/cm3
-
+        tuple:
+            If `return_tag` is False:
+                energy_density (float): The energy density in natural units 
+                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                pressure (float): The pressure in natural units.
+            
+            If `return_tag` is True:
+                numpy array: A 1D array representing EOS components:
+                    - EoS[0]: Number density in fm⁻³
+                    - EoS[1]: Energy density in natural units
+                    - EoS[2]: Pressure in natural units
+                    - EoS[3]: Proton chemical potential in natural units
+                    - EoS[4]: Neutron chemical potential in natural units
+                    - EoS[5]: Electron chemical potential in natural units
+                    - EoS[6]: Muon chemical potential in natural units
+                    - EoS[7]: Proton fraction (dimensionless)
     """
     sigma, omega, rho_03, mu_n, mu_e = x
 
@@ -238,10 +257,14 @@ def Energy_density_Pressure(x, rho, theta):
     energy_l = 0
     multi = 0
 
+    EoS = np.empty(8, dtype=np.float64) #["rho", "energy density", "pressure", "mu_p", "mu_n", "mu_e", "mu_mu", "proton_fraction"]
+    
     m_eff = m_n - (g_sigma * sigma)
 
     for i in range(len(Matrix_b)):
         mu_b = Matrix_b[i, 0] * mu_n - Matrix_b[i, 1] * mu_e
+
+        EoS[3+i] = mu_b
 
         E_fb = mu_b - g_omega * omega - g_rho * rho_03 * Matrix_b[i, 2]
 
@@ -254,6 +277,10 @@ def Energy_density_Pressure(x, rho, theta):
 
         rho_B = ((2.0 * J_B) + 1.0) * b_B * (k_fb**3) / (6.0 * math.pi**2)
 
+        if i == 0:
+            #when b = proton,
+            EoS[7] = rho_B / rho
+
         multi = multi + mu_b * rho_B
         energy_baryon = (1 / (8.0 * (math.pi**2))) * (
             k_fb * (E_fb**3)
@@ -265,6 +292,8 @@ def Energy_density_Pressure(x, rho, theta):
 
     for j in range(len(Matrix_l)):
         mu_l = Matrix_l[i, 0] * mu_n - Matrix_l[j, 1] * mu_e
+
+        EoS[5+j] = mu_l
 
         k_fl_sq = mu_l**2 - m_l[j] ** 2
         if k_fl_sq < 0.0:
@@ -298,56 +327,109 @@ def Energy_density_Pressure(x, rho, theta):
 
     Pressure = multi - energy_density
 
-    return energy_density, Pressure
+    if return_tag:
+        EoS[0] = rho
+        EoS[1] = energy_density
+        EoS[2] = Pressure
+        return EoS
+    else:
+        EoS[1] = energy_density
+        EoS[2] = Pressure
+        return EoS
 
 # define a function that computes the EoS 
-@njit
-def compute_EOS(eps_crust, pres_crust, theta):
+def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
     """Generate core part equation of state, main function, from RMF model,
+
     (Faster Version Using Numba)
+    
     Args:
         eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
         pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
         theta (array): An array representing the parameters used to determine a RMF model in the
         Lagrangian. In this case, the RMF model is defined by 10 parameters.
 
+        return_tag (bool, optional): If False (default), returns only the energy 
+                                     density and pressure. If True, returns additional 
+                                     EOS components.
     Returns:
-        energy_density (float): EOS ingredient, energy density in g/cm3
-        pressure (float): EOS ingredient, pressure in dyn/cm3
-
+        If `return_tag` is False:
+                energy_density (float): The energy density in natural units 
+                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                pressure (float): The pressure in natural units.
+            
+        If `return_tag` is True:
+                numpy array: A 1D array representing EOS components:
+                    - EoS[0]: Number density in fm⁻³
+                    - EoS[1]: Energy density in natural units
+                    - EoS[2]: Pressure in natural units
+                    - EoS[3]: Proton chemical potential in natural units
+                    - EoS[4]: Neutron chemical potential in natural units
+                    - EoS[5]: Electron chemical potential in natural units
+                    - EoS[6]: Muon chemical potential in natural units
+                    - EoS[7]: Proton fraction (dimensionless)
     """
     dt    = 0.05
     rho_0 = 0.1505
     
     x_init   = np.array(initial_values(0.1 * rho_0, theta), dtype=np.float64)
-    Energy   = np.empty(124, dtype=np.float64)
-    Pressure = np.empty(124, dtype=np.float64)
-    for i in range(1, 126):
+
+    if return_tag:
+        EoS = np.empty((124, 8), dtype=np.float64)
+    else:
+        Energy   = np.empty(124, dtype=np.float64)
+        Pressure = np.empty(124, dtype=np.float64)
+    for i in range(1, 125):
 
         rho = i * dt * rho_0
         args = np.append(theta, rho)
         xsol, fvec, success, info = lmdif(funcptr, x_init, 5, args)
-        Re = Energy_density_Pressure(x_init, rho, theta)
+        
+        Re  = Energy_density_Pressure(x_init, rho, theta, return_tag)
 
-        Energy[i-1]   = Re[0]*oneoverfm_MeV / gcm3_to_MeVfm3
-        Pressure[i-1] = Re[1]*oneoverfm_MeV / dyncm2_to_MeVfm3
+        if return_tag:
+            # Re = [ rho , energy_density , pressure, mu_n , mu_p , mu_e , mu_mu , proton_fraction ]
+            Re[1] = Re[1] * oneoverfm_MeV / gcm3_to_MeVfm3
+            Re[2] = Re[2] * oneoverfm_MeV / dyncm2_to_MeVfm3
+            Re[3] = Re[3]
+            Re[4] = Re[4]
+            Re[5] = Re[5]
+            Re[6] = Re[6]
+            
+            EoS[i-1] = Re
+        else:
+            Energy[i-1]   = Re[0]*oneoverfm_MeV / gcm3_to_MeVfm3
+            Pressure[i-1] = Re[1]*oneoverfm_MeV / dyncm2_to_MeVfm3
 
         x_init = xsol
     
-    end = 0
-    for i in range(0, len(Energy) - 1):
-        if Energy[i] > max(eps_crust / g_cm_3) and i > 18:
-            end = i + 2
-            break
-        end += 1
-    ep = Energy[end::] * G / c**2
-    pr = Pressure[end::] * G / c**4
+    if return_tag:
+        end = 0
+        for i in range(0, len(EoS) - 1):
+            if EoS[i][1] > max(eps_crust / g_cm_3) and i > 18:
+                end = i + 2
+                break
+            end += 1
+        EoS = EoS[end::].T
+        EoS[1] = EoS[1] * g_cm_3
+        EoS[2] = EoS[2] * dyn_cm_2
 
-    # tzzhou: migrating to new unit convention
-    ep = ep * c**2 / G * g_cm_3
-    pr = pr * c**4 / G * dyn_cm_2
-
-    return ep, pr
+        return EoS
+    else:
+        end = 0
+        for i in range(0, len(Energy) - 1):
+            if Energy[i] > max(eps_crust / g_cm_3) and i > 18:
+                end = i + 2
+                break
+            end += 1
+        ep = Energy[end::]
+        pr = Pressure[end::]
+    
+        # tzzhou: migrating to new unit convention
+        ep = ep * g_cm_3
+        pr = pr * dyn_cm_2
+    
+        return ep, pr
 
 
 ##################### Date: 04 Nov 2024 #######################
