@@ -17,7 +17,7 @@ The initial papers based on or contributing to this package are listed below:
    *arXiv preprint arXiv:2410.14572*.  
    `https://arxiv.org/abs/2410.14572 <https://arxiv.org/abs/2410.14572>`_
 
-**2. Definition of Likelihood Functions**
+**2. Application of Likelihood Functions and analysis glitch data**
 
 .. [3] **Huang, C., & Zheng, X.-P.** (2024).  
    *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*.  

@@ -8,6 +8,7 @@
 
    installation
    publications
+   starthere
 
 .. toctree::
    :maxdepth: 2
@@ -17,11 +18,12 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Illustration Notebooks
+   :caption: Tutorials
 
    test_EOSgenerators
    test_TOVsolver
    test_Inference
+   test_Bayesian_inference_Strangeon_EOS
    UnitConventionForDeveloper
 
 .. toctree::

@@ -131,11 +131,6 @@ In our code, we provide two different functions:
 
 For more information on the TOV equation, visit the `Wikipedia page <https://en.wikipedia.org/wiki/Tolman–Oppenheimer–Volkoff_equation>`_.
 
-The following image illustrates the integration over a waveband (a range of photon energies). We also decrease the mode frequency relative to the stellar spin frequency, ensuring the mode is not as equatorially trapped.
-
-.. image:: mode_integration.png
-   :alt: Mode Integration Diagram
-
 Bayesian Inference
 ==================
 
