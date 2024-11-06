@@ -398,8 +398,8 @@ def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
             
             EoS[i-1] = Re
         else:
-            Energy[i-1]   = Re[0]*oneoverfm_MeV / gcm3_to_MeVfm3
-            Pressure[i-1] = Re[1]*oneoverfm_MeV / dyncm2_to_MeVfm3
+            Energy[i-1]   = Re[1]*oneoverfm_MeV / gcm3_to_MeVfm3
+            Pressure[i-1] = Re[2]*oneoverfm_MeV / dyncm2_to_MeVfm3
 
         x_init = xsol
     
