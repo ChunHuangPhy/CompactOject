@@ -8,7 +8,8 @@
 
    installation
    publications
-   
+   starthere
+
 .. toctree::
    :maxdepth: 2
    :caption: Development
