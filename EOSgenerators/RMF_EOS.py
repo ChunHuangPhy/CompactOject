@@ -563,17 +563,15 @@ def get_eos_alpha(theta, single_point = False):
     """ Generate EOS for a given alpha
 
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
         theta (array): An array representing the parameters used to determine a RMF model in the
         Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last
         defined the proton fraction (alpha).
         single_point (boolean): Allows for the return of a single point of the EoS.
 
     Returns:
-        rho (array): EOS ingredient, density in fm-3
-        energy_density (array): EOS ingredient, energy density in fm-4
-        pressure (array): EOS ingredient, pressure in fm-4
+        rho (array): EOS ingredient, density in fm⁻³.
+        energy_density (array): EOS ingredient, energy density in natural units.
+        pressure (array): EOS ingredient, pressure in natural units.
 
     """
     if not single_point:
