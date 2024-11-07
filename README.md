@@ -78,7 +78,13 @@ CompactObject includes the following components to facilitate neutron star EOS i
 
 5. **Sample Analysis and Tutorial Notebook**
     - [test_Inference.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb)
-    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer.
+    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer. This is specifically focus on the RMF EOS,
+    However, **please check this notebook before all other notebook,**
+    **since here we showcase all the likelihood** 
+    - Other Inference pipline that using different EOS are
+        - [MIT bag inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Bayesian_inference_MITbag_EOS.ipynb)
+        - [Strangeon Star inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Bayesian_inference_Strangeon_EOS.ipynb)
+        - [Polytrope inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Inference_polytrope.ipynb) 
 
 > **Note:** Please review these notebooks before starting your own project to familiarize yourself with the coding routines.
 
