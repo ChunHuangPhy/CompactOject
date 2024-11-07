@@ -421,21 +421,21 @@ def compute_eos(eps_crust, pres_crust, theta):
         x_init = sol.x
         Re     = get_energy_pressure(x_init, rho, theta_in)
     
-        Energy[i]   = (Re[0]*oneoverfm_MeV/gcm3_to_MeVfm3)
-        Pressure[i] = (Re[1]*oneoverfm_MeV/dyncm2_to_MeVfm3)
-        Alpha[i]    = (Re[2])
-        Density[i]  = (rho)
+        Energy[i]   = Re[0]
+        Pressure[i] = Re[1]
+        Alpha[i]    = Re[2]
+        Density[i]  = rho
 
     end = 0
     for i in range(0, len(Energy) - 1):
-        if Energy[i] > max(eps_crust / g_cm_3) and i > 18:
+        if Energy[i] > max(eps_crust) and i > 18:
             end = i + 2
             break
         end += 1
     
     Density  = Density[end::]
-    Energy   = Energy[end::] * g_cm_3
-    Pressure = Pressure[end::] * dyn_cm_2
+    Energy   = Energy[end::]
+    Pressure = Pressure[end::]
     Alpha    = Alpha[end::]
 
     return Density, Energy, Pressure, Alpha
@@ -628,11 +628,8 @@ def compute_eos_alpha(theta):
         x_init = sol.x
         Re     = get_energy_pressure_alpha(x_init, rho, theta_in)
 
-        Density[i]  = (rho)
-        Energy[i]   = (Re[0]*oneoverfm_MeV/gcm3_to_MeVfm3)
-        Pressure[i] = (Re[1]*oneoverfm_MeV/dyncm2_to_MeVfm3)
-    
-    Energy   = Energy * g_cm_3
-    Pressure = Pressure * dyn_cm_2
+        Density[i]  = rho
+        Energy[i]   = Re[0]
+        Pressure[i] = Re[1]
     
     return Density, Energy, Pressure
