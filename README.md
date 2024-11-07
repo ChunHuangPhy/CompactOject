@@ -3,7 +3,7 @@
 
 **CompactObject** is an open-source package designed to perform Bayesian inference on neutron star equation of state (EOS) constraints. It offers a comprehensive workflow that integrates astrophysical observations and nuclear measurements to explore the interior composition of neutron stars. The package is built to be user-friendly, easily extendable, and thoroughly documented, making it an essential tool for researchers in nuclear astrophysics.
 
-We have a detailed documentation please check here: [CompactObject Package Website](https://chunhuangphy.github.io/CompactObject/)
+We have a detailed documentation please check here: [CompactObject Package Website](https://chunhuangphy.github.io/CompactOject/)
 
 ## Table of Contents
 
@@ -78,7 +78,13 @@ CompactObject includes the following components to facilitate neutron star EOS i
 
 5. **Sample Analysis and Tutorial Notebook**
     - [test_Inference.ipynb](https://github.com/ChunHuangPhy/EoS_inference/blob/main/Test_Case/test_Inference.ipynb)
-    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer.
+    - Demonstrates the entire pipeline of Bayesian inference using supported EOS models, constructing priors and likelihoods, and the types of likelihoods supported in this project. Also provide a MCMC based emcee example for people don't have access to High Performance Computer. This is specifically focus on the RMF EOS,
+    However, **please check this notebook before all other notebook,**
+    **since here we showcase all the likelihood** 
+    - Other Inference pipline that using different EOS are
+        - [MIT bag inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Bayesian_inference_MITbag_EOS.ipynb)
+        - [Strangeon Star inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Bayesian_inference_Strangeon_EOS.ipynb)
+        - [Polytrope inference](https://github.com/ChunHuangPhy/CompactOject/blob/main/Test_Case/test_Inference_polytrope.ipynb) 
 
 > **Note:** Please review these notebooks before starting your own project to familiarize yourself with the coding routines.
 
