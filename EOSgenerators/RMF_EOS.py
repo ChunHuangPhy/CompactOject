@@ -1,18 +1,18 @@
+from TOVsolver.unit import g_cm_3, dyn_cm_2
+from scipy import optimize
 import numpy as np
 import math
-from scipy import optimize
-from TOVsolver.unit import g_cm_3, dyn_cm_2
 
-c = 3e10
+c = 2.99792458e10
 G = 6.67428e-8
 Msun = 1.989e33
 
 dyncm2_to_MeVfm3 = 1.0 / (1.6022e33)
 gcm3_to_MeVfm3 = 1.0 / (1.7827e12)
-oneoverfm_MeV = 197.33
+oneoverfm_MeV = 197.327053
 
-m_e = 2.5896 * 10**-3
-m_mu = 0.53544
+m_e = 2.5896041 * 10**-3
+m_mu = 0.5354479981
 m_n = 4.7583690772
 m_p = 4.7583690772
 
@@ -31,24 +31,24 @@ Matrix_l = np.array([[0.0, -1.0, 1 / 2.0], [0.0, -1.0, 1 / 2.0]])
 
 def initial_values(rho, theta):
     """Outputs the the sigma, omega, rho term and chemical potential of electron and neutron at
-    given initial density
+    given initial density.
 
     Args:
         rho (float): given nuclear density
-        theta (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+        theta (array): parameters of determine a RMF model in Lagrangian; here, we have 10 parameters.
 
     Returns:
-        sigma (float): sigma term in lagrangian
-        omega (float): omega term in lagrangian
-        rho_03 (float): rho term in lagrangian
-        mu_n (float): chemical potential of neutron matter
-        mu_e (float): chemical potential of electron portion
+        sigma (float): sigma term in Lagrangian.
+        omega (float): omega term in Lagrangian.
+        rho_03 (float): rho term in Lagrangian.
+        mu_n (float): chemical potential of neutron matter.
+        mu_e (float): chemical potential of electron portion.
 
     """
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
 
-    m_e = 2.5896 * 10**-3
-    m_mu = 0.53544
+    m_e = 2.5896041 * 10**-3
+    m_mu = 0.5354479981
     m_n = 4.7583690772
     m_p = 4.7583690772
 
@@ -68,19 +68,19 @@ def initial_values(rho, theta):
 
 
 def functie(x, args):
-    """iterate the the sigma, omega, rho term and chemical potential of electron and neutron at
-    any given density
+    """Iterates the the sigma, omega, rho term and chemical potential of electron and neutron at
+    any given density,
 
     Args:
         x (array): initial sigma omega rho and chemical potential from initial_values function
-        args (array): paramters of determine a RMF model in lagrangian, here we have 10 parameters.
+        args (array): parameters of a specific RMF model Lagrangian; here, we have 10 parameters.
 
     Returns:
-        sigma (float): sigma term in lagrangian
-        omega (float): omega term in lagrangian
-        rho_03 (float): rho term in lagrangian
-        mu_n (float): chemical potential of neutron matter
-        mu_e (float): chemical potential of electron portion
+        sigma (float): sigma term in the Lagrangian.
+        omega (float): omega term in the Lagrangian.
+        rho_03 (float): rho term in the Lagrangian.
+        mu_n (float): chemical potential of neutron matter.
+        mu_e (float): chemical potential of electron portion.
 
     """
     m_sig = args[0]
@@ -95,8 +95,8 @@ def functie(x, args):
     Lambda_w = args[9]
     rho = args[10]
 
-    m_e = 2.5896 * 10**-3
-    m_mu = 0.53544
+    m_e = 2.5896041 * 10**-3
+    m_mu = 0.5354479981
     m_n = 4.7583690772
     m_p = 4.7583690772
 
@@ -198,7 +198,7 @@ def functie(x, args):
 def Energy_density_Pressure(x, rho, theta, return_tag=False):
     """
     Compute the pressure and energy density for the equation of state (EOS) 
-    based on the Relativistic Mean Field (RMF) model parameters.
+    based on the Relativistic Mean Field (RMF) model parameters,
 
     Args:
         x (array): An array containing the initial values for sigma, omega, rho, 
@@ -214,26 +214,26 @@ def Energy_density_Pressure(x, rho, theta, return_tag=False):
         tuple:
             If `return_tag` is False:
                 energy_density (float): The energy density in natural units 
-                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                                        (to convert to MeV.fm-3, divide by MeV.fm-3).
                 pressure (float): The pressure in natural units.
             
             If `return_tag` is True:
                 numpy array: A 1D array representing EOS components:
-                    - EoS[0]: Number density in fm⁻³
-                    - EoS[1]: Energy density in natural units
-                    - EoS[2]: Pressure in natural units
-                    - EoS[3]: Proton chemical potential in natural units
-                    - EoS[4]: Neutron chemical potential in natural units
-                    - EoS[5]: Electron chemical potential in natural units
-                    - EoS[6]: Muon chemical potential in natural units
-                    - EoS[7]: Proton fraction (dimensionless)
+                    - EoS[0]: Number density in fm-3.
+                    - EoS[1]: Energy density in natural units.
+                    - EoS[2]: Pressure in natural units.
+                    - EoS[3]: Proton chemical potential in natural units.
+                    - EoS[4]: Neutron chemical potential in natural units.
+                    - EoS[5]: Electron chemical potential in natural units.
+                    - EoS[6]: Muon chemical potential in natural units.
+                    - EoS[7]: Proton fraction (dimensionless).
     """
     sigma, omega, rho_03, mu_n, mu_e = x
 
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
 
-    m_e = 2.5896 * 10**-3
-    m_mu = 0.53544
+    m_e = 2.5896041 * 10**-3
+    m_mu = 0.5354479981
     m_n = 4.7583690772
     m_p = 4.7583690772
 
@@ -328,8 +328,8 @@ def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
     """Generate core part equation of state, main function, from RMF model,
 
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
+        eps_crust (array): the energy density of crust EoS in g.cm-3.
+        pres_crust (array): the pressure from crust EoS model in dyn.cm-2.
         theta (array): An array representing the parameters used to determine a RMF model in the
         Lagrangian. In this case, the RMF model is defined by 10 parameters.
 
@@ -339,19 +339,19 @@ def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
     Returns:
         If `return_tag` is False:
                 energy_density (float): The energy density in natural units 
-                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                                        (to convert to MeV.fm-3, divide by MeV.fm-3).
                 pressure (float): The pressure in natural units.
             
         If `return_tag` is True:
                 numpy array: A 1D array representing EOS components:
-                    - EoS[0]: Number density in fm⁻³
-                    - EoS[1]: Energy density in natural units
-                    - EoS[2]: Pressure in natural units
-                    - EoS[3]: Proton chemical potential in natural units
-                    - EoS[4]: Neutron chemical potential in natural units
-                    - EoS[5]: Electron chemical potential in natural units
-                    - EoS[6]: Muon chemical potential in natural units
-                    - EoS[7]: Proton fraction (dimensionless)
+                    - EoS[0]: Number density in fm-3.
+                    - EoS[1]: Energy density in natural units.
+                    - EoS[2]: Pressure in natural units.
+                    - EoS[3]: Proton chemical potential in natural units.
+                    - EoS[4]: Neutron chemical potential in natural units.
+                    - EoS[5]: Electron chemical potential in natural units.
+                    - EoS[6]: Muon chemical potential in natural units.
+                    - EoS[7]: Proton fraction (dimensionless).
     """
     dt = 0.05
     rho_0 = 0.1505
@@ -429,13 +429,13 @@ def initial_guess_alpha(rho, theta):
 
     Args:
         rho (float): given nuclear density
-        theta (array): parameters to determine an RMF model in Lagrangian, here we have 11 parameters,
-        where the last parameters are the proton fraction (alpha) and the density rho.
+        theta (array): parameters to determine an RMF model in Lagrangian, here there are 11 parameters,
+        where the last parameters are the proton fraction (alpha) and the number density rho.
 
     Returns:
-        math.sqrt(sigma) (float): square root of the sigma term in lagrangian
-        math.sqrt(omega) (float): square root of the omega term in lagrangian
-        rho_03 (float): rho term in lagrangian
+        math.sqrt(sigma) (float): square root of the sigma term in the Lagrangian.
+        math.sqrt(omega) (float): square root of the omega term in the Lagrangian.
+        rho_03 (float): rho term in the Lagrangian.
     """
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha = theta
         
@@ -447,17 +447,18 @@ def initial_guess_alpha(rho, theta):
     return math.sqrt(sigma), math.sqrt(omega), rho_03
     
 def fields_alpha(x, args):
-    """ Iterate the sigma, omega, and rho fields for a given proton fraction and density
+    """ Iterate the sigma, omega, and rho fields for a given proton fraction and density.
 
     Args:
-        x (array): initial sqrt(sigma) sqrt(omega) and rho from initial_values function
-        args (array): parameters to determine a RMF model in Lagrangian, here we have 12 parameters,
+        x (array): initial sqrt(sigma) sqrt(omega) and rho from initial_values function.
+        args (array): parameters to determine a RMF model in Lagrangian; here, we have 12 parameters,
         where the last parameters are the proton fraction (alpha) and the density rho. 
         For pure neutron matter (PNM), alpha is 0, and for symmetric nuclear matter, alpha is 0.5.
 
     Returns:
         f (array): field equations which are then solved using the scipy root finding function.
     """
+    
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha, rho = args
 
     m_n = 4.7583690772
@@ -495,7 +496,7 @@ def fields_alpha(x, args):
     return f
 
 def get_energy_pressure_alpha(x, rho, theta):
-    """ Generate pressure and energy density at a given number density and proton fraction 
+    """ Generate pressure and energy density at a given number density and proton fraction.
     
     Args:
         x (array): An array that consists of the initial values of sqrt(sigma), sqrt(omega), and rho 
@@ -507,8 +508,8 @@ def get_energy_pressure_alpha(x, rho, theta):
 
 
     Returns:
-        energy_density (float): EOS ingredient, energy density in fm-4
-        pressure (float): EOS ingredient, pressure in fm-4
+        energy_density (float): EOS ingredient, energy density in natural units.
+        pressure (float): EOS ingredient, pressure in natural units.
 
     """
     sigma_sqrt, omega_sqrt, rho_03 = x
@@ -563,23 +564,21 @@ def get_eos_alpha(theta, single_point = False):
     """ Generate EOS for a given alpha
 
     Args:
-        eps_crust (array): the energy density of crust EoS in MeV/fm3, times a G/c**2 factor
-        pres_crust (array): the pressure from crust EoS model in MeV/fm3, times a G/c**4 factor
         theta (array): An array representing the parameters used to determine a RMF model in the
         Lagrangian. In this case, the RMF model is defined by 11 parameters, where the last
         defined the proton fraction (alpha).
         single_point (boolean): Allows for the return of a single point of the EoS.
 
     Returns:
-        rho (array): EOS ingredient, density in fm-3
-        energy_density (array): EOS ingredient, energy density in fm-4
-        pressure (array): EOS ingredient, pressure in fm-4
+        rho (array): EOS ingredient, density in fm-3.
+        energy_density (array): EOS ingredient, energy density in natural units.
+        pressure (array): EOS ingredient, pressure in natural units.
 
     """
     if not single_point:
         x_init           = np.array(initial_guess_alpha(0.05, theta))
         dt               = 0.006
-        N_points         = 250
+        N_points         = 125
 
         Density  = np.empty(N_points, dtype=float)
         Energy   = np.empty(N_points, dtype=float)
