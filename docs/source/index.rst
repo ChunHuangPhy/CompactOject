@@ -8,6 +8,7 @@
 
    installation
    publications
+   cluster
    starthere
 
 .. toctree::
