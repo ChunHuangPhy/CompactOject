@@ -31,18 +31,18 @@ Matrix_l = np.array([[0.0, -1.0, 1 / 2.0], [0.0, -1.0, 1 / 2.0]])
 
 def initial_values(rho, theta):
     """Outputs the the sigma, omega, rho term and chemical potential of electron and neutron at
-    given initial density
+    given initial density.
 
     Args:
         rho (float): given nuclear density
         theta (array): parameters of determine a RMF model in Lagrangian; here, we have 10 parameters.
 
     Returns:
-        sigma (float): sigma term in Lagrangian
-        omega (float): omega term in Lagrangian
-        rho_03 (float): rho term in Lagrangian
-        mu_n (float): chemical potential of neutron matter
-        mu_e (float): chemical potential of electron portion
+        sigma (float): sigma term in Lagrangian.
+        omega (float): omega term in Lagrangian.
+        rho_03 (float): rho term in Lagrangian.
+        mu_n (float): chemical potential of neutron matter.
+        mu_e (float): chemical potential of electron portion.
 
     """
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w = theta
@@ -76,11 +76,11 @@ def functie(x, args):
         args (array): parameters of a specific RMF model Lagrangian; here, we have 10 parameters.
 
     Returns:
-        sigma (float): sigma term in the Lagrangian
-        omega (float): omega term in the Lagrangian
-        rho_03 (float): rho term in the Lagrangian
-        mu_n (float): chemical potential of neutron matter
-        mu_e (float): chemical potential of electron portion
+        sigma (float): sigma term in the Lagrangian.
+        omega (float): omega term in the Lagrangian.
+        rho_03 (float): rho term in the Lagrangian.
+        mu_n (float): chemical potential of neutron matter.
+        mu_e (float): chemical potential of electron portion.
 
     """
     m_sig = args[0]
@@ -214,19 +214,19 @@ def Energy_density_Pressure(x, rho, theta, return_tag=False):
         tuple:
             If `return_tag` is False:
                 energy_density (float): The energy density in natural units 
-                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                                        (to convert to MeV.fm-3, divide by MeV.fm-3).
                 pressure (float): The pressure in natural units.
             
             If `return_tag` is True:
                 numpy array: A 1D array representing EOS components:
-                    - EoS[0]: Number density in fm⁻³
-                    - EoS[1]: Energy density in natural units
-                    - EoS[2]: Pressure in natural units
-                    - EoS[3]: Proton chemical potential in natural units
-                    - EoS[4]: Neutron chemical potential in natural units
-                    - EoS[5]: Electron chemical potential in natural units
-                    - EoS[6]: Muon chemical potential in natural units
-                    - EoS[7]: Proton fraction (dimensionless)
+                    - EoS[0]: Number density in fm-3.
+                    - EoS[1]: Energy density in natural units.
+                    - EoS[2]: Pressure in natural units.
+                    - EoS[3]: Proton chemical potential in natural units.
+                    - EoS[4]: Neutron chemical potential in natural units.
+                    - EoS[5]: Electron chemical potential in natural units.
+                    - EoS[6]: Muon chemical potential in natural units.
+                    - EoS[7]: Proton fraction (dimensionless).
     """
     sigma, omega, rho_03, mu_n, mu_e = x
 
@@ -328,8 +328,8 @@ def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
     """Generate core part equation of state, main function, from RMF model,
 
     Args:
-        eps_crust (array): the energy density of crust EoS in g/cm³.
-        pres_crust (array): the pressure from crust EoS model in dyn/cm².
+        eps_crust (array): the energy density of crust EoS in g.cm-3.
+        pres_crust (array): the pressure from crust EoS model in dyn.cm-2.
         theta (array): An array representing the parameters used to determine a RMF model in the
         Lagrangian. In this case, the RMF model is defined by 10 parameters.
 
@@ -339,12 +339,12 @@ def compute_EOS(eps_crust, pres_crust, theta, return_tag=False):
     Returns:
         If `return_tag` is False:
                 energy_density (float): The energy density in natural units 
-                                        (to convert to MeV/fm³, divide by MeV/fm³).
+                                        (to convert to MeV.fm-3, divide by MeV.fm-3).
                 pressure (float): The pressure in natural units.
             
         If `return_tag` is True:
                 numpy array: A 1D array representing EOS components:
-                    - EoS[0]: Number density in fm⁻³.
+                    - EoS[0]: Number density in fm-3.
                     - EoS[1]: Energy density in natural units.
                     - EoS[2]: Pressure in natural units.
                     - EoS[3]: Proton chemical potential in natural units.
@@ -458,6 +458,7 @@ def fields_alpha(x, args):
     Returns:
         f (array): field equations which are then solved using the scipy root finding function.
     """
+    
     m_sig, m_w, m_rho, g_sigma, g_omega, g_rho, kappa, lambda_0, zeta, Lambda_w, alpha, rho = args
 
     m_n = 4.7583690772
@@ -495,7 +496,7 @@ def fields_alpha(x, args):
     return f
 
 def get_energy_pressure_alpha(x, rho, theta):
-    """ Generate pressure and energy density at a given number density and proton fraction 
+    """ Generate pressure and energy density at a given number density and proton fraction.
     
     Args:
         x (array): An array that consists of the initial values of sqrt(sigma), sqrt(omega), and rho 
@@ -569,7 +570,7 @@ def get_eos_alpha(theta, single_point = False):
         single_point (boolean): Allows for the return of a single point of the EoS.
 
     Returns:
-        rho (array): EOS ingredient, density in fm⁻³.
+        rho (array): EOS ingredient, density in fm-3.
         energy_density (array): EOS ingredient, energy density in natural units.
         pressure (array): EOS ingredient, pressure in natural units.
 
