@@ -45,7 +45,7 @@ MeVfm3_to_dyncm2 = mev_si*1e46  # convert pressure from MeV/fm^3 to dyne/cm^2
 lalpconvert = 755397844024.145 # pressure
 laleconvert = 755407089027.154 # energy density
 
-def read_compose(eosdir="./filesCompose/", eos_prefix="eos",nptsmin = 100): 
+def read_compose(eosdir="./filesCompose", eos_prefix="/eos",nptsmin = 100,eosname=None): 
 
     """
     Routine which reads the data from the original EoS model, Compose format is assumed
@@ -122,7 +122,8 @@ def read_compose(eosdir="./filesCompose/", eos_prefix="eos",nptsmin = 100):
           p_compose[i]=float(tmp[3])*nB_compose[i]  # pressure
           eps_compose[i]=(float(tmp[9])+ 1.0)*m_n*nB_compose[i]  # energy density
 
-    eosname = read_README(eosdir)
+    if eosname is None:
+        eosname = read_README(eosdir)
     eps_gcm3 = eps_compose*MeVfm3_to_gcm3
     p_dyncm2 = p_compose*MeVfm3_to_dyncm2
     
