@@ -33,7 +33,7 @@ def MRlikihood_kernel(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])
         if len(MR) == False:
             likelihood = -1e101
         else:
@@ -144,7 +144,7 @@ def Masslikihood_Gaussian(eps_total,pres_total,x,d1):
     else:
         d1 = 10**(d1)
         if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
+            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])
         if len(MR) == False:
             likelihood = -1e101
         else:
