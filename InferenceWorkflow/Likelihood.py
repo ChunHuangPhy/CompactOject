@@ -102,12 +102,12 @@ def MRlikihood_Gaussian(eps_total,pres_total,x,d1):
     sigma_x = Rwidth
     sigma_y = Mwidth
     MR = []
-    if d1 ==0 :
+    if d1 ==0:
         likelihood = -1e101
     else:
         d1 = 10**(d1)
-        if   all(x<y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<y for x, y in zip(pres_total[:], pres_total[1:])):
-            MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
+        # if all(x<=y for x,y in zip(eps_total[:], eps_total[1:])) and all(x<=y for x, y in zip(pres_total[:], pres_total[1:])):
+        MR = main.OutputMR("",eps_total,pres_total,[d1*g_cm_3])[0]
         if len(MR) == False:
             likelihood = -1e101
         else:
