@@ -4,7 +4,7 @@ Call for Contributions
 Introduction
 ------------
 
-If you are interested in contributing to the **CompactObject** project, please send an email to `chun.h@wustl.edu <mailto:chun.h@wustl.edu>`_ to request collaboration. You can also open an issue on our GitHub repository at `Issue page <https://github.com/ChunHuangPhy/CompactOject/issues>`_ so that the community can track the status of collaborations.
+If you are interested in contributing to the **CompactObject** project, please send an email to `chun.h@wustl.edu <mailto:chun.h@wustl.edu>`_ to request collaboration. You can also open an issue on our GitHub repository at `Issue page <https://github.com/ChunHuangPhy/CompactObject/issues>`_ so that the community can track the status of collaborations.
 
 We are always eager to expand our scope to include the most equation of state (EOS) computations currently available in the community, as well as the most relevant constraints. If you have your own EOS and wish to contribute, please follow the steps outlined below.
 
@@ -12,7 +12,7 @@ Contributing an Equation of State (EOS)
 ---------------------------------------
 
 1. **Open an Issue**  
-   Visit our GitHub issues page at `Issue page <https://github.com/ChunHuangPhy/CompactOject/issues>`_ and open a new issue to suggest the EOS you would like to contribute.
+   Visit our GitHub issues page at `Issue page <https://github.com/ChunHuangPhy/CompactObject/issues>`_ and open a new issue to suggest the EOS you would like to contribute.
 
 2. **Request Collaboration**  
    Send an email to `chun.h@wustl.edu` to request collaborator access to the repository.
@@ -21,7 +21,7 @@ Contributing an Equation of State (EOS)
    - Create a `.py` script that computes the EOS. The script should:
      - Input the EOS parameter values.
      - Output the pressure and density in CGS units.
-   - For unit conventions, please refer to the `UnitConventionForDeveloper <https://chunhuangphy.github.io/CompactOject/UnitConventionForDeveloper.html>`_.
+   - For unit conventions, please refer to the `UnitConventionForDeveloper <https://chunhuangphy.github.io/CompactObject/UnitConventionForDeveloper.html>`_.
    - Name the main compute function as `compute_EOS`.
    - Name the file as `(YourEOSName)_EOS.py`.
 
@@ -38,7 +38,7 @@ Contributing Inference Components
 If you have developed your own likelihood, prior, sampler, or any component related to inference that is suitable for addition to our functionalities, we highly recommend contacting us. Follow these steps to contribute:
 
 1. **Open an Issue**  
-   Visit our GitHub issues page at `Issue page <https://github.com/ChunHuangPhy/CompactOject/issues>`_ and open a new issue to suggest changes to the inference components.
+   Visit our GitHub issues page at `Issue page <https://github.com/ChunHuangPhy/CompactObject/issues>`_ and open a new issue to suggest changes to the inference components.
 
 2. **Request Collaboration**  
    Send an email to `chun.h@wustl.edu` to request collaborator access to the repository.
