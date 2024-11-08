@@ -6,7 +6,7 @@ Computation Time Scaling
 
 Fully converged Bayesian inference requires numerous iterations to explore the entire prior parameter space. This process demands substantial computation time, which can be very expensive depending on the Equation of State (EOS) you are using.
 
-### 1. Using Integrated EOS Models
+ **1. Using Integrated EOS Models**
 
 If you are utilizing the EOS models integrated into this package, here is an overview of the computational resources required:
 
@@ -28,7 +28,7 @@ c. **Strangeon Model and MIT Bag Model**
    - **Resources:** On a laptop with **24 cores**, the computation can be completed within **5-6 hours**.
    - **Scalability:** The computation time increases with the addition of more observations.
 
-### 2. Using Custom EOS Models
+**2. Using Custom EOS Models**
 
 If you are defining your own EOS and wish to perform inference using this package:
 
@@ -39,12 +39,12 @@ Parallelization
 
 Given the computational intensity of Bayesian inference, parallelization strategies are essential to optimize performance. Below are the steps to parallelize computations using **UltraNest** without modifying the package's code.
 
-### Requirements
+**Requirements**
 
 - **OpenMPI:** Ensure that OpenMPI is installed and available on your system.
 - **Python Packages:** Install `h5py` and `mpi4py`.
 
-### Steps to Parallelize
+**Steps to Parallelize**
 
 1. **Set the Number of Threads**
 
@@ -64,11 +64,11 @@ Given the computational intensity of Bayesian inference, parallelization strateg
 
    - **Explanation:** This command runs the inference using **4 CPU cores**. Adjust the `-np` value according to the number of available cores you wish to utilize.
 
-### Recommendations
+**Recommendations**
 
 - **Virtual Environment:** Regardless of where you are running the code, it is highly recommended to use a virtual environment to manage your installations. This practice helps maintain dependencies and avoids conflicts with other projects.
 
-### Additional Resources
+**Additional Resources**
 
 For more detailed information on performance and parallelization strategies with **UltraNest**, refer to the `UltraNest Performance Page <https://johannesbuchner.github.io/UltraNest/performance.html>`_.
 
