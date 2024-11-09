@@ -116,7 +116,7 @@ Software: Python language [@10.1109/MCSE.2007.58], NumPy [@van_der_Walt_2011], M
 
 ## Acknowledgements
 
-H.C., S.S., O.N., W.N., W.Z. and J.G. acknowledge support from the Arts \& Sciences Fellowship of Washington University in St Louis. H.C. also acknoledge support from NASA grant 80NSSC24K1095. 
+H.C., S.S., O.N., W.N. and J.G. acknowledge support from the Arts \& Sciences Fellowship of Washington University in St Louis. H.C. also acknoledge support from NASA grant 80NSSC24K1095. 
 C.P. received support from Fundação para a Ciência e a Tecnologia (FCT), I.P., Portugal, under the  projects UIDB/04564/2020 (doi:10.54499/UIDB/04564/2020), UIDP/04564/2020 (doi:10.54499/UIDP/04564/2020), and 2022.06460.PTDC (doi:10.54499/2022.06460.PTDC).
 L.T. acknowledges support from CEX2020-001058-M (Unidad de Excelencia ``Mar\'{\i}a de Maeztu") and PID2022-139427NB-I00 financed by the Spanish MCIN/AEI/10.13039/501100011033/FEDER,UE as well as from the Generalitat de Catalunya under contract 2021 SGR 171,  from the Generalitat Valenciana under contract CIPROM/2023/59 and by the CRC-TR 211 'Strong-interaction matter under extreme conditions'- project Nr. 315477589 - TRR 211. A.L.W. acknowledges support from ERC Consolidator Grant No.~865768 AEONS. A.C. acknowlege the support from NSF grants DMS-2235457 and AST-2308111.
 
