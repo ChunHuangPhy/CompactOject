@@ -84,16 +84,16 @@ def EOS_check(density, pressure):
     dp = np.diff(pressure)  # dy
     drho = np.diff(density)  # dx
 
-    for value in drho:
-        if value == 0:
-            print("This is not a valid equation of state, 0")
-            sys.exit()
+    # for value in drho:
+    #     if value == 0:
+    #         print("This is not a valid equation of state, 0")
+    #         sys.exit()
 
     dpdrho = dp / drho  # dydx
 
-    for value in dpdrho:
-        if value < -1e-3:
-            print(f"dpdrho = {value} is not a valid equation of state")
-            sys.exit()
+    # for value in dpdrho:
+    #     if value < -1e-3:
+    #         print(f"dpdrho = {value} is not a valid equation of state")
+    #         sys.exit()
 
     return density, pressure

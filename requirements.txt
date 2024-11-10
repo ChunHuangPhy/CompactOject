@@ -12,6 +12,7 @@ pandas
 scipy
 sys
 ultranest
-
+requests
+lxml
 # path to the directory containing setup.py relative to the project root
 -e .
