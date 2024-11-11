@@ -51,7 +51,8 @@ If you wish to perform Bayesian inference using the EOS models already integrate
 
 1. **RMF EOS Inference Pipeline:** Explore the `RMF EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Inference.html>`_.
 2. **Strangeon EOS Inference Pipeline:** Check out the `Strangeon EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Bayesian_inference_Strangeon_EOS.html>`_.
-3. *...and more examples*
+3. **MIT bag model EOS Inference Pipeline:** Check out the `MIT bag model EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Bayesian_inference_MITbag_EOS.html>`_.
+4. **Speed of Sound EOS Inference Pipeline:** Check out the `Speed of sound EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Bayesian_inference_SpeedOfSound_EOS.html>`_.
 
  b. **Using Your Own EOS for Inference**
 
