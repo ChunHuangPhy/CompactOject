@@ -5,6 +5,8 @@
 
 We have a detailed documentation please check here: [CompactObject Package Website](https://chunhuangphy.github.io/CompactObject/)
 
+**Please star this repository if you find it is helpful!**
+
 ## Table of Contents
 
 - [Core Functionality](#core-functionality)
