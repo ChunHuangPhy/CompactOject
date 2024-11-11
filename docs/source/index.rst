@@ -32,7 +32,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tutorials (MCMC based)
+   :caption: MCMC inference workflow
 
    EMCEE_RMF
    EMCEE_strangeon
