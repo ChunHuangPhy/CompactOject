@@ -129,7 +129,7 @@ def overlapping_corner_three(array1, array2, array3, param_labels=None,sample_la
         
 
 
-def overlapping_corner_three(array1, array2, param_labels=None, sample_labels=None, save_plot=False, filename="corner_plot.pdf"):
+def overlapping_corner_two(array1, array2, param_labels=None, sample_labels=None, save_plot=False, filename="corner_plot.pdf"):
     """
     Creates a corner plot using three 2D arrays, overlapping them with different colors,
     and displays histograms with consistent binning for comparison. Histograms are unfilled,

@@ -44,7 +44,13 @@
    :caption: EOS generators module
 
    crust_EOS
-   EOS
+   RMF_EOS
+   RMF_DDH
+   Strangeon_EOS
+   MITbag_EOS
+   Polytrope_EOS
+   SpeedofSound_EOS
+   Compose_eos
    fastRMF_EoS
 
 .. toctree::
