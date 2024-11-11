@@ -32,6 +32,15 @@
 
 .. toctree::
    :maxdepth: 2
+   :caption: Tutorials (MCMC based)
+
+   EMCEE_RMF
+   EMCEE_strangeon
+   EMCEE_MIT_bag
+   EMCEE_polytrope
+
+.. toctree::
+   :maxdepth: 2
    :caption: EOS generators module
 
    crust_EOS
