@@ -1,7 +1,7 @@
 .. _readme:
 
 ***********************************
-CompactObject Package Tutorials
+CompactObject
 ***********************************
 
 **An Open-Source Package for Neutron Stars**
