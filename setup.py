@@ -1,14 +1,17 @@
+import os
 from setuptools import setup, find_packages
 
 # Function to read requirements from requirements.txt
-def parse_requirements(filename):
-    with open(filename, 'r') as f:
-        return f.read().splitlines()
+def get_requires():
+    reqs = []
+    for line in open("CompactObject_TOV.egg-info/requires.txt", "r").readlines():
+        reqs.append(line)
+    return reqs
 
 setup(
-    name="CompactObject",
-    version="1.9.8",
+    name="CompactObject-TOV",
+    version="1.9.9",
     packages=find_packages(),
-    install_requires=parse_requirements('requirements.txt'),  # Automatically adds requirements
+    install_requires=get_requires(),  # Automatically adds requirements
     # other setup parameters
 )
