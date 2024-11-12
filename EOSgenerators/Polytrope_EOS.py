@@ -3,6 +3,11 @@ from scipy.optimize import root
 
 from TOVsolver.unit import g_cm_3, dyn_cm_2
 
+dyncm2_to_MeVfm3 = 1. / (1.6022e33)
+gcm3_to_MeVfm3 = 1. / (1.7827e12)
+oneoverfm_MeV = 197.33
+rho_ns = 267994004080000.03
+
 def compute_EOS(rhos, theta,
               rho_t_start=4.3721E11*g_cm_3, P_t_start=7.7582E29*dyn_cm_2):
     """
@@ -86,3 +91,26 @@ def fun_gamma_max(rho2, rho1, p1):
 
     gamma_max = root(fun, [3/4]).x[0]
     return gamma_max
+
+def eos_core_pp(gammas,rho_ts,rho_t,rho, P_t):
+    P_ts = np.zeros(len(gammas))
+    k = np.zeros(len(gammas))
+    P_ts[0] = P_t
+    k[0] = P_t / ((rho_t / rho_ns)**gammas[0])
+    P_ts[1] = k[0] * rho_ts[0]**gammas[0]
+    k[1] = P_ts[1] / (rho_ts[0]**gammas[1])
+    P_ts[2] = k[1] * rho_ts[1]**gammas[1]
+    k[2] = P_ts[2] / (rho_ts[1]**gammas[2])
+    pres_ts = P_ts[1::] / dyncm2_to_MeVfm3
+
+    if rho <= rho_ts[0]:
+        pres = k[0] * rho**gammas[0]
+    
+    if rho_ts[0]< rho <= rho_ts[1]:
+        #pres = k[1] * rho**gammas[1]
+        pres = k[1] * (rho)**gammas[1] - (k[1] * (rho_ts[0])**gammas[1] - k[0] * rho_ts[0]**gammas[0])
+
+    if rho_ts[1] < rho:
+        pres = k[2] * (rho)**gammas[2] - (k[2] * (rho_ts[1])**gammas[2] - (k[1] * (rho_ts[1])**gammas[1] - (k[1] * (rho_ts[0])**gammas[1] - k[0] * rho_ts[0]**gammas[0])))
+
+    return pres
