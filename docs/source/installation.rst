@@ -50,7 +50,7 @@ If you encounter issues using ``pip install``, you can install the package manua
 
    .. code-block:: bash
 
-      git clone [repository URL]
+      git clone https://github.com/ChunHuangPhy/CompactObject.git
 
 2. **Install the Required Dependencies**
 
@@ -130,7 +130,7 @@ If you encounter issues using ``pip install``, you can install the package manua
 
    .. code-block:: bash
 
-      git clone [repository URL]
+      git clone https://github.com/ChunHuangPhy/CompactObject.git
 
 2. **Install the Required Dependencies**
 
