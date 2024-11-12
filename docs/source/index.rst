@@ -27,6 +27,7 @@
    test_Bayesian_inference_Strangeon_EOS
    test_Bayesian_inference_MITbag_EOS
    test_Bayesian_inference_SpeedOfSound_EOS
+   test_Inference_polytrope
    DownloadCompose
    UnitConventionForDeveloper
 

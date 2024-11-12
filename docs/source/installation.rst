@@ -1,135 +1,169 @@
 Installation
-=========================
+============
 
-CompactObject is an open-source tool designed for comprehensive neutron star equation inference. It is built to be easy to install and use. Follow the step-by-step installation guide below to get started.
+CompactObject is an open-source package designed for comprehensive neutron star EOS inference. It is built to be easy to install and use. Follow the step-by-step installation guide below to get started.
 
 Using Python Virtual Environment (Recommended)
-------------------------------------------
+----------------------------------------------
 
-If you are not using Anaconda, you can create a virtual environment using Python's `venv` module:
+If you are not using Anaconda, you can create a virtual environment using Python's ``venv`` module:
 
-1. **Create a Virtual Environment**
+Step 1: Create a Virtual Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Run the following command to create a virtual environment named `CompactObject`:
+Run the following command to create a virtual environment named ``CompactObject``:
 
-   .. code-block:: bash
+.. code-block:: bash
 
-       python3 -m venv CompactObject
+   python3 -m venv CompactObject
 
-   *You can specify a different path by replacing `CompactObject` with your desired directory name.*
+*You can specify a different path by replacing ``CompactObject`` with your desired directory name.*
 
-2. **Activate the Environment**
+Step 2: Activate the Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Activate the virtual environment with:
+Activate the virtual environment with:
 
-   .. code-block:: bash
+.. code-block:: bash
 
-       source CompactObject/bin/activate
+   source CompactObject/bin/activate
 
-3. **Install the CompactObject package**
+Step 3: Install the CompactObject Package
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Once the environment is activated, you can install the package from PyPI, which is called `CompactObject-TOV`:
+Once the environment is activated, you can install the package from PyPI, which is called ``CompactObject-TOV``:
 
-    .. code-block:: bash
-    
-         pip install CompactObject-TOV
-   
-    The dependencies should be automatically installed for you. 
-   
-    while if you have trouble to use pip install, maybe you could git clone this repository, Then
+.. code-block:: bash
 
-   .. code-block:: bash
-    
-         pip install -r requirements.txt
+   pip install CompactObject-TOV
 
-**Alternative**:
+The dependencies should be automatically installed for you.
 
-    You can install the CompactObject package using pip inside the repository directory:
-    
-   .. code-block:: bash
-    
-         pip install -e .
+Alternative Installation Method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    To upgrade to the latest version on PyPI, run:
+If you encounter issues using ``pip install``, you can install the package manually:
+
+1. **Clone the Repository**
+
+   Clone the CompactObject repository:
 
    .. code-block:: bash
 
-       pip install CompactObject-TOV --upgrade
+      git clone [repository URL]
 
+2. **Install the Required Dependencies**
 
-5. **Using the Package**
-
-   You are now ready to use CompactObject. Each time you want to use the package, ensure you activate the environment:
+   Navigate to the repository directory and install the dependencies:
 
    .. code-block:: bash
 
-       source CompactObject/bin/activate
+      pip install -r requirements.txt
 
+3. **Install the CompactObject Package**
+
+   Install the package in editable mode:
+
+   .. code-block:: bash
+
+      pip install -e .
+
+To upgrade to the latest version on PyPI, run:
+
+.. code-block:: bash
+
+   pip install CompactObject-TOV --upgrade
+
+Step 4: Using the Package
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You are now ready to use CompactObject. Each time you want to use the package, ensure you activate the environment:
+
+.. code-block:: bash
+
+   source CompactObject/bin/activate
 
 Alternative: Using Anaconda
 ---------------------------
 
-1. **Create a Virtual Environment**
+Step 1: Create a Virtual Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   You can also create a virtual environment for CompactObject using Anaconda:
+You can also create a virtual environment for CompactObject using Anaconda:
 
-   .. code-block:: bash
+.. code-block:: bash
 
-       conda create -n CompactObject
+   conda create -n CompactObject
 
-   When prompted to proceed, type `y` and press Enter:
+When prompted to proceed, type ``y`` and press Enter.
 
-   .. code-block:: none
+Step 2: Activate the Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-       Proceed ([y]/n)?
+Activate your newly created environment with the following command:
 
-2. **Activate the Environment**
+.. code-block:: bash
 
-   Activate your newly created environment with the following command:
+   conda activate CompactObject
 
-   .. code-block:: bash
+**Note:** Once you create this environment, you don't need to create it again. Simply activate it whenever you want to use CompactObject.
 
-       conda activate CompactObject
+Step 3: Install the CompactObject Package
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   **Note:** Once you create this environment, you don't need to create it again. Simply activate it whenever you want to use CompactObject.
+Once the environment is activated, you can install the package from PyPI:
 
-3. **Install the CompactObject package**
+.. code-block:: bash
 
-    Once the environment is activated, you can install the package from PyPI, which is called `CompactObject-TOV`:
+   pip install CompactObject-TOV
 
-    .. code-block:: bash
-    
-         pip install CompactObject-TOV
-   
-    The dependencies should be automatically installed for you. 
-   
-    while if you have trouble to use pip install, maybe you could git clone this repository, Then
+The dependencies should be automatically installed for you.
 
-   .. code-block:: bash
-    
-         pip install -r requirements.txt
+Alternative Installation Method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Alternative**:
+If you encounter issues using ``pip install``, you can install the package manually:
 
-    You can install the CompactObject package using pip inside the repository directory:
-    
-   .. code-block:: bash
-    
-         pip install -e .
+1. **Clone the Repository**
 
-    To upgrade to the latest version on PyPI, run:
+   Clone the CompactObject repository:
 
    .. code-block:: bash
 
-       pip install CompactObject-TOV --upgrade
+      git clone [repository URL]
 
-5. **You're Ready to Use CompactObject!**
+2. **Install the Required Dependencies**
 
-   You are now ready to use CompactObject. Whenever you want to use this package, remember to activate the environment first:
+   Navigate to the repository directory and install the dependencies:
 
    .. code-block:: bash
 
-       conda activate CompactObject
+      pip install -r requirements.txt
+
+3. **Install the CompactObject Package**
+
+   Install the package in editable mode:
+
+   .. code-block:: bash
+
+      pip install -e .
+
+To upgrade to the latest version on PyPI, run:
+
+.. code-block:: bash
+
+   pip install CompactObject-TOV --upgrade
+
+Step 4: You're Ready to Use CompactObject!
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Whenever you want to use this package, remember to activate the environment first:
+
+.. code-block:: bash
+
+   conda activate CompactObject
+
+By following these instructions, you should have CompactObject installed and ready to use. If you encounter any issues during installation, please refer to the project's documentation or seek assistance from the community.
 
 ..    Our package automatically installs all necessary dependencies for you. The dependencies include:
 
