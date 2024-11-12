@@ -22,12 +22,12 @@ sys.path.insert(0, os.path.abspath('../'))
 # -- Project information -----------------------------------------------------
 
 project = 'CompactObject'
-copyright = '2023, Chun Huang, Nicole Obsborn, Nathan Whitsett'
-author = 'Chun Huang, Nicole Obsborn, Nathan Whitsett'
+copyright = '2024, Chun Huang, João Cartaxo, Tuhin Malik, Wenli Yuan,Shashwat Sourav, Xuezhi Liu, Tianzhe Zhou, John Groger, Zhiheng Wang, Nicole Osborn, Nathan Whitsett'
+author = 'Chun Huang, João Cartaxo, Tuhin Malik, Wenli Yuan, Shashwat Sourav, Xuezhi Liu, Tianzhe Zhou, John Groger, Zhiheng Wang, Nicole Osborn, Nathan Whitsettt'
 
 # The full version, including alpha/beta/rc tags
-version = '1.9.1'
-release = '1.9.1'
+version = '1.9.9'
+release = '1.9.9'
 
 
 # -- General configuration ---------------------------------------------------
