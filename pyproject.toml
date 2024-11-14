@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CompactObject_TOV"
+version = "0.0.1"
+authors = [
+  { name="Chun Huang", email="author@example.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "contourpy",
+  "corner",
+  "cycler",
+  "fonttools",
+  "kiwisolver",
+  "matplotlib",
+  "numpy",
+  "packaging",
+  "pillow",
+  "pyparsing",
+  "python-dateutil",
+  "six",
+  "scipy",
+]
+
+[project.urls]
+Homepage = "https://github.com/ChunHuangPhy/CompactOject"
+Issues = "https://github.com/ChunHuangPhy/CompactOject/issues"

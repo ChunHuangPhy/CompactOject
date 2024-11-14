@@ -12,6 +12,6 @@ setup(
     name="CompactObject-TOV",
     version="1.9.9",
     packages=find_packages(),
-    install_requires=get_requires(),  # Automatically adds requirements
+    # install_requires=get_requires(),  # Automatically adds requirements
     # other setup parameters
 )
