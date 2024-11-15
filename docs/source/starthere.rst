@@ -108,6 +108,14 @@ Depending on Your Scientific Goal
    **Note:**  
    The key functions, including the **TOVsolver module** code, form the foundation for all inference and computations. Modifying them may require substantial code restructuring. Therefore, if you clone the repository locally and need to make changes to the **TOVsolver**, proceed with caution to avoid extensive code rebuilding. Only original contributors have permission to modify the **TOVsolver** module code, and such commits must undergo detailed reviews by the original members of the project.
 
+Computation requirements and citation
+-------------------------------------
+
+Bayesian inference could be quite computation expensive especially when the EOS parameters dimensions increase, So we provide a detailed `Computation guide <https://chunhuangphy.github.io/CompactObject/cluster.html>`_ on estimating how many computation resources are required if you would like to use the integrated EOS functions in our package and what is the computation speed requirement if you would like to implement a self-defined EOS functions. 
+
+If you used our pipeline and code in your study, please consider to cite us, there is the list of publication you could cite in `Publications page <https://chunhuangphy.github.io/CompactObject/publications.html>`_
+
+
 Acknowledgements
 ----------------
 
