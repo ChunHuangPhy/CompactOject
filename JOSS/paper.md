@@ -1,9 +1,9 @@
 ---
 title: 'CompactObject: An open-source Python package for full-scope neutron star equation of state inference'
 tags:
-    - Python
-    - astrostatistics
-    - neutron stars
+  - Python
+  - astrostatistics
+  - neutron stars
 authors:
   - name: Chun Huang
     orcid: 0000-0001-6406-1003
