@@ -5,11 +5,12 @@
 .. toctree::
    :maxdepth: 2
    :caption: User Guide
-
+   
+   starthere
    installation
    publications
    cluster
-   starthere
+   
 
 .. toctree::
    :maxdepth: 2

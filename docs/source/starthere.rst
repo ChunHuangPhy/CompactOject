@@ -6,8 +6,8 @@ Welcome to **CompactObject**! This guide will help you get started after success
 Prerequisites
 -------------
 
-- **Package Installation:** Ensure you have installed **CompactObject** successfully.
-- **Virtual Environment:** Activate your virtual environment where **CompactObject** is installed.
+- **Package Installation:** Ensure you have installed **CompactObject** successfully, see installation instructions here: `Installation <https://chunhuangphy.github.io/CompactObject/installation.html>`_ .
+- **Virtual Environment:** Activate your virtual environment where **CompactObject** is installed , also see installation instructions here: `Installation <https://chunhuangphy.github.io/CompactObject/installation.html>`_ .
 
 Depending on Your Scientific Goal
 ---------------------------------
@@ -62,7 +62,18 @@ Depending on Your Scientific Goal
       4. **MIT Bag Model EOS Inference Pipeline:** Check out the `MIT Bag Model EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Bayesian_inference_MITbag_EOS.html>`_.
       5. **Speed of Sound EOS Inference Pipeline:** Check out the `Speed of Sound EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Bayesian_inference_SpeedOfSound_EOS.html>`_.
       6. **Polytrope EOS Inference Pipeline:** Check out the `Polytrope EOS Inference Pipeline <https://chunhuangphy.github.io/CompactObject/test_Inference_polytrope.html>`_.
+      
+      If you computer don't have OpenMPI and only want to parallelize your code in your labtop or a server, we also provide options for
+      implementing the MCMC sampling method, to do the inference, which could easily scale up in a personal computer. Except for using 
+      UltraNest, we use EMCEE in this version of pipeline, here below are some of the examples (not all the equation of state we provided
+      the EMCEE version, since some of them could be time-consuming and we default recommend you to use UltraNest to scale up computation
+      in a High performance computation facility)
 
+      1. **RMF EOS Inference MCMC Pipeline:**, see `RMF EOS EMCEE Inference Pipeline <https://chunhuangphy.github.io/CompactObject/EMCEE_RMF.html>`_
+      2. **Strangeon EOS MCMC Inference Pipeline:** Check out the `Strangeon EOS EMCEE Inference Pipeline <https://chunhuangphy.github.io/CompactObject/EMCEE_strangeon.html>`_.
+      3. **MIT Bag Model EOS MCMC Inference Pipeline:** Check out the `MIT Bag Model EOS EMCEE Inference Pipeline <https://chunhuangphy.github.io/CompactObject/EMCEE_MIT_bag.html>`_.
+      4. **Polytrope EOS MCMC Inference Pipeline:** Check out the `Polytrope EOS EMCEE Inference Pipeline <https://chunhuangphy.github.io/CompactObject/EMCEE_polytrope.html>`_.
+   
    b. **Using Your Own EOS for Inference**
 
       If you have developed your own EOS and wish to perform Bayesian inference:
