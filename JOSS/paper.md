@@ -36,8 +36,8 @@ authors:
     orcid: 
     affiliation: 1
   - name: Xieyuan Dong
-   orcid: 
-   affiliation: 6
+    orcid: 
+    affiliation: 6
   - name: Zhiheng Wang
     orcid: 0009-0000-5088-6207
     affiliation: 1
