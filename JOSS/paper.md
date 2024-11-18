@@ -41,7 +41,7 @@ authors:
   - name: Zhiheng Wang
     orcid: 0009-0000-5088-6207
     affiliation: 1
-  - name: Constan\c{c}a Provid\^{e}ncia
+  - name: Constança Providência
     orcid: 0000-0001-6464-8023
     affiliation: 2
   - name: Micaela Oertel
@@ -72,7 +72,7 @@ affiliations:
     index: 5
   - name: School of Physics, Nankai University, Tianjin 300071, China
     index: 6
-  - name: Laboratoire Univers et Th\^{e}ories, CNRS, Observatoire de Paris, Universit\^{e} PSL, Universit\^{e} Paris Cit\^{e}, 5 place Jules Janssen, 92195 Meudon, France
+  - name: Laboratoire Univers et Théories, CNRS, Observatoire de Paris, Université PSL, Université Paris Cité, 5 place Jules Janssen, 92195 Meudon, France
     index: 7
   - name: Institute of Space Sciences (ICE, CSIC), Campus UAB, Carrer de Can Magrans, 08193, Barcelona, Spain
     index: 8
