@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "CompactObject_TOV"
-version = "0.0.1"
+version = "2.0.0"
 authors = [
   { name="Chun Huang", email="author@example.com" },
 ]
