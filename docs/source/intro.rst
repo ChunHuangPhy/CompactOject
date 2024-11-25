@@ -37,6 +37,12 @@ For installation instructions, please refer to the `Installation Page <https://c
 
 **Publications**
 
+Package paper, please cite us if you are using it:
+
+.. [1] **Huang, C., Malik, T., Cartaxo, J., et al.** (2024). 
+   *CompactObject: An open-source Python package for full-scope neutron star equation of state inference*
+   `arXiv:2411.14615 <https://arxiv.org/abs/2411.14615>`_
+
 Papers generated using this package include:
 
 .. [1] **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024).  
@@ -56,7 +62,7 @@ Papers generated using this package include:
 
 If you use our software, please consider citing us with the following standard citation:
 
-The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_.  
+The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_ \cite{CompactObject}.  
 This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ....
 
 .. _CompactObject: https://chunhuangphy.github.io/CompactObject/
