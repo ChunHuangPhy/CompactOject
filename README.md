@@ -41,11 +41,16 @@ CompactObject offers a range of functionalities essential for constraining the E
 
 Please consider cite the following papers if you use CompactObject in your research:
 
-1. **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024). *Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models*. *Monthly Notices of the Royal Astronomical Society*, 529. [DOI:10.1093/mnras/stae844](https://academic.oup.com/mnras/article/529/4/4650/7634362)
+Package paper:
+1. - **Huang, C., Malik, T., Cartaxo, J., et al.** (2024). *CompactObject: An open-source Python package for full-scope neutron star equation of state inference*[arXiv:2411.14615](https://arxiv.org/abs/2411.14615)
 
-2. **Huang, C., Tolos, L., Providência, C., & Watts, A.** (2024). *Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models*. *arXiv preprint arXiv:2410.14572*. [https://arxiv.org/abs/2410.14572](https://arxiv.org/abs/2410.14572)
 
-3. **Huang, C., & Zheng, X.-P.** (2024). *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*. *arXiv preprint arXiv:2409.18432*. [https://arxiv.org/abs/2409.18432](https://arxiv.org/abs/2409.18432)
+Other papers:
+2. **Huang, C., Raaijmakers, G., Watts, A. L., Tolos, L., & Providência, C.** (2024). *Constraining fundamental nuclear physics parameters using neutron star mass-radius measurements I: Nucleonic models*. *Monthly Notices of the Royal Astronomical Society*, 529. [DOI:10.1093/mnras/stae844](https://academic.oup.com/mnras/article/529/4/4650/7634362)
+
+3. **Huang, C., Tolos, L., Providência, C., & Watts, A.** (2024). *Constraining a relativistic mean field model using neutron star mass-radius measurements II: Hyperonic models*. *arXiv preprint arXiv:2410.14572*. [https://arxiv.org/abs/2410.14572](https://arxiv.org/abs/2410.14572)
+
+4. **Huang, C., & Zheng, X.-P.** (2024). *Bayesian Insights into post-Glitch Dynamics: Model comparison and parameter constraint from decades-long observation data of the Crab pulsar*. *arXiv preprint arXiv:2409.18432*. [https://arxiv.org/abs/2409.18432](https://arxiv.org/abs/2409.18432)
 
 
 ## Sample Citation
