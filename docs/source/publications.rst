@@ -28,7 +28,8 @@ The initial papers based on or contributing to this package are listed below:
 
 .. [4] **Yuan, W.-L., Huang, C., Zhang, C., Zhou, E.-P., & Xu, R.-X.** (2024).  
    *Bayesian inference of strangeon matter equation of state using the new NICER mass-radius measurements J0437-4751 and GW190814 data*.  
-   *In preparation*.
+   *arXiv preprint arXiv:2411.14938*.
+   `https://arxiv.org/abs/2411.14938 <https://arxiv.org/abs/2411.14938>`_
 
 **4. pQCD Computation Implementation**
 
@@ -77,7 +78,7 @@ Citing CompactObject
 
     If you use our software, please consider citing us with the following standard citation:
 
-    The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_.  
+    The inference conducted here relies on the framework in the :math:`\textit{CompactObject}` package [CompactObject]_\cite{CompactObject}.  
     This is an open-source, full-scope package designed to implement Bayesian constraints on the neutron star EOS. Other work based on this package is ....
 
 .. [CompactObject] https://chunhuangphy.github.io/CompactObject/
